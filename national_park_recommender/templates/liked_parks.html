@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}My Liked Parks{% endblock %}
+
+{% block content %}
+<div class="bg-white p-6 md:p-8 rounded-xl shadow-2xl">
+    <h1 class="text-3xl md:text-4xl font-bold text-green-700 mb-8 text-center">My Favorite Parks</h1>
+
+    {% if liked_parks %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {% for park in liked_parks %}
+        <div class="park-card bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl">
+            <div class="relative">
+                <a href="{{ url_for('park_detail_page', park_id=park.id) }}">
+                    <img src="{{ park.image_url }}" alt="Image of {{ park.name }}" class="w-full h-56 object-cover">
+                </a>
+                <button class="like-button absolute top-3 right-3 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-md text-xl z-10" data-park-id="{{ park.id }}" aria-label="Like {{park.name}}">
+                    <i class="fa-heart {% if park.id in liked_park_ids %}fas text-red-500{% else %}far text-gray-600{% endif %}"></i>
+                </button>
+            </div>
+            <div class="p-5 flex flex-col flex-grow">
+                <h3 class="text-xl font-semibold text-green-700 mb-1">
+                     <a href="{{ url_for('park_detail_page', park_id=park.id) }}" class="hover:underline">{{ park.name }}</a>
+                </h3>
+                <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-green-600"></i>{{ park.location }}</p>
+                <p class="text-gray-600 text-sm mb-3 line-clamp-3 flex-grow">{{ park.description }}</p>
+                 {% if park.rating %}
+                 <div class="text-xs text-amber-600 bg-amber-100 rounded-full px-2 py-0.5 mb-2 inline-block">
+                    <i class="fas fa-star text-amber-500"></i> Rating: {{ park.rating }}
+                </div>
+                {% endif %}
+                <div class="mt-auto pt-3">
+                    <a href="{{ url_for('park_detail_page', park_id=park.id) }}" 
+                       class="inline-block w-full text-center bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">
+                       View Details <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-12">
+        <img src="https://illustrations.popsy.co/amber/dreamer.svg" alt="No liked parks" class="mx-auto h-64 mb-6">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-2">You haven't liked any parks yet!</h2>
+        <p class="text-gray-500 mb-6">Start exploring and click the heart icon on parks you love.</p>
+        <a href="{{ url_for('index') }}" class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-transform transform hover:scale-105">
+            Discover Parks
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
