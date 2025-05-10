@@ -8,7 +8,7 @@ PARKS_DATA = [
         "description": "Features a stunning rocky coastline, granite peaks, and historic carriage roads. Ideal for coastal hikes and scenic drives.",
         "activities": ["hiking", "biking", "boating", "wildlife watching", "stargazing", "photography", "scenic driving"],
         "scenery": ["mountains", "forests", "coasts", "lakes", "islands"],
-        "image_url": "https://images.unsplash.com/photo-1553949090-4487DCA1735A?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YWNhZGlhJTIwbmF0aW9uYWwlMjBwYXJrfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+        "image_url": "https://images.unsplash.com/photo-1693307481261-1725dbe5a61f?q=80&w=1373&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         "rating": 4.8
     },
     {
