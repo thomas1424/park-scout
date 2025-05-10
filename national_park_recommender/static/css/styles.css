@@ -75,3 +75,13 @@
 .email-contact-link:hover {
     color: #A7F3D0;
 }
+
+/* General link color for all <a> tags */
+a {
+    color: #2563eb; /* Tailwind blue-600 */
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+a:hover {
+    color: #1d4ed8; /* Tailwind blue-700 */
+}
