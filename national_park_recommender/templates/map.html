@@ -6,33 +6,54 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
 integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
 crossorigin=""/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
 integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
 crossorigin=""></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
 <style>
     #map_canvas { 
-        height: 600px; 
+        height: 70vh; /* Taller map */
         width: 100%;
         border-radius: 0.5rem;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .leaflet-popup-content-wrapper {
+        border-radius: 5px;
+    }
+    .leaflet-popup-content {
+        margin: 10px !important;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    .leaflet-popup-content b {
+        color: #2c5282; /* Tailwind blue-800 */
+    }
+    .leaflet-popup-content img.popup-image {
+        max-width: 180px;
+        height: auto;
+        border-radius: 3px;
+        margin-top: 5px;
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="bg-white p-6 md:p-8 rounded-xl shadow-2xl">
-    <h1 class="text-3xl md:text-4xl font-bold text-green-700 mb-8 text-center">World National Park Map</h1>
+    <h1 class="text-3xl md:text-4xl font-bold text-green-700 mb-6 text-center">Interactive World Landmark Map</h1>
     
     <p class="text-center text-gray-600 mb-6">
-        Explore national parks and significant sites globally. Click on a marker for more information.
-        (This is a basic implementation. More features can be added!)
+        Explore landmarks globally. Zoom in on clusters to see individual markers. Click a marker for details.
     </p>
 
     <div id="map_canvas"></div>
 
     <div class="mt-10 text-center">
         <a href="{{ url_for('index') }}" class="text-green-600 hover:text-green-800 font-medium transition-colors">
-            <i class="fas fa-arrow-left mr-2"></i>Back to Recommendations
+            <i class="fas fa-arrow-left mr-2"></i>Back to Discover Parks
         </a>
     </div>
 </div>
@@ -42,24 +63,55 @@ crossorigin=""></script>
 {{ super() }}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Initialize the map and set its view to a default location and zoom
-        var map = L.map('map_canvas').setView([20, 0], 2); // Centered roughly globally, zoomed out
+        // Initialize the map and set its view
+        // Centering on Europe/Africa allows seeing more landmasses initially with a wide dataset
+        var map = L.map('map_canvas').setView([20, 10], 2.5); // Adjusted initial view
 
-        // Add a tile layer to the map (OpenStreetMap)
+        // Add a tile layer (OpenStreetMap)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            maxZoom: 18, // Slightly less maxZoom for performance with many markers
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
         // Get park data passed from Flask
-        var parks = {{ parks_for_map | tojson }};
+        var landmarks = JSON.parse('{{ parks_for_map | tojson | safe }}');
 
-        parks.forEach(function(park) {
-            if (park.lat && park.lon) {
-                var marker = L.marker([park.lat, park.lon]).addTo(map);
-                marker.bindPopup("<b>" + park.name + "</b><br><a href='/park/" + park.id + "'>View Details</a>");
+        // Create a marker cluster group
+        var markers = L.markerClusterGroup({
+            chunkedLoading: true, // Helps with large datasets
+            maxClusterRadius: 60  // Adjust clustering sensitivity
+        });
+
+        landmarks.forEach(function(landmark) {
+            if (landmark.lat && landmark.lon) {
+                var title = landmark.name;
+                var marker = L.marker(L.latLng(landmark.lat, landmark.lon), { title: title });
+                
+                var popupContent = `
+                    <b>${landmark.name}</b><br>
+                    Type: ${landmark.type}<br>
+                    <a href="/park/${landmark.id}" target="_blank">View Details</a>
+                `;
+                // Optionally add a small image to the popup
+                // if (landmark.image_url) {
+                //    popupContent += \`<br><img src="\${landmark.image_url}" alt="\${landmark.name}" class="popup-image">\`;
+                // }
+                // Be cautious with many images in popups as it can slow down map interaction.
+
+                marker.bindPopup(popupContent);
+                markers.addLayer(marker);
             }
         });
+
+        // Add the marker cluster group to the map
+        map.addLayer(markers);
+
+        // Optional: Fit map to bounds of all markers, if not too many markers initially visible
+        // if (landmarks.length > 0) {
+        //    var groupBounds = markers.getBounds();
+        //    if (groupBounds.isValid()) {
+        //       map.fitBounds(groupBounds.pad(0.1)); // Add some padding
+        //    }
+        // }
     });
 </script>
-{% endblock %}
