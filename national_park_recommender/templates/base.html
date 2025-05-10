@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}ParkScout{% endblock %} - National Park Recommender</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌲</text></svg>">
     {% block head_extra %}{% endblock %}
 </head>
 <body class="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 text-gray-800 antialiased">
     <nav class="bg-green-800 text-white px-6 py-4 flex justify-between items-center shadow-lg">
-        <a href="{{ url_for('intro') }}" class="text-2xl font-bold flex items-center gap-2 hover:text-green-200 transition">
+        <a href="{{ url_for('welcome') }}" class="text-2xl font-bold flex items-center gap-2 hover:text-green-200 transition">
             <span>🌲</span> ParkScout
         </a>
         <div class="flex gap-6">
@@ -39,31 +39,17 @@
         {% block content %}{% endblock %}
     </main>
 
-<footer class="bg-gray-800 text-gray-300 text-center p-6 mt-auto">
-    <p>&copy; <span id="current-year"></span> ParkScout by <a href="https://github.com/thomas1424" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Thomas Pan</a>. Happy Exploring!</p>
-    <p class="text-sm">Icons by <a href="https://fontawesome.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Font Awesome</a>.</p>
-    <p class="text-sm">Powered by <a href="https://flask.palletsprojects.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Flask</a> and <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Tailwind CSS</a>.</p>
-    <p class="text-sm">This project is open-source. Check it out on <a href="https://github.com/thomas1424/park-scout" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Github</a></p>
-    <p class="text-sm">This project is not affiliated with the National Park Service.</p>
-    <p class="text-sm">For any inquiries, please contact <a href="mailto:panthomas1424@gmail.com" class="email-contact-link">Thomas Pan</a></p>
-</footer>
+    <footer class="bg-gray-800 text-gray-300 text-center p-6 mt-auto">
+        <p>&copy; <span id="current-year"></span> ParkScout by <a href="https://github.com/thomas1424" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Thomas Pan</a>. Happy Exploring!</p>
+        <p class="text-sm">Icons by <a href="https://fontawesome.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Font Awesome</a>.</p>
+        <p class="text-sm">Powered by <a href="https://flask.palletsprojects.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Flask</a> and <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Tailwind CSS</a>.</p>
+        <p class="text-sm">This project is open-source. Check it out on <a href="https://github.com/thomas1424/park-scout" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Github</a></p>
+        <p class="text-sm">This project is not affiliated with the National Park Service.</p>
+        <p class="text-sm">For any inquiries, please contact <a href="mailto:panthomas1424@gmail.com" class="email-contact-link">Thomas Pan</a></p>
+    </footer>
 
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
-        const mobileMenuButtonNav = document.getElementById('mobile-menu-button'); // Renamed to avoid conflict if any
-        const mobileMenuNav = document.getElementById('mobile-menu'); // Renamed
-        if(mobileMenuButtonNav) {
-            mobileMenuButtonNav.addEventListener('click', () => {
-                const expanded = mobileMenuButtonNav.getAttribute('aria-expanded') === 'true' || false;
-                mobileMenuButtonNav.setAttribute('aria-expanded', !expanded);
-                mobileMenuNav.classList.toggle('hidden');
-                const icon = mobileMenuButtonNav.querySelector('i'); // Get the icon inside the button
-                if (icon) {
-                    icon.classList.toggle('fa-bars');
-                    icon.classList.toggle('fa-times');
-                }
-            });
-        }
     </script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     {% block scripts %}{% endblock %}

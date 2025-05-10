@@ -151,8 +151,22 @@ def map_page():
 
 @app.route('/gallery')
 def gallery():
-    # Load landmarks from your data source
-    return render_template('gallery.html', landmarks=all_landmarks)
+    # ...logic to load landmarks...
+    return render_template('gallery.html', landmarks=...)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    # ...handle contact form...
+    return render_template('contact.html')
+
+@app.route('/suggest', methods=['GET', 'POST'])
+def suggest():
+    # ...handle suggestion form...
+    return render_template('suggest.html')
 
 @app.errorhandler(404)
 def page_not_found(e):

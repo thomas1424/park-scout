@@ -111,4 +111,4 @@ document.addEventListener('DOMContentLoaded', function() {
             icon.classList.toggle('fa-times');
         });
     }
-});
+}); // <-- Add this closing brace and parenthesis
