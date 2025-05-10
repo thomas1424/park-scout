@@ -66,3 +66,7 @@
 .toast-success { background-color: #10B981; color: white; } /* green-500 */
 .toast-info { background-color: #3B82F6; color: white; } /* blue-500 */
 .toast-error { background-color: #EF4444; color: white; } /* red-500 */
+
+.email-contact-link {
+    color: green;
+}
