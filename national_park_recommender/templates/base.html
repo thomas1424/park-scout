@@ -8,35 +8,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌲</text></svg>">
-
+    {% block head_extra %}{% endblock %}
 </head>
 <body class="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 text-gray-800 antialiased">
     <nav class="bg-green-700 text-white shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
-                    <a href="{{ url_for('index') }}" class="flex items-center text-2xl font-bold hover:text-green-200 transition-colors">
+                    <a href="{{ url_for('welcome') }}" class="flex items-center text-2xl font-bold hover:text-green-200 transition-colors">
                         <span class="mr-2">🌲</span> ParkScout
                     </a>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="{{ url_for('index') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-600 transition-colors {% if request.endpoint == 'index' %}bg-green-800{% endif %}">Home</a>
+                        <a href="{{ url_for('index') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-600 transition-colors {% if request.endpoint == 'index' %}bg-green-800{% endif %}">Discover Parks</a>
                         <a href="{{ url_for('liked_parks_page') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-600 transition-colors {% if request.endpoint == 'liked_parks_page' %}bg-green-800{% endif %}">My Liked Parks <span id="liked-count-nav" class="bg-red-500 text-xs rounded-full px-1.5 py-0.5 ml-1 {% if not session.get('liked_parks') %}hidden{% endif %}">{{ session.get('liked_parks')|length if session.get('liked_parks') else '' }}</span></a>
+                        <a href="{{ url_for('map_page') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-green-600 transition-colors {% if request.endpoint == 'map_page' %}bg-green-800{% endif %}">World Map</a>
                     </div>
                 </div>
                 <div class="-mr-2 flex md:hidden">
                     <button type="button" id="mobile-menu-button" class="bg-green-700 inline-flex items-center justify-center p-2 rounded-md text-green-200 hover:text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-700 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
                         <span class="sr-only">Open main menu</span>
-                        <i class="fas fa-bars"></i>
-                    </button>
+                        <i class="fas fa-bars"></i> </button>
                 </div>
             </div>
         </div>
         <div class="md:hidden hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="{{ url_for('index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors {% if request.endpoint == 'index' %}bg-green-800{% endif %}">Home</a>
+                <a href="{{ url_for('index') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors {% if request.endpoint == 'index' %}bg-green-800{% endif %}">Discover Parks</a>
                 <a href="{{ url_for('liked_parks_page') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors {% if request.endpoint == 'liked_parks_page' %}bg-green-800{% endif %}">My Liked Parks <span id="liked-count-nav-mobile" class="bg-red-500 text-xs rounded-full px-1.5 py-0.5 ml-1 {% if not session.get('liked_parks') %}hidden{% endif %}">{{ session.get('liked_parks')|length if session.get('liked_parks') else '' }}</span></a>
+                <a href="{{ url_for('map_page') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors {% if request.endpoint == 'map_page' %}bg-green-800{% endif %}">World Map</a>
             </div>
         </div>
     </nav>
@@ -51,33 +52,37 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        <div id="global-message-area" class="fixed top-20 right-5 z-[100]"></div>
+        <div id="global-message-area" class="fixed top-20 right-5 z-[100] w-auto max-w-xs"></div>
         {% block content %}{% endblock %}
     </main>
 
 <footer class="bg-gray-800 text-gray-300 text-center p-6 mt-auto">
-    <p>&copy; <span id="current-year"></span> ParkScout by <a href="github.com/thomas1424">Thomas Pan</a>. Happy Exploring!</p>
-    <p class="text-sm">Icons by <a href="https://fontawesome.com/" class="text-gray-400 hover:text-gray-200">Font Awesome</a>.</p>
-    <p class="text-sm">Powered by <a href="https://flask.palletsprojects.com/" class="text-gray-400 hover:text-gray-200">Flask</a> and <a href="https://tailwindcss.com/" class="text-gray-400 hover:text-gray-200">Tailwind CSS</a>.</p>
-    <p class="text-sm">This project is open-source. Check it out on <a href="github.com/thomas1424/park-scout">Github</a></p>
+    <p>&copy; <span id="current-year"></span> ParkScout by <a href="https://github.com/thomas1424" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Thomas Pan</a>. Happy Exploring!</p>
+    <p class="text-sm">Icons by <a href="https://fontawesome.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Font Awesome</a>.</p>
+    <p class="text-sm">Powered by <a href="https://flask.palletsprojects.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Flask</a> and <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Tailwind CSS</a>.</p>
+    <p class="text-sm">This project is open-source. Check it out on <a href="https://github.com/thomas1424/park-scout" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Github</a></p>
     <p class="text-sm">This project is not affiliated with the National Park Service.</p>
     <p class="text-sm">For any inquiries, please contact <a class="email-contact-link" href="mailto:panthomas1424@gmail.com">Thomas Pan</a></p>
 </footer>
 
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if(mobileMenuButton) {
-            mobileMenuButton.addEventListener('click', () => {
-                const expanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
-                mobileMenuButton.setAttribute('aria-expanded', !expanded);
-                mobileMenu.classList.toggle('hidden');
-                mobileMenuButton.querySelector('i').classList.toggle('fa-bars');
-                mobileMenuButton.querySelector('i').classList.toggle('fa-times');
+        const mobileMenuButtonNav = document.getElementById('mobile-menu-button'); // Renamed to avoid conflict if any
+        const mobileMenuNav = document.getElementById('mobile-menu'); // Renamed
+        if(mobileMenuButtonNav) {
+            mobileMenuButtonNav.addEventListener('click', () => {
+                const expanded = mobileMenuButtonNav.getAttribute('aria-expanded') === 'true' || false;
+                mobileMenuButtonNav.setAttribute('aria-expanded', !expanded);
+                mobileMenuNav.classList.toggle('hidden');
+                const icon = mobileMenuButtonNav.querySelector('i'); // Get the icon inside the button
+                if (icon) {
+                    icon.classList.toggle('fa-bars');
+                    icon.classList.toggle('fa-times');
+                }
             });
         }
     </script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% block scripts %}{% endblock %}
 </body>
 </html>

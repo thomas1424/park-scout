@@ -13,36 +13,47 @@
 
     <header class="mb-6">
         <h1 class="text-4xl md:text-5xl font-bold text-green-700 mb-2">{{ park.name }}</h1>
-        <p class="text-lg text-gray-600 flex items-center">
-            <i class="fas fa-map-marker-alt mr-2 text-green-600"></i>{{ park.location }}
-            {% if park.rating %}
-            <span class="ml-4 pl-4 border-l border-gray-300 text-amber-600">
-                <i class="fas fa-star text-amber-500"></i> {{ park.rating }}/5.0
+        <p class="text-sm text-gray-500 mb-2">{{ park.type }} - {{ park.region }}</p>
+        <p class="text-lg text-gray-600 flex items-start mb-1">
+            <i class="fas fa-map-marker-alt mr-2 text-green-600 mt-1"></i>
+            <span>
+                {{ park.location }}
+                {% if park.address %}
+                    <br><span class="text-sm text-gray-500">{{ park.address }}</span>
+                {% endif %}
             </span>
-            {% endif %}
         </p>
+        {% if park.rating %}
+        <p class="text-amber-600">
+            <i class="fas fa-star text-amber-500"></i> {{ park.rating }}/5.0
+        </p>
+        {% endif %}
     </header>
 
     <section class="prose prose-lg max-w-none text-gray-700 mb-8">
         <p class="lead">{{ park.description }}</p>
-        </section>
+    </section>
 
     <section class="mb-8">
         <h2 class="text-2xl font-semibold text-gray-800 mb-3">Key Features:</h2>
-        <div class="flex flex-wrap gap-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <h3 class="text-lg font-medium text-green-700 mb-1">Activities:</h3>
                 <div class="flex flex-wrap gap-2">
                     {% for activity in park.activities %}
                     <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm capitalize">{{ activity.replace('_', ' ') }}</span>
+                    {% else %}
+                    <span class="text-gray-500">No specific activities listed.</span>
                     {% endfor %}
                 </div>
             </div>
-            <div class="mt-4 md:mt-0">
+            <div>
                 <h3 class="text-lg font-medium text-teal-700 mb-1">Scenery:</h3>
                 <div class="flex flex-wrap gap-2">
                     {% for scenery_item in park.scenery %}
                     <span class="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm capitalize">{{ scenery_item.replace('_', ' ') }}</span>
+                    {% else %}
+                     <span class="text-gray-500">No specific scenery listed.</span>
                     {% endfor %}
                 </div>
             </div>

@@ -5,7 +5,7 @@
 {% block content %}
 <div class="bg-white p-6 md:p-8 rounded-xl shadow-2xl mb-10 transform transition-all duration-500 hover:shadow-3xl">
     <h1 class="text-3xl md:text-4xl font-bold text-green-700 mb-2 text-center">Discover Your Next Adventure!</h1>
-    <p class="text-center text-gray-600 mb-8">Use the filters below or search by keyword to find national parks that match your interests.</p>
+    <p class="text-center text-gray-600 mb-8">Use the filters below or search by keyword to find parks that match your interests.</p>
     
     <form method="POST" action="{{ url_for('index') }}" class="space-y-8">
         <div>
@@ -14,7 +14,33 @@
                    class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors">
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Park Types:</h3>
+                <div class="max-h-60 overflow-y-auto p-3 border border-gray-200 rounded-lg bg-gray-50 space-y-2">
+                    {% for park_type in available_park_types %}
+                    <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded-md cursor-pointer transition-colors">
+                        <input type="checkbox" name="park_types" value="{{ park_type }}" 
+                               {% if park_type in selected_park_types %}checked{% endif %}
+                               class="form-checkbox h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-green-500 transition-colors">
+                        <span class="text-gray-700 capitalize">{{ park_type }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Regions:</h3>
+                <div class="max-h-60 overflow-y-auto p-3 border border-gray-200 rounded-lg bg-gray-50 space-y-2">
+                    {% for region in available_regions %}
+                    <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded-md cursor-pointer transition-colors">
+                        <input type="checkbox" name="regions" value="{{ region }}" 
+                               {% if region in selected_regions %}checked{% endif %}
+                               class="form-checkbox h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-green-500 transition-colors">
+                        <span class="text-gray-700 capitalize">{{ region.replace('_', ' ') }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
             <div>
                 <h3 class="text-lg font-semibold text-gray-700 mb-2">Preferred Activities:</h3>
                 <div class="max-h-60 overflow-y-auto p-3 border border-gray-200 rounded-lg bg-gray-50 space-y-2">
@@ -43,10 +69,15 @@
             </div>
         </div>
         
-        <div class="flex justify-center pt-4">
+        <div class="flex flex-col items-center space-y-4 pt-4">
             <button type="submit"
-                    class="px-8 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-transform transform hover:scale-105">
+                    class="w-full md:w-auto px-8 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-transform transform hover:scale-105">
                 <i class="fas fa-search mr-2"></i>Find Parks
+            </button>
+            <button type="button" id="find-closest-park-button"
+                    class="w-full md:w-auto px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-transform transform hover:scale-105"
+                    title="Feature coming soon!">
+                <i class="fas fa-location-arrow mr-2"></i>Find Closest Park (Soon)
             </button>
         </div>
     </form>
@@ -54,7 +85,7 @@
 
 {% if parks_to_display %}
     <h2 class="text-2xl md:text-3xl font-bold text-gray-700 mb-6 mt-12">
-        {% if selected_activities or selected_scenery or search_term_value %}
+        {% if selected_activities or selected_scenery or selected_regions or selected_park_types or search_term_value %}
             Recommended Parks
         {% else %}
             Popular Parks
@@ -75,6 +106,7 @@
                 <h3 class="text-xl font-semibold text-green-700 mb-1">
                     <a href="{{ url_for('park_detail_page', park_id=park.id) }}" class="hover:underline">{{ park.name }}</a>
                 </h3>
+                <p class="text-xs text-gray-500 mb-1">{{ park.type }} - {{ park.region }}</p>
                 <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-green-600"></i>{{ park.location }}</p>
                 <p class="text-gray-600 text-sm mb-3 line-clamp-3 flex-grow">{{ park.description }}</p>
                 
@@ -86,7 +118,7 @@
                 </div>
                 {% elif park.rating %}
                  <div class="text-xs text-amber-600 bg-amber-100 rounded-full px-2 py-0.5 mb-2 inline-block">
-                    <i class="fas fa-star text-amber-500"></i> Rating: {{ park.rating }}
+                    <i class="fas fa-star text-amber-500"></i> Rating: {{ park.rating }}/5.0
                 </div>
                 {% endif %}
 
@@ -108,4 +140,50 @@
     </div>
 {% endif %}
 
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const closestParkButton = document.getElementById('find-closest-park-button');
+    if (closestParkButton) {
+        closestParkButton.addEventListener('click', function() {
+            alert('Finding the closest park based on your location is a feature coming soon! Ensure your browser location services are enabled.');
+            // Future implementation:
+            // if (navigator.geolocation) {
+            //     navigator.geolocation.getCurrentPosition(showPosition, showError);
+            // } else {
+            //     alert("Geolocation is not supported by this browser.");
+            // }
+        });
+    }
+
+    // function showPosition(position) {
+    //     const lat = position.coords.latitude;
+    //     const lon = position.coords.longitude;
+    //     // You would then send these coordinates to your Flask backend
+    //     // e.g., window.location.href = `/main?lat=${lat}&lon=${lon}`;
+    //     // Or use fetch to send it and update the page dynamically.
+    //     alert(`Your current position is Latitude: ${lat} Longitude: ${lon}. This data would be used to find nearby parks.`);
+    // }
+
+    // function showError(error) {
+    //     switch(error.code) {
+    //         case error.PERMISSION_DENIED:
+    //             alert("User denied the request for Geolocation.");
+    //             break;
+    //         case error.POSITION_UNAVAILABLE:
+    //             alert("Location information is unavailable.");
+    //             break;
+    //         case error.TIMEOUT:
+    //             alert("The request to get user location timed out.");
+    //             break;
+    //         case error.UNKNOWN_ERROR:
+    //             alert("An unknown error occurred.");
+    //             break;
+    //     }
+    // }
+});
+</script>
 {% endblock %}
