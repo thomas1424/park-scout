@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Suggest a Park{% endblock %}
+{% block content %}
+<div class="max-w-lg mx-auto py-10">
+    <h1 class="text-4xl font-bold mb-6 text-green-700">Suggest a New Park</h1>
+    <form method="POST" action="{{ url_for('suggest') }}" class="space-y-4">
+        <input type="text" name="name" placeholder="Park Name" class="w-full p-3 rounded border" required>
+        <input type="text" name="country" placeholder="Country" class="w-full p-3 rounded border" required>
+        <input type="url" name="image_url" placeholder="Image URL" class="w-full p-3 rounded border">
+        <textarea name="description" placeholder="Why should we add this park?" class="w-full p-3 rounded border" rows="4"></textarea>
+        <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">Submit Suggestion</button>
+    </form>
+</div>
+{% endblock %}
+
+@app.route('/suggest', methods=['GET', 'POST'])
+def suggest():
+    if request.method == 'POST':
+        # Save suggestion to DB or send email
+        flash('Thank you for your suggestion!', 'success')
+        return redirect(url_for('suggest'))
+    return render_template('suggest.html')

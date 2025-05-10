@@ -149,6 +149,11 @@ def map_page():
     ]
     return render_template('map.html', parks_for_map=all_parks_for_map)
 
+@app.route('/gallery')
+def gallery():
+    # Load landmarks from your data source
+    return render_template('gallery.html', landmarks=all_landmarks)
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
