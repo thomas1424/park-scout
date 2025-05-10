@@ -1,8 +1,5 @@
 /* static/css/styles.css */
-body {
-    /* You can add global font families or minor overrides here if Tailwind defaults aren't enough */
-    /* Example: font-family: 'Inter', sans-serif; (ensure you import Inter if you use it) */
-}
+/* No empty body ruleset here */
 
 .park-card {
     /* Custom transition for a subtle lift and shadow grow */
@@ -28,12 +25,13 @@ body {
     color: #6b7280; /* gray-500 for outline state */
 }
 
-/* For multi-line truncation if not using Tailwind plugin */
+/* For multi-line truncation */
 .line-clamp-3 {
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* Fallback for existing browsers */
+    line-clamp: 3;         /* Standard property (support varies, added for linter & future) */
 }
 
 /* Styling for form elements for better consistency if needed */
