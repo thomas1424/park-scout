@@ -158,24 +158,29 @@ document.addEventListener('DOMContentLoaded', function() {
             const parkId = this.getAttribute('data-park-id');
             const icon = this.querySelector('i');
             const label = this.querySelector('.like-btn-label');
-            // Disable button briefly to prevent double clicks
-            this.disabled = true;
+            // Always allow click, but disable until fetch returns
+            if (this.classList.contains('loading')) return;
+            this.classList.add('loading');
             try {
                 const resp = await fetch(`/like_park/${parkId}`, {method: 'POST'});
                 if (resp.ok) {
                     const data = await resp.json();
-                    this.classList.toggle('liked');
-                    this.classList.toggle('unliked');
-                    icon.classList.toggle('fas');
-                    icon.classList.toggle('far');
+                    // Remove both liked/unliked, then add correct one
+                    this.classList.remove('liked', 'unliked');
                     if (data.status === 'liked') {
+                        this.classList.add('liked');
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
                         label.textContent = 'Added to Favorites';
                     } else if (data.status === 'unliked') {
+                        this.classList.add('unliked');
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
                         label.textContent = 'Removed from Favorites';
                     }
                 }
             } finally {
-                setTimeout(() => { this.disabled = false; }, 350); // Prevent rapid double clicks
+                setTimeout(() => { this.classList.remove('loading'); }, 200);
             }
         });
     });
