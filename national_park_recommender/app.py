@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask, render_template, request, jsonify, session, url_for, redirect
+from flask import Flask, render_template, request, jsonify, session, url_for, redirect, flash
 from park_data import PARKS_DATA, AVAILABLE_ACTIVITIES, AVAILABLE_SCENERY, AVAILABLE_REGIONS, AVAILABLE_PARK_TYPES
 
 app = Flask(__name__)
@@ -150,14 +150,23 @@ def map_page():
     return render_template('map.html', parks_for_map=all_parks_for_map)
 
 @app.route('/parks')
-def all_parks():
-    # Show all parks, sorted alphabetically
-    parks_sorted = sorted(PARKS_DATA, key=lambda p: p['name'])
+def parks():
+    # Filtering and search for all parks
+    q = request.args.get('q', '').strip().lower()
+    region = request.args.get('region', '')
+    type_ = request.args.get('type', '')
+    parks_filtered = PARKS_DATA
+    if q:
+        parks_filtered = [p for p in parks_filtered if q in p['name'].lower() or q in p['location'].lower() or q in p['description'].lower()]
+    if region:
+        parks_filtered = [p for p in parks_filtered if p['region'] == region]
+    if type_:
+        parks_filtered = [p for p in parks_filtered if p['type'] == type_]
+    parks_sorted = sorted(parks_filtered, key=lambda p: p['name'])
     return render_template('all_parks.html', parks=parks_sorted, liked_park_ids=session.get('liked_parks', []))
 
 @app.route('/gallery')
 def gallery():
-    # Show all parks in gallery format
     parks_sorted = sorted(PARKS_DATA, key=lambda p: p['name'])
     return render_template('gallery.html', parks=parks_sorted)
 

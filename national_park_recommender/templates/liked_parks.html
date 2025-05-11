@@ -12,7 +12,7 @@
         <div class="park-card bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl">
             <div class="relative">
                 <a href="{{ url_for('park_detail_page', park_id=park.id) }}">
-                    <img src="{{ park.image_url }}" alt="Image of {{ park.name }}" class="w-full h-56 object-cover">
+                    <img src="{{ park.image_url or url_for('static', filename='img/default-park.jpg') }}" alt="Image of {{ park.name }}" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='{{ url_for('static', filename='img/default-park.jpg') }}';">
                 </a>
                 <button class="like-button absolute top-3 right-3 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-md text-xl z-10" data-park-id="{{ park.id }}" aria-label="Like {{park.name}}">
                     <i class="fa-heart {% if park.id in liked_park_ids %}fas text-red-500{% else %}far text-gray-600{% endif %}"></i>
@@ -26,7 +26,7 @@
                 <p class="text-gray-600 text-sm mb-3 line-clamp-3 flex-grow">{{ park.description }}</p>
                  {% if park.rating %}
                  <div class="text-xs text-amber-600 bg-amber-100 rounded-full px-2 py-0.5 mb-2 inline-block">
-                    <i class="fas fa-star text-amber-500"></i> Rating: {{ park.rating }}
+                    <i class="fas fa-star text-amber-500"></i> Rating: {{ park.rating }}/5.0
                 </div>
                 {% endif %}
                 <div class="mt-auto pt-3">

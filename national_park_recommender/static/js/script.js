@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-
     likeButtons.forEach(button => {
         button.addEventListener('click', function() {
             const parkId = this.dataset.parkId;
@@ -58,9 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // If you add CSRF protection, include the token here
                 },
-                // body: JSON.stringify({}) // No body needed for this simple POST
             })
             .then(response => response.json())
             .then(data => {
@@ -69,27 +66,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     icon.classList.add('fas', 'text-red-500');
                     button.classList.add('liked');
                     button.classList.remove('unliked');
-                    button.setAttribute('aria-label', `Unlike ${data.park_id}`); // A bit tricky to get park name here without another query or passing it in data attr
+                    button.setAttribute('aria-label', `Unlike ${data.park_id}`);
                 } else if (data.status === 'unliked') {
                     icon.classList.remove('fas', 'text-red-500');
                     icon.classList.add('far', 'text-gray-600');
                     button.classList.remove('liked');
                     button.classList.add('unliked');
-                     button.setAttribute('aria-label', `Like ${data.park_id}`);
+                    button.setAttribute('aria-label', `Like ${data.park_id}`);
                 }
                 displayToastMessage(data.message, data.status === 'liked' ? 'success' : 'info');
-                
-                // Update liked count in navbar (assuming session is the source of truth on next load, but can try client-side update)
-                // For a more robust count update, the server could return the new total liked count.
-                // For now, let's just fetch the current liked parks count or infer it.
-                let currentCount = parseInt(likedCountNav.textContent || '0');
+                let currentCount = parseInt(likedCountNav && likedCountNav.textContent ? likedCountNav.textContent : '0');
                 if(data.status === 'liked') {
                     currentCount++;
-                } else {
+                } else if (data.status === 'unliked' && currentCount > 0) {
                     currentCount--;
                 }
                 updateLikedCount(Math.max(0, currentCount));
-
             })
             .catch(error => {
                 console.error('Error liking park:', error);
@@ -111,4 +103,4 @@ document.addEventListener('DOMContentLoaded', function() {
             icon.classList.toggle('fa-times');
         });
     }
-}); // <-- Add this closing brace and parenthesis
+}); // <-- Ensure this closing brace and parenthesis is present
