@@ -736,9 +736,99 @@ PARKS_DATA = [
         "rating": 4.6,
         "features": ["Wilderness", "Glaciers", "Wild rivers"]
     },
+    {
+        "id": "fjordland_norway",
+        "name": "Norwegian Fjords",
+        "type": "Natural Wonder",
+        "location": "Western Norway",
+        "address": "Geirangerfjord, Norway",
+        "latitude": 62.1049,
+        "longitude": 7.2055,
+        "region": "Northern Europe",
+        "description": "Dramatic fjords carved by glaciers, featuring steep cliffs and stunning waterfalls.",
+        "activities": ["fjord cruising", "hiking", "kayaking", "photography", "fishing"],
+        "scenery": ["fjords", "waterfalls", "mountains", "glaciers"],
+        "image_url": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38",
+        "rating": 4.9,
+        "features": ["Geirangerfjord", "Nærøyfjord", "Seven Sisters Waterfall"]
+    },
+    {
+        "id": "angkor_thom",
+        "name": "Angkor Thom",
+        "type": "Archaeological Site",
+        "location": "Siem Reap, Cambodia",
+        "address": "Angkor Archaeological Park, Siem Reap, Cambodia",
+        "latitude": 13.4412,
+        "longitude": 103.8597,
+        "region": "Southeast Asia",
+        "description": "Ancient capital city of the Khmer Empire, featuring the Bayon Temple.",
+        "activities": ["temple exploration", "archaeology", "photography", "guided tours"],
+        "scenery": ["temples", "ruins", "forests", "ancient architecture"],
+        "image_url": "https://images.unsplash.com/photo-1547146-29fc0fb6d78d",
+        "rating": 4.8,
+        "features": ["Bayon Temple", "Terrace of the Elephants", "Ancient walls"]
+    },
+    {
+        "id": "zhangjiajie",
+        "name": "Zhangjiajie National Forest Park",
+        "type": "National Park",
+        "location": "Hunan, China",
+        "address": "Zhangjiajie, Hunan Province, China",
+        "latitude": 29.3248,
+        "longitude": 110.4342,
+        "region": "East Asia",
+        "description": "Towering sandstone pillars that inspired Avatar's floating mountains.",
+        "activities": ["hiking", "cable car rides", "photography", "rock climbing"],
+        "scenery": ["sandstone pillars", "forests", "mountains", "caves"],
+        "image_url": "https://images.unsplash.com/photo-1513977055327-83ab3a227b59",
+        "rating": 4.9,
+        "features": ["Avatar Mountains", "Glass walkway", "World's longest cable car"]
+    }
 ]
 
 AVAILABLE_ACTIVITIES = sorted(list(set(activity for park in PARKS_DATA for activity in park.get("activities", []))))
 AVAILABLE_SCENERY = sorted(list(set(scenery_type for park in PARKS_DATA for scenery_type in park.get("scenery", []))))
-AVAILABLE_REGIONS = sorted(list(set(park.get("region", "Other") for park in PARKS_DATA)))
-AVAILABLE_PARK_TYPES = sorted(list(set(park.get("type", "Other") for park in PARKS_DATA)))
+AVAILABLE_REGIONS = [
+    "North America",
+    "South America",
+    "Central America",
+    "Caribbean",
+    "Western Europe",
+    "Eastern Europe",
+    "Northern Europe",
+    "Southern Europe",
+    "North Africa",
+    "East Africa",
+    "West Africa",
+    "Southern Africa",
+    "Middle East",
+    "Central Asia",
+    "South Asia",
+    "Southeast Asia",
+    "East Asia",
+    "Oceania",
+    "Arctic",
+    "Antarctica"
+]
+AVAILABLE_PARK_TYPES = [
+    "National Park",
+    "UNESCO World Heritage Site",
+    "Natural Wonder",
+    "Archaeological Site",
+    "Historic Landmark",
+    "Marine Reserve",
+    "Wildlife Sanctuary",
+    "Botanical Garden",
+    "Desert Landscape",
+    "Mountain Range",
+    "Volcanic Site",
+    "Coastal Feature",
+    "Island Destination",
+    "Ancient Ruins",
+    "Religious Site",
+    "Cultural Landscape",
+    "Geological Formation",
+    "Forest Reserve",
+    "Urban Park",
+    "Cave System"
+]
