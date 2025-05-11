@@ -17,10 +17,11 @@
         </a>
         <div class="flex gap-6">
             <a href="{{ url_for('index') }}" class="hover:text-green-200 transition">Discover Parks</a>
+            <a href="{{ url_for('parks') }}" class="hover:text-green-200 transition">All Parks</a>
             <a href="{{ url_for('map_page') }}" class="hover:text-green-200 transition">World Map</a>
             <a href="{{ url_for('gallery') }}" class="hover:text-green-200 transition">Gallery</a>
+            <a href="{{ url_for('blog') }}" class="hover:text-green-200 transition">Blog</a>
             <a href="{{ url_for('about') }}" class="hover:text-green-200 transition">About</a>
-            <!-- Contact and Suggest links removed as requested -->
         </div>
     </nav>
 
@@ -45,6 +46,16 @@
         <p class="text-sm">This project is open-source. Check it out on <a href="https://github.com/thomas1424/park-scout" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Github</a></p>
         <p class="text-sm">This project is not affiliated with the National Park Service.</p>
         <p class="text-sm">For any inquiries, please contact <a href="mailto:panthomas1424@gmail.com" class="email-contact-link">Thomas Pan</a></p>
+        <div class="mt-4 text-left max-w-2xl mx-auto">
+            <h3 class="text-green-400 font-bold mb-1">What's New?</h3>
+            <ul class="text-sm text-gray-200 list-disc ml-6">
+                <li>🌍 <b>All Parks</b> page: Browse every park in our database!</li>
+                <li>🖼️ Improved Gallery: See all parks with better images.</li>
+                <li>📝 <b>Blog</b> section: Read park guides and tips.</li>
+                <li>✨ Features: Like parks, random park button, find closest park (coming soon!), and more.</li>
+                <li>🐞 Bug fixes and image reliability improvements.</li>
+            </ul>
+        </div>
     </footer>
 
     <script>

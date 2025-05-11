@@ -5,7 +5,7 @@
 {% block content %}
 <article class="bg-white p-6 md:p-10 rounded-xl shadow-2xl max-w-4xl mx-auto">
     <div class="relative mb-6">
-        <img src="{{ park.image_url }}" alt="Banner image of {{ park.name }}" class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg">
+        <img src="{{ park.image_url or url_for('static', filename='img/default-park.jpg') }}" alt="Banner image of {{ park.name }}" class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg" onerror="this.onerror=null;this.src='{{ url_for('static', filename='img/default-park.jpg') }}';">
         <button class="like-button absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-xl text-2xl z-10" data-park-id="{{ park.id }}" aria-label="Like {{park.name}}">
             <i class="fa-heart {% if park.id in liked_park_ids %}fas text-red-500{% else %}far text-gray-700{% endif %}"></i>
         </button>
@@ -58,11 +58,24 @@
                 </div>
             </div>
         </div>
+        {% if park.features %}
+        <div class="mt-6">
+            <h3 class="text-lg font-medium text-indigo-700 mb-1">Notable Features:</h3>
+            <ul class="list-disc ml-6 text-gray-700">
+                {% for feature in park.features %}
+                <li>{{ feature }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
     </section>
     
     <div class="mt-10 text-center">
         <a href="{{ url_for('index') }}" class="text-green-600 hover:text-green-800 font-medium transition-colors">
             <i class="fas fa-arrow-left mr-2"></i>Back to Recommendations
+        </a>
+        <a href="{{ url_for('parks') }}" class="ml-6 text-blue-600 hover:text-blue-800 font-medium transition-colors">
+            <i class="fas fa-list mr-2"></i>All Parks
         </a>
     </div>
 </article>

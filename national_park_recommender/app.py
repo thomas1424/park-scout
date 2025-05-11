@@ -149,10 +149,21 @@ def map_page():
     ]
     return render_template('map.html', parks_for_map=all_parks_for_map)
 
+@app.route('/parks')
+def all_parks():
+    # Show all parks, sorted alphabetically
+    parks_sorted = sorted(PARKS_DATA, key=lambda p: p['name'])
+    return render_template('all_parks.html', parks=parks_sorted, liked_park_ids=session.get('liked_parks', []))
+
 @app.route('/gallery')
 def gallery():
-    # ...logic to load landmarks...
-    return render_template('gallery.html', landmarks=...)
+    # Show all parks in gallery format
+    parks_sorted = sorted(PARKS_DATA, key=lambda p: p['name'])
+    return render_template('gallery.html', parks=parks_sorted)
+
+@app.route('/blog')
+def blog():
+    return render_template('blog.html')
 
 @app.route('/about')
 def about():

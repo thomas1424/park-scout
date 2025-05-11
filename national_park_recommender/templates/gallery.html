@@ -6,7 +6,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {% for park in parks %}
         <a href="{{ url_for('park_detail_page', park_id=park.id) }}" class="block bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 transition">
-            <img src="{{ park.image_url or url_for('static', filename='img/default-park.jpg') }}" alt="{{ park.name }}" class="w-full h-48 object-cover">
+            <img src="{{ park.image_url or url_for('static', filename='img/default-park.jpg') }}" alt="{{ park.name }}" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='{{ url_for('static', filename='img/default-park.jpg') }}';">
             <div class="p-4">
                 <h2 class="text-xl font-semibold text-green-800">{{ park.name }}</h2>
                 <p class="text-gray-600">{{ park.type }}</p>
