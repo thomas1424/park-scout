@@ -196,16 +196,13 @@ def like_park(park_id):
     try:
         if not current_user.liked_parks:
             current_user.liked_parks = []
-        
         park = get_park_by_id(park_id)
         if not park:
             return jsonify({'status': 'error', 'message': 'Park not found'}), 404
-
         if park_id not in current_user.liked_parks:
             current_user.liked_parks.append(park_id)
         else:
             current_user.liked_parks.remove(park_id)
-        
         db.session.commit()
         return jsonify({
             'status': 'liked' if park_id in current_user.liked_parks else 'unliked',

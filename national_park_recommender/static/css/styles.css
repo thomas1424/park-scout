@@ -427,6 +427,9 @@ body.dark .custom-checkbox-label:hover {
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 8px #05966911;
+    min-width: 2.5em;
+    min-height: 2.5em;
+    touch-action: manipulation;
 }
 .like-button .fa-heart {
     font-size: 1.4em;
@@ -518,4 +521,12 @@ body.dark .navbar .navbar-link.surprise {
 body.dark .navbar .navbar-link.surprise:hover {
     background: #059669;
     color: #fff;
+}
+
+@media (max-width: 600px) {
+    .navbar { flex-direction: column; align-items: flex-start; }
+    .navbar .navbar-links { flex-direction: column; width: 100%; }
+    .navbar .navbar-link { width: 100%; text-align: left; }
+    .like-button { min-width: 2.2em; min-height: 2.2em; }
+    .park-card { border-radius: 0.8rem; }
 }

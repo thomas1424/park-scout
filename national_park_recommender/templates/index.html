@@ -97,8 +97,9 @@
                 <a href="{{ url_for('park_detail_page', park_id=park.id) }}">
                     <img src="{{ park.image_url }}" alt="Image of {{ park.name }}" class="w-full h-56 object-cover">
                 </a>
-                <button class="like-button absolute top-3 right-3 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-md text-xl z-10 {% if park.id in liked_park_ids %}liked{% else %}unliked{% endif %}" data-park-id="{{ park.id }}" aria-label="{% if park.id in liked_park_ids %}Unlike{% else %}Like{% endif %} {{ park.name }}">
-                    <i class="fa-heart {% if park.id in liked_park_ids %}fas text-red-500{% else %}far text-gray-600{% endif %}"></i>
+                <button class="like-button {% if park.id in liked_park_ids %}liked{% else %}unliked{% endif %}" 
+                        data-park-id="{{ park.id }}" aria-label="Like park" type="button" style="margin-left:auto;">
+                    <i class="fa-heart fa{% if park.id in liked_park_ids %}s{% else %}r{% endif %}"></i>
                 </button>
             </div>
             <div class="p-5 flex flex-col flex-grow">
@@ -147,6 +148,20 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = "/random_park";
         };
     }
+    document.querySelectorAll('.like-button').forEach(btn => {
+        btn.addEventListener('click', async function() {
+            const parkId = this.getAttribute('data-park-id');
+            const icon = this.querySelector('i');
+            const liked = this.classList.contains('liked');
+            const resp = await fetch(`/like_park/${parkId}`, {method: 'POST'});
+            if (resp.ok) {
+                this.classList.toggle('liked');
+                this.classList.toggle('unliked');
+                icon.classList.toggle('fas');
+                icon.classList.toggle('far');
+            }
+        });
+    });
 });
 </script>
 {% endblock %}
