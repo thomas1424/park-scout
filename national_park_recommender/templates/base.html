@@ -67,18 +67,25 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             opacity: 1;
-            transition:
-                font-size 0.8s cubic-bezier(.4,0,.2,1),
-                top 0.8s cubic-bezier(.4,0,.2,1),
-                left 0.8s cubic-bezier(.4,0,.2,1),
-                transform 0.8s cubic-bezier(.4,0,.2,1),
-                color 0.8s cubic-bezier(.4,0,.2,1),
-                background 0.8s cubic-bezier(.4,0,.2,1);
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
+            animation: introFadeZoom 1.2s cubic-bezier(.4,0,.2,1);
             pointer-events: none;
+        }
+        @keyframes introFadeZoom {
+            0% {
+                opacity: 0;
+                transform: scale(0.7);
+                filter: blur(8px);
+            }
+            60% {
+                opacity: 1;
+                transform: scale(1.05);
+                filter: blur(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
+            }
         }
         #intro-logo.move-corner {
             font-size: 2rem;
@@ -94,6 +101,7 @@
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
+            transition: opacity 0.7s cubic-bezier(.4,0,.2,1), visibility 0.7s cubic-bezier(.4,0,.2,1);
         }
         /* Navbar styles */
         .navbar {
@@ -267,25 +275,11 @@
         if (localStorage.getItem('darkMode') === '1') setDarkMode(true);
     </script>
     <script>
-        // Intro animation: logo appears in center, then animates to navbar
+        // New intro animation: fade/zoom only, no logo move
         window.addEventListener('DOMContentLoaded', () => {
-            const introLogo = document.getElementById('intro-logo');
-            const overlay = document.getElementById('intro-overlay');
-            const navbarLogo = document.getElementById('navbar-logo');
-            // Get navbar logo position and size
             setTimeout(() => {
-                const navRect = navbarLogo.getBoundingClientRect();
-                const introRect = introLogo.getBoundingClientRect();
-                // Calculate the final position for the intro logo
-                const x = navRect.left - introRect.left + window.scrollX;
-                const y = navRect.top - introRect.top + window.scrollY;
-                introLogo.style.setProperty('--logo-final-x', `${introRect.left + x}px`);
-                introLogo.style.setProperty('--logo-final-y', `${introRect.top + y}px`);
-                introLogo.classList.add('move-corner');
-            }, 900);
-            setTimeout(() => {
-                overlay.classList.add('hide');
-            }, 1800);
+                document.getElementById('intro-overlay').classList.add('hide');
+            }, 1400);
         });
     </script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
