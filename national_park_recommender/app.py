@@ -175,10 +175,6 @@ def gallery():
     parks_sorted = sorted(PARKS_DATA, key=lambda p: p['name'])
     return render_template('gallery.html', parks=parks_sorted)
 
-@app.route('/blog')
-def blog():
-    return render_template('blog.html')
-
 @app.route('/about')
 def about():
     return render_template('about.html')
