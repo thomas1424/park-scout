@@ -161,52 +161,65 @@ document.addEventListener('DOMContentLoaded', function() {
             const icon = this.querySelector('i');
             const label = this.querySelector('.like-btn-label');
             
+            // Prevent multiple clicks while processing
             if (this.classList.contains('loading')) return;
             this.classList.add('loading');
             
             try {
-                const resp = await fetch(`/like_park/${parkId}`, {method: 'POST'});
-                if (resp.ok) {
-                    const data = await resp.json();
-                    // Remove both classes first
-                    this.classList.remove('liked', 'unliked');
-                    
-                    if (data.status === 'liked') {
-                        this.classList.add('liked');
-                        icon.classList.remove('far');
-                        icon.classList.add('fas');
-                        label.textContent = 'Added to Favorites';
-                        displayToastMessage('Added to favorites!', 'success');
-                    } else {
-                        this.classList.add('unliked');
-                        icon.classList.remove('fas');
-                        icon.classList.add('far');
-                        label.textContent = 'Add to Favorites';
-                        displayToastMessage('Removed from favorites', 'info');
-                    }
+                const resp = await fetch(`/like_park/${parkId}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'}
+                });
+                
+                if (!resp.ok) {
+                    throw new Error('Network response was not ok');
                 }
+                
+                const data = await resp.json();
+                
+                // Remove both classes first
+                this.classList.remove('liked', 'unliked');
+                
+                if (data.status === 'liked') {
+                    this.classList.add('liked');
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    label.textContent = 'Added to Favorites';
+                    displayToastMessage('Added to favorites!', 'success');
+                } else {
+                    this.classList.add('unliked');
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    label.textContent = 'Add to Favorites';
+                    displayToastMessage('Removed from favorites', 'info');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                // Reset to previous state
+                this.classList.remove('loading');
+                displayToastMessage('Failed to update favorites. Please try again.', 'error');
             } finally {
-                setTimeout(() => { this.classList.remove('loading'); }, 200);
+                // Remove loading state after short delay
+                setTimeout(() => {
+                    this.classList.remove('loading');
+                }, 300);
             }
         });
     });
 });
 
+// Toast message display function if not already defined
 function displayToastMessage(message, type = 'info') {
     const messageArea = document.getElementById('global-message-area');
     const toast = document.createElement('div');
-    toast.className = `toast-message toast-${type}`;
+    toast.className = `toast-message toast-${type} show`;
     toast.textContent = message;
     messageArea.appendChild(toast);
     
-    // Trigger animation
-    setTimeout(() => toast.classList.add('show'), 10);
-    
-    // Remove after delay
     setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
-    }, 2000);
+    }, 3000);
 }
 </script>
 {% endblock %}
