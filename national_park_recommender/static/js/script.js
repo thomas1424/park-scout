@@ -53,4 +53,37 @@ document.addEventListener('DOMContentLoaded', function() {
             icon.classList.toggle('fa-times');
         });
     }
+    
+    // Enhance park card image loading
+    const parkImages = document.querySelectorAll('.park-card img');
+    parkImages.forEach(img => {
+        img.loading = 'lazy';
+        img.onerror = () => {
+            const parkName = img.alt.replace('Image of ', '');
+            handleImageError(img, parkName);
+        };
+    });
 }); // <-- Ensure this closing brace and parenthesis is present
+
+// Add image handling functions
+async function handleImageError(img, parkName) {
+    const overlay = img.closest('.image-container').querySelector('.image-loading-overlay');
+    if (overlay) overlay.classList.remove('hidden');
+    
+    try {
+        const response = await fetch(`/api/fallback-image?park=${encodeURIComponent(parkName)}`);
+        if (!response.ok) throw new Error('Failed to get fallback image');
+        
+        const data = await response.json();
+        if (data.url) {
+            img.src = data.url;
+            return;
+        }
+        throw new Error('No fallback image URL');
+    } catch (error) {
+        console.error('Image fallback error:', error);
+        img.src = '/static/img/default-park.jpg';
+    } finally {
+        if (overlay) overlay.classList.add('hidden');
+    }
+}

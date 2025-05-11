@@ -13,6 +13,9 @@ import uuid
 from datetime import datetime
 import random
 import logging
+from utils.image_validator import validate_image_url, get_fallback_image_url
+from functools import lru_cache
+from werkzeug.contrib.cache import SimpleCache
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -86,12 +89,21 @@ def save_profile_image(file):
 def load_user(id):
     return User.query.get(int(id))
 
-# Helper function to get park by ID
+# Initialize cache
+cache = SimpleCache()
+
+@lru_cache(maxsize=100)
 def get_park_by_id(park_id):
+    """Cached version of park lookup."""
     try:
-        return next((park for park in PARKS_DATA if park['id'] == park_id), None)
-    except Exception:
-        current_app.logger.error(f"Error fetching park with ID: {park_id}")
+        park = next((park for park in PARKS_DATA if park['id'] == park_id), None)
+        if park:
+            # Validate image URL
+            if not validate_image_url(park['image_url']):
+                park['image_url'] = get_fallback_image_url(park['name'])
+        return park
+    except Exception as e:
+        logger.error(f"Error fetching park with ID {park_id}: {e}")
         return None
 
 @app.context_processor
@@ -393,11 +405,20 @@ def delete_account():
 
 @app.route('/api/fallback-image')
 def get_fallback_image():
+    """Get a fallback image for a park with caching."""
     park_name = request.args.get('park', '')
     if not park_name:
         return jsonify({'error': 'Park name required'}), 400
+    
+    cache_key = f'fallback_image_{park_name}'
+    cached_url = cache.get(cache_key)
+    
+    if cached_url:
+        return jsonify({'url': cached_url})
         
-    fallback_url = image_validator.get_fallback_image_url(park_name)
+    fallback_url = get_fallback_image_url(park_name)
+    cache.set(cache_key, fallback_url, timeout=3600)  # Cache for 1 hour
+    
     return jsonify({'url': fallback_url})
 
 @app.errorhandler(404)
