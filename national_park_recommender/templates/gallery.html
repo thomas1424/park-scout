@@ -4,14 +4,14 @@
 <div class="container mx-auto py-10">
     <h1 class="text-4xl font-bold mb-8 text-center text-green-700">Landmark Gallery</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {% for landmark in landmarks %}
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 transition">
-            <img src="{{ landmark.image_url }}" alt="{{ landmark.name }}" class="w-full h-48 object-cover">
+        {% for park in parks %}
+        <a href="{{ url_for('park_detail_page', park_id=park.id) }}" class="block bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 transition">
+            <img src="{{ park.image_url or url_for('static', filename='img/default-park.jpg') }}" alt="{{ park.name }}" class="w-full h-48 object-cover">
             <div class="p-4">
-                <h2 class="text-xl font-semibold text-green-800">{{ landmark.name }}</h2>
-                <p class="text-gray-600">{{ landmark.type }}</p>
+                <h2 class="text-xl font-semibold text-green-800">{{ park.name }}</h2>
+                <p class="text-gray-600">{{ park.type }}</p>
             </div>
-        </div>
+        </a>
         {% endfor %}
     </div>
 </div>

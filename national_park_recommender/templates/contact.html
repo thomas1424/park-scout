@@ -1,21 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Contact{% endblock %}
 {% block content %}
-<div class="max-w-lg mx-auto py-10">
+<div class="max-w-lg mx-auto py-10 text-center">
     <h1 class="text-4xl font-bold mb-6 text-green-700">Contact Us</h1>
-    <form method="POST" action="{{ url_for('contact') }}" class="space-y-4">
-        <input type="text" name="name" placeholder="Your Name" class="w-full p-3 rounded border" required>
-        <input type="email" name="email" placeholder="Your Email" class="w-full p-3 rounded border" required>
-        <textarea name="message" placeholder="Your Message" class="w-full p-3 rounded border" rows="5" required></textarea>
-        <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">Send</button>
-    </form>
+    <img src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif" alt="Prank" class="mx-auto mb-6 rounded-lg shadow-lg" style="max-width:300px;">
+    <p class="text-xl text-gray-700 mb-4">Surprise! This isn't a real contact form. 😜</p>
+    <p class="text-gray-500">But thanks for trying to reach out. Enjoy exploring parks instead!</p>
 </div>
 {% endblock %}
-
-@app.route('/contact', methods=['GET', 'POST'])
-def contact():
-    if request.method == 'POST':
-        # Handle form submission (send email, save to DB, etc.)
-        flash('Thank you for your message!', 'success')
-        return redirect(url_for('contact'))
-    return render_template('contact.html')

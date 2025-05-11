@@ -8,7 +8,9 @@ PARKS_DATA = [
         "description": "Features a stunning rocky coastline, granite peaks, and historic carriage roads.",
         "activities": ["hiking", "biking", "boating", "wildlife watching", "stargazing", "photography", "scenic driving"],
         "scenery": ["mountains", "forests", "coasts", "lakes", "islands"],
-        "image_url": "https://images.unsplash.com/photo-1593832719222-9708db603899?q=80&w=1920&auto=format&fit=crop", "rating": 4.8
+        "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.8,
+        "features": ["Ocean views", "Granite peaks", "Carriage roads"]
     },
     {
         "id": "yosemite", "name": "Yosemite National Park", "type": "National Park", "location": "California, USA",
@@ -16,7 +18,9 @@ PARKS_DATA = [
         "description": "Giant sequoia trees, El Capitan & Half Dome granite cliffs, stunning waterfalls.",
         "activities": ["hiking", "rock climbing", "photography", "wildlife watching", "camping", "waterfalls", "backpacking"],
         "scenery": ["mountains", "forests", "waterfalls", "valleys", "granite cliffs", "giant sequoias"],
-        "image_url": "https://images.unsplash.com/photo-1542332213-12a0f514ab78?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.9,
+        "features": ["El Capitan", "Half Dome", "Yosemite Falls"]
     },
     {
         "id": "zion", "name": "Zion National Park", "type": "National Park", "location": "Utah, USA",
@@ -24,7 +28,9 @@ PARKS_DATA = [
         "description": "Massive sandstone cliffs of cream, pink, and red. Challenging hikes like The Narrows.",
         "activities": ["hiking", "canyoning", "photography", "stargazing", "rock climbing", "backpacking"],
         "scenery": ["canyons", "rivers", "cliffs", "deserts", "slot canyons"],
-        "image_url": "https://images.unsplash.com/photo-1586624368578-8ac564072091?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.9,
+        "features": ["The Narrows", "Angels Landing", "Sandstone cliffs"]
     },
     {
         "id": "yellowstone", "name": "Yellowstone National Park", "type": "National Park", "location": "Wyoming, USA", # Primary state
@@ -32,7 +38,9 @@ PARKS_DATA = [
         "description": "Geysers like Old Faithful, hot springs, diverse wildlife. A geothermal wonderland.",
         "activities": ["hiking", "wildlife watching", "geothermal viewing", "camping", "fishing", "photography"],
         "scenery": ["geysers", "hot springs", "mountains", "forests", "lakes", "wildlife", "caldera"],
-        "image_url": "https://images.unsplash.com/photo-1588556003059-61cba19087f3?q=80&w=1920&auto=format&fit=crop", "rating": 4.7
+        "image_url": "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.7,
+        "features": ["Old Faithful", "Grand Prismatic Spring", "Wildlife"]
     },
     {
         "id": "grand_canyon", "name": "Grand Canyon National Park", "type": "National Park", "location": "Arizona, USA",
@@ -40,7 +48,9 @@ PARKS_DATA = [
         "description": "Mile-deep canyon carved by the Colorado River. Breathtaking views, challenging hikes.",
         "activities": ["hiking", "mule rides", "rafting", "photography", "stargazing", "helicopter tours"],
         "scenery": ["canyons", "rivers", "deserts", "geological formations", "sunrise/sunset views"],
-        "image_url": "https://images.unsplash.com/photo-1536423035268-9396047ac14a?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.9,
+        "features": ["South Rim", "Colorado River", "Sunset views"]
     },
     {
         "id": "everglades", "name": "Everglades National Park", "type": "National Park", "location": "Florida, USA",
@@ -48,7 +58,9 @@ PARKS_DATA = [
         "description": "Vast wetland ecosystem with unique wildlife like alligators and manatees.",
         "activities": ["boating", "kayaking", "wildlife watching", "fishing", "hiking", "bird watching", "airboat tours"],
         "scenery": ["wetlands", "mangroves", "wildlife", "sawgrass prairies"],
-        "image_url": "https://images.unsplash.com/photo-1591780352319-a832f8939f87?q=80&w=1920&auto=format&fit=crop", "rating": 4.5
+        "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.5,
+        "features": ["Alligators", "Mangroves", "Airboat tours"]
     },
     {
         "id": "rocky_mountain", "name": "Rocky Mountain National Park", "type": "National Park", "location": "Colorado, USA",
@@ -56,7 +68,9 @@ PARKS_DATA = [
         "description": "Majestic mountain views, diverse wildlife, Trail Ridge Road.",
         "activities": ["hiking", "wildlife watching", "scenic driving", "fishing", "camping", "mountaineering", "snowshoeing"],
         "scenery": ["mountains", "alpine tundra", "forests", "lakes", "wildlife"],
-        "image_url": "https://images.unsplash.com/photo-1570586790312-889758590123?q=80&w=1920&auto=format&fit=crop", "rating": 4.8
+        "image_url": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.8,
+        "features": ["Trail Ridge Road", "Alpine lakes", "Wildlife"]
     },
     {
         "id": "lincoln_memorial", "name": "Lincoln Memorial", "type": "National Memorial", "location": "Washington D.C., USA",
@@ -64,7 +78,9 @@ PARKS_DATA = [
         "description": "Iconic American monument honoring Abraham Lincoln.",
         "activities": ["sightseeing", "photography", "history learning"],
         "scenery": ["monuments", "city views", "reflecting pool"],
-        "image_url": "https://images.unsplash.com/photo-1600058140354-930980510150?q=80&w=1920&auto=format&fit=crop", "rating": 4.7
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Lincoln_Memorial_%28Lincoln_Memorial_Reflecting_Pool%29.jpg",
+        "rating": 4.7,
+        "features": ["Reflecting Pool", "Statue of Lincoln", "Historic speeches"]
     },
     {
         "id": "mount_rushmore", "name": "Mount Rushmore National Memorial", "type": "National Memorial", "location": "South Dakota, USA",
@@ -72,7 +88,9 @@ PARKS_DATA = [
         "description": "Colossal sculptures of four U.S. presidents.",
         "activities": ["sightseeing", "photography", "history learning", "hiking"],
         "scenery": ["mountains", "sculptures", "forests"],
-        "image_url": "https://images.unsplash.com/photo-1597054420938-5e6909089a4b?q=80&w=1920&auto=format&fit=crop", "rating": 4.6
+        "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.6,
+        "features": ["Presidential carvings", "Visitor center", "Scenic views"]
     },
 
     # New International and Diverse Landmarks
@@ -82,7 +100,9 @@ PARKS_DATA = [
         "description": "Chain of 16 terraced lakes joined by waterfalls in a limestone canyon.",
         "activities": ["hiking", "photography", "boating", "waterfalls viewing"],
         "scenery": ["lakes", "waterfalls", "forests", "canyons"],
-        "image_url": "https://images.unsplash.com/photo-1570395198008-050700a8f894?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1570395198008-050700a8f894?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.9,
+        "features": ["Terraced lakes", "Waterfalls", "Limestone canyon"]
     },
     {
         "id": "uluru_kata_tjuta", "name": "Uluru-Kata Tjuta National Park", "type": "National Park", "location": "Northern Territory, Australia",
@@ -90,7 +110,9 @@ PARKS_DATA = [
         "description": "Home to Uluru (Ayers Rock) and Kata Tjuta (The Olgas). Sacred to Indigenous Australians.",
         "activities": ["cultural tours", "hiking", "stargazing", "sunrise/sunset views", "photography"],
         "scenery": ["deserts", "rock formations", "cultural sites"],
-        "image_url": "https://images.unsplash.com/photo-1547309984-09e7128f03ca?q=80&w=1920&auto=format&fit=crop", "rating": 4.8
+        "image_url": "https://images.unsplash.com/photo-1547309984-09e7128f03ca?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.8,
+        "features": ["Uluru", "Kata Tjuta", "Cultural significance"]
     },
     {
         "id": "banff", "name": "Banff National Park", "type": "National Park", "location": "Alberta, Canada",
@@ -98,7 +120,9 @@ PARKS_DATA = [
         "description": "Canada's oldest national park, with Rocky Mountain peaks, turquoise glacial lakes, and abundant wildlife.",
         "activities": ["hiking", "skiing", "canoeing", "wildlife watching", "scenic driving", "photography"],
         "scenery": ["mountains", "glaciers", "lakes", "forests", "hot springs"],
-        "image_url": "https://images.unsplash.com/photo-1503614472-8c93d56e92ce?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1503614472-8c93d56e92ce?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.9,
+        "features": ["Rocky Mountain peaks", "Glacial lakes", "Wildlife"]
     },
     {
         "id": "machu_picchu", "name": "Machu Picchu", "type": "UNESCO World Heritage Site", "location": "Cusco Region, Peru",
@@ -106,7 +130,9 @@ PARKS_DATA = [
         "description": "Ancient Inca city set high in the Andes Mountains. Renowned for its sophisticated dry-stone walls.",
         "activities": ["archaeology", "hiking", "history learning", "photography", "spiritual exploration"],
         "scenery": ["mountains", "ruins", "cloud forests", "valleys"],
-        "image_url": "https://images.unsplash.com/photo-1526745925052-dd824d27b9ab?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1526745925052-dd824d27b9ab?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.9,
+        "features": ["Inca ruins", "Andes Mountains", "Dry-stone walls"]
     },
     {
         "id": "serengeti", "name": "Serengeti National Park", "type": "National Park", "location": "Tanzania",
@@ -114,7 +140,9 @@ PARKS_DATA = [
         "description": "Famous for its annual wildebeest migration, vast plains, and high concentration of predators.",
         "activities": ["safari", "wildlife watching", "photography", "hot air ballooning", "cultural visits"],
         "scenery": ["savannah", "wildlife", "acacia trees", "riverine forests"],
-        "image_url": "https://images.unsplash.com/photo-1534001803993-75071f110f85?q=80&w=1920&auto=format&fit=crop", "rating": 4.8
+        "image_url": "https://images.unsplash.com/photo-1534001803993-75071f110f85?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.8,
+        "features": ["Wildebeest migration", "Vast plains", "Predators"]
     },
     {
         "id": "great_barrier_reef", "name": "Great Barrier Reef", "type": "UNESCO World Heritage Site", "location": "Queensland, Australia",
@@ -122,7 +150,9 @@ PARKS_DATA = [
         "description": "World's largest coral reef system, composed of over 2,900 individual reefs and 900 islands.",
         "activities": ["snorkeling", "diving", "boating", "marine biology", "scenic flights"],
         "scenery": ["coral reefs", "marine life", "islands", "ocean"],
-        "image_url": "https://images.unsplash.com/photo-1610632897825-1eb11b43911c?q=80&w=1920&auto=format&fit=crop", "rating": 4.7
+        "image_url": "https://images.unsplash.com/photo-1610632897825-1eb11b43911c?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.7,
+        "features": ["Coral reefs", "Marine life", "Scenic flights"]
     },
     {
         "id": "eiffel_tower", "name": "Eiffel Tower", "type": "Historic Landmark", "location": "Paris, France",
@@ -130,7 +160,9 @@ PARKS_DATA = [
         "description": "Iconic wrought-iron lattice tower on the Champ de Mars in Paris.",
         "activities": ["sightseeing", "photography", "city views", "dining"],
         "scenery": ["cityscape", "architecture", "river seine"],
-        "image_url": "https://images.unsplash.com/photo-1500217053999-aa7570a6d352?q=80&w=1920&auto=format&fit=crop", "rating": 4.8
+        "image_url": "https://images.unsplash.com/photo-1500217053999-aa7570a6d352?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.8,
+        "features": ["Iconic structure", "City views", "Dining"]
     },
     {
         "id": "colosseum", "name": "Colosseum", "type": "Historic Landmark", "location": "Rome, Italy",
@@ -138,7 +170,9 @@ PARKS_DATA = [
         "description": "Ancient Roman amphitheater, an iconic symbol of Imperial Rome.",
         "activities": ["history learning", "archaeology", "sightseeing", "photography"],
         "scenery": ["ruins", "historic architecture", "roman forum"],
-        "image_url": "https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=1920&auto=format&fit=crop", "rating": 4.7
+        "image_url": "https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.7,
+        "features": ["Roman architecture", "Amphitheater", "Historic significance"]
     },
     {
         "id": "taj_mahal", "name": "Taj Mahal", "type": "UNESCO World Heritage Site", "location": "Agra, India",
@@ -146,7 +180,9 @@ PARKS_DATA = [
         "description": "Ivory-white marble mausoleum on the south bank of the Yamuna river. A monument of love.",
         "activities": ["sightseeing", "history learning", "architecture appreciation", "photography"],
         "scenery": ["mausoleum", "gardens", "mughal architecture", "reflection pool"],
-        "image_url": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.9,
+        "features": ["Marble mausoleum", "Gardens", "Reflection pool"]
     },
     {
         "id": "great_wall_china", "name": "Great Wall of China", "type": "UNESCO World Heritage Site", "location": "China",
@@ -154,7 +190,9 @@ PARKS_DATA = [
         "description": "Series of fortifications made of stone, brick, tamped earth, wood, and other materials.",
         "activities": ["hiking", "history learning", "photography", "scenic views"],
         "scenery": ["mountains", "fortifications", "historic architecture", "countryside"],
-        "image_url": "https://images.unsplash.com/photo-1507799018044-3c7c9c9f0bcd?q=80&w=1920&auto=format&fit=crop", "rating": 4.7
+        "image_url": "https://images.unsplash.com/photo-1507799018044-3c7c9c9f0bcd?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.7,
+        "features": ["Historic fortifications", "Scenic views", "Cultural significance"]
     },
     {
         "id": "pyramids_giza", "name": "Pyramids of Giza", "type": "UNESCO World Heritage Site", "location": "Giza, Egypt",
@@ -162,7 +200,9 @@ PARKS_DATA = [
         "description": "The Giza pyramid complex, includes the Great Pyramid, Pyramid of Khafre, and Pyramid of Menkaure, along with the Great Sphinx.",
         "activities": ["archaeology", "history learning", "sightseeing", "camel riding", "photography"],
         "scenery": ["pyramids", "sphinx", "desert", "ancient civilization"],
-        "image_url": "https://images.unsplash.com/photo-1572094304400-b9c170344692?q=80&w=1920&auto=format&fit=crop", "rating": 4.8
+        "image_url": "https://images.unsplash.com/photo-1572094304400-b9c170344692?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.8,
+        "features": ["Great Pyramid", "Sphinx", "Ancient civilization"]
     },
     {
         "id": "petra", "name": "Petra", "type": "UNESCO World Heritage Site", "location": "Jordan",
@@ -170,7 +210,9 @@ PARKS_DATA = [
         "description": "Ancient Nabatean city carved into rose-red sandstone cliffs. Famous for Al-Khazneh (The Treasury).",
         "activities": ["archaeology", "hiking", "history learning", "photography", "horseback riding"],
         "scenery": ["canyons", "rock-cut architecture", "desert", "ruins"],
-        "image_url": "https://images.unsplash.com/photo-1580030569959-526959c99585?q=80&w=1920&auto=format&fit=crop", "rating": 4.8
+        "image_url": "https://images.unsplash.com/photo-1580030569959-526959c99585?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.8,
+        "features": ["Al-Khazneh", "Rock-cut architecture", "Desert canyons"]
     },
     {
         "id": "angkor_wat", "name": "Angkor Wat", "type": "UNESCO World Heritage Site", "location": "Siem Reap, Cambodia",
@@ -178,7 +220,9 @@ PARKS_DATA = [
         "description": "Largest religious monument in the world, originally a Hindu temple dedicated to Vishnu, gradually transformed into a Buddhist temple.",
         "activities": ["archaeology", "history learning", "temple exploration", "photography", "sunrise views"],
         "scenery": ["temples", "ruins", "bas-reliefs", "moats", "forests"],
-        "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.9,
+        "features": ["Temples", "Bas-reliefs", "Moats"]
     },
     {
         "id": "stonehenge", "name": "Stonehenge", "type": "UNESCO World Heritage Site", "location": "Wiltshire, England",
@@ -186,7 +230,9 @@ PARKS_DATA = [
         "description": "Prehistoric monument featuring a ring of standing stones, set within earthworks.",
         "activities": ["archaeology", "history learning", "mysticism", "photography"],
         "scenery": ["megalithic structures", "plains", "ancient mystery"],
-        "image_url": "https://images.unsplash.com/photo-1548303549-37e17a1b0d52?q=80&w=1920&auto=format&fit=crop", "rating": 4.5
+        "image_url": "https://images.unsplash.com/photo-1548303549-37e17a1b0d52?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.5,
+        "features": ["Standing stones", "Ancient mystery", "Plains"]
     },
     {
         "id": "galapagos", "name": "Galápagos Islands", "type": "National Park & UNESCO Site", "location": "Ecuador",
@@ -194,7 +240,9 @@ PARKS_DATA = [
         "description": "Volcanic archipelago renowned for its unique fearless wildlife, studied by Charles Darwin.",
         "activities": ["wildlife watching", "snorkeling", "diving", "boating", "evolutionary studies"],
         "scenery": ["islands", "volcanic landscapes", "unique fauna", "marine life", "beaches"],
-        "image_url": "https://images.unsplash.com/photo-1531890412038-6c40e059079f?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1531890412038-6c40e059079f?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.9,
+        "features": ["Unique wildlife", "Volcanic landscapes", "Marine life"]
     },
     {
         "id": "mount_fuji", "name": "Mount Fuji", "type": "UNESCO World Heritage Site", "location": "Honshu, Japan",
@@ -202,7 +250,9 @@ PARKS_DATA = [
         "description": "Japan's tallest peak, an active stratovolcano and iconic symbol of the country.",
         "activities": ["hiking", "mountaineering", "photography", "cultural significance", "scenic views"],
         "scenery": ["volcano", "mountains", "lakes", "snow-capped peak", "forests"],
-        "image_url": "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?q=80&w=1920&auto=format&fit=crop", "rating": 4.8
+        "image_url": "https://images.unsplash.com/photo-1578271887552-5ac3a72752bc?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.8,
+        "features": ["Stratovolcano", "Snow-capped peak", "Cultural significance"]
     },
     {
         "id": "victoria_falls", "name": "Victoria Falls", "type": "UNESCO World Heritage Site", "location": "Zambia/Zimbabwe Border",
@@ -210,7 +260,9 @@ PARKS_DATA = [
         "description": "One of the world's largest waterfalls, known locally as 'The Smoke that Thunders'.",
         "activities": ["sightseeing", "rafting", "bungee jumping", "wildlife viewing", "photography"],
         "scenery": ["waterfalls", "gorges", "rainforest", "mist", "river"],
-        "image_url": "https://images.unsplash.com/photo-1581701778934-2b991658a79b?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1581701778934-2b991658a79b?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.9,
+        "features": ["Waterfalls", "Gorges", "Rainforest"]
     },
     {
         "id": "ha_long_bay", "name": "Hạ Long Bay", "type": "UNESCO World Heritage Site", "location": "Quảng Ninh Province, Vietnam",
@@ -218,7 +270,9 @@ PARKS_DATA = [
         "description": "Thousands of limestone karsts and isles in various shapes and sizes. Emerald waters and stunning caves.",
         "activities": ["boating", "kayaking", "cave exploration", "swimming", "photography"],
         "scenery": ["karst islands", "emerald waters", "caves", "floating villages"],
-        "image_url": "https://images.unsplash.com/photo-1548032885-b5e38734688a?q=80&w=1920&auto=format&fit=crop", "rating": 4.7
+        "image_url": "https://images.unsplash.com/photo-1548032885-b5e38734688a?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.7,
+        "features": ["Limestone karsts", "Emerald waters", "Caves"]
     },
     {
         "id": "kilimanjaro", "name": "Mount Kilimanjaro", "type": "National Park & UNESCO Site", "location": "Tanzania",
@@ -226,7 +280,9 @@ PARKS_DATA = [
         "description": "Africa's highest peak and the world's tallest free-standing mountain. A dormant volcano.",
         "activities": ["mountaineering", "hiking", "trekking", "cultural experiences"],
         "scenery": ["mountains", "glaciers", "alpine desert", "rainforest", "summit views"],
-        "image_url": "https://images.unsplash.com/photo-1589391879625-b7349700b926?q=80&w=1920&auto=format&fit=crop", "rating": 4.8
+        "image_url": "https://images.unsplash.com/photo-1589391879625-b7349700b926?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.8,
+        "features": ["Highest peak in Africa", "Glaciers", "Summit views"]
     },
     {
         "id": "chichen_itza", "name": "Chichen Itza", "type": "UNESCO World Heritage Site", "location": "Yucatán Peninsula, Mexico",
@@ -234,7 +290,9 @@ PARKS_DATA = [
         "description": "Large pre-Columbian city built by the Maya people. Features El Castillo pyramid.",
         "activities": ["archaeology", "history learning", "Mayan culture", "photography"],
         "scenery": ["pyramids", "temples", "ruins", "cenotes (nearby)"],
-        "image_url": "https://images.unsplash.com/photo-1511910293148-3706f2729753?q=80&w=1920&auto=format&fit=crop", "rating": 4.7
+        "image_url": "https://images.unsplash.com/photo-1511910293148-3706f2729753?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.7,
+        "features": ["El Castillo pyramid", "Mayan ruins", "Cenotes"]
     },
     {
         "id": "santorini", "name": "Santorini", "type": "Island Destination", "location": "Cyclades, Greece",
@@ -242,7 +300,9 @@ PARKS_DATA = [
         "description": "Volcanic island known for its dramatic views, stunning sunsets from Oia town, and white-washed houses.",
         "activities": ["sightseeing", "sunsets", "boating", "wine tasting", "beach relaxation", "photography"],
         "scenery": ["caldera", "volcanic islands", "white villages", "blue-domed churches", "aegean sea"],
-        "image_url": "https://images.unsplash.com/photo-1573096101305-79701b74a6f0?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1573096101305-79701b74a6f0?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.9,
+        "features": ["Dramatic views", "Sunsets", "White-washed houses"]
     },
     {
         "id": "bora_bora", "name": "Bora Bora", "type": "Island Destination", "location": "French Polynesia",
@@ -250,7 +310,9 @@ PARKS_DATA = [
         "description": "South Pacific island known for its turquoise lagoon, luxury resorts, and overwater bungalows.",
         "activities": ["snorkeling", "diving", "luxury travel", "boating", "beach relaxation", "watersports"],
         "scenery": ["lagoon", "coral reefs", "volcanic peaks", "overwater bungalows", "tropical paradise"],
-        "image_url": "https://images.unsplash.com/photo-1506953823076-075a7c0339a1?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1506953823076-075a7c0339a1?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.9,
+        "features": ["Turquoise lagoon", "Luxury resorts", "Overwater bungalows"]
     },
     {
         "id": "death_valley", "name": "Death Valley National Park", "type": "National Park", "location": "California/Nevada, USA",
@@ -258,7 +320,9 @@ PARKS_DATA = [
         "description": "Hottest, driest, and lowest national park. A land of extremes with stunning desert landscapes.",
         "activities": ["hiking", "stargazing", "photography", "geology", "scenic driving"],
         "scenery": ["deserts", "badlands", "salt flats", "canyons", "sand dunes", "mountains"],
-        "image_url": "https://images.unsplash.com/photo-1541700345680-c2e0f1f392c3?q=80&w=1920&auto=format&fit=crop", "rating": 4.6
+        "image_url": "https://images.unsplash.com/photo-1541700345680-c2e0f1f392c3?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.6,
+        "features": ["Desert landscapes", "Badlands", "Salt flats"]
     },
     {
         "id": "statue_of_liberty", "name": "Statue of Liberty National Monument", "type": "National Monument", "location": "New York Harbor, USA",
@@ -266,7 +330,9 @@ PARKS_DATA = [
         "description": "Colossal neoclassical sculpture on Liberty Island. A symbol of freedom and democracy.",
         "activities": ["sightseeing", "history learning", "ferry ride", "museum visit", "photography"],
         "scenery": ["statue", "skyline views", "harbor", "island"],
-        "image_url": "https://images.unsplash.com/photo-1544017109-28d089900c84?q=80&w=1920&auto=format&fit=crop", "rating": 4.7
+        "image_url": "https://images.unsplash.com/photo-1544017109-28d089900c84?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.7,
+        "features": ["Symbol of freedom", "Skyline views", "Museum"]
     },
     {
         "id": "neuschwanstein_castle", "name": "Neuschwanstein Castle", "type": "Historic Landmark", "location": "Bavaria, Germany",
@@ -274,7 +340,9 @@ PARKS_DATA = [
         "description": "Nineteenth-century Romanesque Revival palace on a rugged hill. The inspiration for Disney's Sleeping Beauty Castle.",
         "activities": ["castle tour", "history learning", "photography", "hiking (around)"],
         "scenery": ["castle", "mountains", "forests", "lakes (nearby)", "fairytale architecture"],
-        "image_url": "https://images.unsplash.com/photo-1567596683154-591dc5176027?q=80&w=1920&auto=format&fit=crop", "rating": 4.8
+        "image_url": "https://images.unsplash.com/photo-1567596683154-591dc5176027?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.8,
+        "features": ["Fairytale architecture", "Mountain views", "Historic significance"]
     },
     {
         "id": "sydney_opera_house", "name": "Sydney Opera House", "type": "UNESCO World Heritage Site", "location": "Sydney, Australia",
@@ -282,7 +350,9 @@ PARKS_DATA = [
         "description": "Multi-venue performing arts centre. One of the 20th century's most famous and distinctive buildings.",
         "activities": ["performance attendance", "architecture tour", "photography", "dining", "harbour views"],
         "scenery": ["architecture", "harbour", "cityscape", "sydney harbour bridge"],
-        "image_url": "https://images.unsplash.com/photo-1523059623039-a6ed04734213?q=80&w=1920&auto=format&fit=crop", "rating": 4.8
+        "image_url": "https://images.unsplash.com/photo-1523059623039-a6ed04734213?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.8,
+        "features": ["Iconic architecture", "Performing arts", "Harbour views"]
     },
     {
         "id": "torres_del_paine", "name": "Torres del Paine National Park", "type": "National Park", "location": "Patagonia, Chile",
@@ -290,7 +360,9 @@ PARKS_DATA = [
         "description": "Known for its soaring mountains, bright blue icebergs, and grasslands that shelter rare wildlife like guanacos.",
         "activities": ["hiking", "trekking", "mountaineering", "wildlife watching", "photography", "glacier viewing"],
         "scenery": ["mountains", "granite peaks", "glaciers", "lakes", "rivers", "pampas"],
-        "image_url": "https://images.unsplash.com/photo-1564020429170-551900160975?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1564020429170-551900160975?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.9,
+        "features": ["Granite peaks", "Glaciers", "Wildlife"]
     },
     {
         "id": "fiordland", "name": "Fiordland National Park", "type": "National Park", "location": "South Island, New Zealand",
@@ -298,7 +370,9 @@ PARKS_DATA = [
         "description": "Known for the glacier-carved fiords of Milford and Doubtful Sounds. Rainforests, mountains, and waterfalls.",
         "activities": ["hiking", "boating", "kayaking", "wildlife watching", "scenic flights", "photography"],
         "scenery": ["fiords", "mountains", "rainforests", "waterfalls", "lakes", "marine life"],
-        "image_url": "https://images.unsplash.com/photo-1591207960001-ba1a793108a9?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1591207960001-ba1a793108a9?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.9,
+        "features": ["Glacier-carved fiords", "Rainforests", "Waterfalls"]
     },
     {
         "id": "iguazu_falls", "name": "Iguazu Falls", "type": "UNESCO World Heritage Site", "location": "Argentina/Brazil Border",
@@ -306,7 +380,9 @@ PARKS_DATA = [
         "description": "System of hundreds of waterfalls stretching for 2.7 km. Taller than Niagara Falls, twice as wide.",
         "activities": ["sightseeing", "boating (under falls)", "hiking", "wildlife viewing", "photography"],
         "scenery": ["waterfalls", "rainforest", "river", "wildlife", "mist"],
-        "image_url": "https://images.unsplash.com/photo-1592920053728-91749a4a3c4c?q=80&w=1920&auto=format&fit=crop", "rating": 4.9
+        "image_url": "https://images.unsplash.com/photo-1592920053728-91749a4a3c4c?q=80&w=1920&auto=format&fit=crop",
+        "rating": 4.9,
+        "features": ["Hundreds of waterfalls", "Rainforest", "Wildlife"]
     },
 ]
 

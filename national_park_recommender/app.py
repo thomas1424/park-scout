@@ -158,16 +158,6 @@ def gallery():
 def about():
     return render_template('about.html')
 
-@app.route('/contact', methods=['GET', 'POST'])
-def contact():
-    # ...handle contact form...
-    return render_template('contact.html')
-
-@app.route('/suggest', methods=['GET', 'POST'])
-def suggest():
-    # ...handle suggestion form...
-    return render_template('suggest.html')
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
