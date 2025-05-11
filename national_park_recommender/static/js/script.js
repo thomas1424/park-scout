@@ -6,28 +6,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const likedCountNavMobile = document.getElementById('liked-count-nav-mobile');
 
     function displayToastMessage(message, type = 'info') {
-        try {
-            const globalMessageArea = document.getElementById('global-message-area');
-            if (!globalMessageArea) return;
+        const globalMessageArea = document.getElementById('global-message-area');
+        if (!globalMessageArea) return;
+        // Remove any existing toast messages
+        globalMessageArea.querySelectorAll('.toast-message').forEach(el => el.remove());
 
-            const toast = document.createElement('div');
-            toast.className = `toast-message toast-${type}`;
-            toast.textContent = message;
-            
-            // Remove existing toasts
-            const existingToasts = globalMessageArea.getElementsByClassName('toast-message');
-            Array.from(existingToasts).forEach(toast => toast.remove());
-            
-            globalMessageArea.appendChild(toast);
-            requestAnimationFrame(() => toast.classList.add('show'));
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        } catch (error) {
-            console.error('Error displaying toast message:', error);
-        }
+        const toast = document.createElement('div');
+        toast.className = `toast-message toast-${type}`;
+        toast.textContent = message;
+        globalMessageArea.appendChild(toast);
+        requestAnimationFrame(() => toast.classList.add('show'));
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
     }
     
     function updateLikedCount(newCount) {
@@ -50,63 +42,52 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Improved like button functionality
-    document.querySelectorAll('.like-button').forEach(button => {
+    likeButtons.forEach(button => {
         let isProcessing = false;
-
-        async function toggleLike(btn) {
+        button.addEventListener('click', async function(e) {
+            e.preventDefault();
             if (isProcessing) return;
-            
-            const parkId = btn.dataset.parkId;
-            const icon = btn.querySelector('i');
-            const label = btn.querySelector('.like-btn-label');
-            
+            isProcessing = true;
+            button.classList.add('loading');
+
+            const parkId = button.dataset.parkId;
+            const icon = button.querySelector('i');
+            const label = button.querySelector('.like-btn-label');
+
             try {
-                isProcessing = true;
-                btn.classList.add('loading');
-                
                 const response = await fetch(`/like_park/${parkId}`, {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
+                    headers: { 'Content-Type': 'application/json' }
                 });
-
-                if (!response.ok) throw new Error('Network response failed');
-                
+                if (!response.ok) throw new Error('Network response was not ok');
                 const data = await response.json();
-                
-                // Clear existing states
-                btn.classList.remove('liked', 'unliked', 'loading');
+
+                // Clear any loading and state classes
+                button.classList.remove('liked', 'unliked', 'loading');
                 icon.classList.remove('fas', 'far');
                 
-                // Apply new state
                 if (data.status === 'liked') {
-                    btn.classList.add('liked');
+                    button.classList.add('liked');
                     icon.classList.add('fas');
                     label.textContent = 'Added to Favorites';
                     displayToastMessage('Added to favorites!', 'success');
-                } else {
-                    btn.classList.add('unliked');
+                } else if (data.status === 'unliked') {
+                    button.classList.add('unliked');
                     icon.classList.add('far');
                     label.textContent = 'Add to Favorites';
                     displayToastMessage('Removed from favorites', 'info');
                 }
-                
-                // Trigger heart animation
+                // Optionally trigger animation reset:
                 icon.style.animation = 'none';
-                icon.offsetHeight; // Trigger reflow
+                icon.offsetHeight; // force reflow
                 icon.style.animation = null;
-                
             } catch (error) {
-                console.error('Error toggling like:', error);
+                console.error('Toggle favorite error:', error);
                 displayToastMessage('Failed to update favorites. Please try again.', 'error');
             } finally {
                 isProcessing = false;
-                btn.classList.remove('loading');
+                button.classList.remove('loading');
             }
-        }
-
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleLike(button);
         });
     });
 
