@@ -160,25 +160,29 @@ document.addEventListener('DOMContentLoaded', function() {
             const parkId = this.getAttribute('data-park-id');
             const icon = this.querySelector('i');
             const label = this.querySelector('.like-btn-label');
-            // Always allow click, but disable until fetch returns
+            
             if (this.classList.contains('loading')) return;
             this.classList.add('loading');
+            
             try {
                 const resp = await fetch(`/like_park/${parkId}`, {method: 'POST'});
                 if (resp.ok) {
                     const data = await resp.json();
-                    // Remove both liked/unliked, then add correct one
+                    // Remove both classes first
                     this.classList.remove('liked', 'unliked');
+                    
                     if (data.status === 'liked') {
                         this.classList.add('liked');
                         icon.classList.remove('far');
                         icon.classList.add('fas');
                         label.textContent = 'Added to Favorites';
-                    } else if (data.status === 'unliked') {
+                        displayToastMessage('Added to favorites!', 'success');
+                    } else {
                         this.classList.add('unliked');
                         icon.classList.remove('fas');
                         icon.classList.add('far');
-                        label.textContent = 'Removed from Favorites';
+                        label.textContent = 'Add to Favorites';
+                        displayToastMessage('Removed from favorites', 'info');
                     }
                 }
             } finally {
@@ -187,5 +191,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+function displayToastMessage(message, type = 'info') {
+    const messageArea = document.getElementById('global-message-area');
+    const toast = document.createElement('div');
+    toast.className = `toast-message toast-${type}`;
+    toast.textContent = message;
+    messageArea.appendChild(toast);
+    
+    // Trigger animation
+    setTimeout(() => toast.classList.add('show'), 10);
+    
+    // Remove after delay
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 2000);
+}
 </script>
 {% endblock %}
