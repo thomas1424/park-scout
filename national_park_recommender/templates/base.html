@@ -82,8 +82,8 @@
         }
         #intro-logo.move-corner {
             font-size: 2rem;
-            left: 2.2rem;
-            top: 1.6rem;
+            left: var(--logo-final-x, 2.2rem);
+            top: var(--logo-final-y, 1.6rem);
             transform: translate(0, 0);
             background: linear-gradient(90deg, #059669 60%, #10b981 100%);
             -webkit-background-clip: text;
@@ -97,7 +97,7 @@
         }
         /* Navbar styles */
         .navbar {
-            background: #fff;
+            background: #f8fafc;
             box-shadow: 0 2px 12px #0001;
             border-radius: 0 0 1.2rem 1.2rem;
             padding: 0.7rem 1.2rem;
@@ -116,6 +116,10 @@
             align-items: center;
             gap: 0.5rem;
             transition: color 0.2s;
+            background: linear-gradient(90deg, #059669 60%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .navbar .navbar-links {
             display: flex;
@@ -154,6 +158,29 @@
             .navbar .navbar-links { flex-direction: column; width: 100%; }
             .navbar .navbar-link { width: 100%; text-align: left; }
         }
+        /* Light mode improvements */
+        body {
+            background: #f8fafc;
+            color: #222;
+        }
+        .bg-white, .rounded-xl, .shadow-md, .shadow-lg, .shadow-2xl {
+            background: #fff !important;
+            color: #222 !important;
+        }
+        .text-gray-700, .text-gray-600 { color: #374151 !important; }
+        .text-green-700 { color: #059669 !important; }
+        .border-gray-300 { border-color: #d1d5db !important; }
+        .bg-gray-50, .bg-emerald-50, .bg-teal-50 { background: #f8fafc !important; }
+        .rounded-xl { border-radius: 1rem !important; }
+        input, textarea, select { background: #fff !important; color: #222 !important; border-color: #d1d5db !important; }
+        .hover\:bg-green-700:hover { background-color: #10b981 !important; color: #fff !important; }
+        .hover\:text-green-700:hover { color: #059669 !important; }
+        .hover\:text-green-600:hover { color: #10b981 !important; }
+        .hover\:text-green-800:hover { color: #047857 !important; }
+        .hover\:text-blue-800:hover { color: #2563eb !important; }
+        .hover\:text-blue-600:hover { color: #3b82f6 !important; }
+        .hover\:text-purple-300:hover { color: #a78bfa !important; }
+        .hover\:text-gray-700:hover { color: #374151 !important; }
     </style>
     {% block head_extra %}{% endblock %}
 </head>
@@ -242,11 +269,22 @@
     <script>
         // Intro animation: logo appears in center, then animates to navbar
         window.addEventListener('DOMContentLoaded', () => {
+            const introLogo = document.getElementById('intro-logo');
+            const overlay = document.getElementById('intro-overlay');
+            const navbarLogo = document.getElementById('navbar-logo');
+            // Get navbar logo position and size
             setTimeout(() => {
-                document.getElementById('intro-logo').classList.add('move-corner');
+                const navRect = navbarLogo.getBoundingClientRect();
+                const introRect = introLogo.getBoundingClientRect();
+                // Calculate the final position for the intro logo
+                const x = navRect.left - introRect.left + window.scrollX;
+                const y = navRect.top - introRect.top + window.scrollY;
+                introLogo.style.setProperty('--logo-final-x', `${introRect.left + x}px`);
+                introLogo.style.setProperty('--logo-final-y', `${introRect.top + y}px`);
+                introLogo.classList.add('move-corner');
             }, 900);
             setTimeout(() => {
-                document.getElementById('intro-overlay').classList.add('hide');
+                overlay.classList.add('hide');
             }, 1800);
         });
     </script>
