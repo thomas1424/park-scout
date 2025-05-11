@@ -391,6 +391,15 @@ def delete_account():
     flash('Your account has been deleted.', 'success')
     return redirect(url_for('welcome'))
 
+@app.route('/api/fallback-image')
+def get_fallback_image():
+    park_name = request.args.get('park', '')
+    if not park_name:
+        return jsonify({'error': 'Park name required'}), 400
+        
+    fallback_url = image_validator.get_fallback_image_url(park_name)
+    return jsonify({'url': fallback_url})
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

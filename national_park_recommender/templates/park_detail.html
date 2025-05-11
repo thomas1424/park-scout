@@ -5,7 +5,14 @@
 {% block content %}
 <article class="bg-white p-6 md:p-10 rounded-xl shadow-2xl max-w-4xl mx-auto">
     <div class="relative mb-6">
-        <img src="{{ park.image_url or url_for('static', filename='img/default-park.jpg') }}" alt="Banner image of {{ park.name }}" class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg" onerror="this.onerror=null;this.src='{{ url_for('static', filename='img/default-park.jpg') }}';">
+        <img src="{{ park.image_url or url_for('static', filename='img/default-park.jpg') }}" 
+             alt="Banner image of {{ park.name }}" 
+             class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
+             onerror="this.onerror=null;handleImageError(this, '{{ park.name }}');"
+             loading="lazy">
+        <div class="image-loading-overlay hidden">
+            <div class="spinner"></div>
+        </div>
     </div>
 
     <header class="mb-6">
@@ -76,4 +83,28 @@
         </a>
     </div>
 </article>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+async function handleImageError(img, parkName) {
+    const overlay = img.parentElement.querySelector('.image-loading-overlay');
+    overlay.classList.remove('hidden');
+    
+    try {
+        const response = await fetch(`/api/fallback-image?park=${encodeURIComponent(parkName)}`);
+        const data = await response.json();
+        if (data.url) {
+            img.src = data.url;
+        } else {
+            img.src = "{{ url_for('static', filename='img/default-park.jpg') }}";
+        }
+    } catch (error) {
+        img.src = "{{ url_for('static', filename='img/default-park.jpg') }}";
+    } finally {
+        overlay.classList.add('hidden');
+    }
+}
+</script>
 {% endblock %}

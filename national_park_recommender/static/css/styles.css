@@ -473,3 +473,31 @@ main {
     z-index: 1;
     position: relative;
 }
+
+/* Image loading and error handling */
+.image-loading-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #10B981;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.dark .image-loading-overlay {
+    background: rgba(31, 41, 55, 0.9);
+}
