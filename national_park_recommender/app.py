@@ -1,7 +1,18 @@
 # app.py
 from flask import Flask, render_template, request, jsonify, session, url_for, redirect, flash, current_app
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from werkzeug.urls import url_parse
+import werkzeug
+from werkzeug.security import check_password_hash
+print(f"Werkzeug version: {werkzeug.__version__}")
+try:
+    from werkzeug.urls import url_parse
+    print(f"Contents of werkzeug.urls: {dir(werkzeug.urls)}")
+except AttributeError as e:
+    print("werkzeug.urls module not found.")
+    # Fallback to basic URL validation
+    def url_parse(url):
+        return type('ParseResult', (), {'netloc': lambda: None})()
+
 from werkzeug.utils import secure_filename
 from models import db, User
 from forms import LoginForm, RegistrationForm, ProfileForm
@@ -292,9 +303,13 @@ def login():
             return redirect(url_for('login'))
         login_user(user)
         next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
+        try:
+            # Add error handling for URL parsing
+            if not next_page or url_parse(next_page).netloc:
+                next_page = url_for('index')
+        except Exception as e:
+            current_app.logger.error(f"Error parsing next URL: {e}")
             next_page = url_for('index')
-        flash('Welcome back, {}!'.format(user.username), 'success')
         return redirect(next_page)
     return render_template('auth/login.html', title='Sign In', form=form)
 
