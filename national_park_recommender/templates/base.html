@@ -25,7 +25,7 @@
         .dark .bg-blue-100, .dark .bg-green-100, .dark .bg-amber-100, .dark .bg-red-100 { background-color: #23272f !important; }
         .dark .text-blue-700, .dark .text-amber-600, .dark .text-red-500 { color: #38bdf8 !important; }
         .dark .rounded-xl { border-radius: 1rem !important; }
-        .dark input, .dark textarea { background: #23272f !important; color: #e5e7eb !important; border-color: #374151 !important; }
+        .dark input, .dark textarea, .dark select { background: #23272f !important; color: #e5e7eb !important; border-color: #374151 !important; }
         .dark .hover\:bg-green-700:hover { background-color: #065f46 !important; }
         .dark .hover\:bg-purple-700:hover { background-color: #6d28d9 !important; }
         .dark .hover\:text-green-200:hover { color: #bbf7d0 !important; }
@@ -38,6 +38,14 @@
         .dark .text-gray-400 { color: #d1d5db !important; }
         .dark .text-gray-200 { color: #f3f4f6 !important; }
         .dark .bg-white/80 { background-color: #23272fcc !important; }
+        .dark .hover\:text-white:hover { color: #38bdf8 !important; }
+        .dark .hover\:text-green-200:hover { color: #6ee7b7 !important; }
+        .dark .hover\:text-green-600:hover { color: #6ee7b7 !important; }
+        .dark .hover\:text-green-800:hover { color: #34d399 !important; }
+        .dark .hover\:text-blue-800:hover { color: #60a5fa !important; }
+        .dark .hover\:text-blue-600:hover { color: #38bdf8 !important; }
+        .dark .hover\:text-purple-300:hover { color: #a78bfa !important; }
+        .dark .hover\:text-gray-700:hover { color: #d1d5db !important; }
     </style>
     {% block head_extra %}{% endblock %}
 </head>
@@ -60,9 +68,6 @@
                 <a href="{{ url_for('register') }}" class="hover:text-green-200 transition">Register</a>
             {% endif %}
             <a href="#" onclick="window.location.href='/random_park';return false;" class="hover:text-purple-300 transition font-bold">Surprise Me!</a>
-            <button id="dark-mode-toggle" class="ml-2 px-3 py-1 rounded bg-gray-900 text-white hover:bg-gray-700 transition" title="Toggle dark mode">
-                <i class="fas fa-moon"></i>
-            </button>
         </div>
     </nav>
 
@@ -98,6 +103,10 @@
         </div>
     </footer>
 
+    <!-- Floating dark mode toggle -->
+    <button id="dark-mode-toggle" class="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-full bg-gray-900 text-white shadow-lg hover:bg-gray-700 transition" title="Toggle dark mode" style="box-shadow:0 4px 24px #0006;">
+        <i class="fas fa-moon"></i>
+    </button>
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
