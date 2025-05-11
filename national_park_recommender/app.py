@@ -3,10 +3,8 @@ from flask import Flask, render_template, request, jsonify, session, url_for, re
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import werkzeug
 from werkzeug.security import check_password_hash
-import werkzeug
-# print(f"Werkzeug version: {werkzeug.__version__}")
+from urllib.parse import urlparse  # Use Python's built-in URL parser instead
 from werkzeug.utils import secure_filename
-from werkzeug.urls import url_parse
 from werkzeug import __version__ as werkzeug_version
 print(f"Werkzeug version: {werkzeug_version}")
 print(f"Contents of werkzeug.urls: {dir(werkzeug.urls)}")
@@ -292,6 +290,11 @@ def random_park():
     park = random.choice(PARKS_DATA)
     return redirect(url_for('park_detail_page', park_id=park['id']))
 
+def is_safe_url(target):
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(urlparse(target).netloc)
+    return test_url.netloc == '' or test_url.netloc == ref_url.netloc
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -304,12 +307,7 @@ def login():
             return redirect(url_for('login'))
         login_user(user)
         next_page = request.args.get('next')
-        try:
-            # Add error handling for URL parsing
-            if not next_page or url_parse(next_page).netloc:
-                next_page = url_for('index')
-        except Exception as e:
-            current_app.logger.error(f"Error parsing next URL: {e}")
+        if not next_page or not is_safe_url(next_page):
             next_page = url_for('index')
         return redirect(next_page)
     return render_template('auth/login.html', title='Sign In', form=form)
