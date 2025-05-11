@@ -2,32 +2,7 @@
 from flask import Flask, render_template, request, jsonify, session, url_for, redirect, flash
 from park_data import PARKS_DATA, AVAILABLE_ACTIVITIES, AVAILABLE_SCENERY, AVAILABLE_REGIONS, AVAILABLE_PARK_TYPES
 
-import math
 import random
-
-# Simple static ZIP to lat/lon mapping for demo (expand as needed)
-ZIP_LATLON = {
-    "10001": (40.7506, -73.9972),  # New York, NY
-    "94103": (37.7739, -122.4312), # San Francisco, CA
-    "60601": (41.8853, -87.6229),  # Chicago, IL
-    "90001": (33.9731, -118.2479), # Los Angeles, CA
-    "30301": (33.7490, -84.3880),  # Atlanta, GA
-    "33101": (25.7751, -80.2105),  # Miami, FL
-    "80202": (39.7525, -104.9995), # Denver, CO
-    "73301": (30.2672, -97.7431),  # Austin, TX
-    "02101": (42.3601, -71.0589),  # Boston, MA
-    "98101": (47.6101, -122.3365), # Seattle, WA
-}
-
-def haversine(lat1, lon1, lat2, lon2):
-    # Calculate the great-circle distance between two points
-    R = 6371  # Earth radius in km
-    phi1, phi2 = math.radians(lat1), math.radians(lat2)
-    dphi = math.radians(lat2 - lat1)
-    dlambda = math.radians(lon2 - lon1)
-    a = math.sin(dphi/2)**2 + math.cos(phi1)*math.cos(phi2)*math.sin(dlambda/2)**2
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-    return R * c
 
 app = Flask(__name__)
 app.secret_key = 'your_very_secret_key_for_a_secure_session_b1x9d' # CHANGE THIS!
@@ -207,53 +182,6 @@ def blog():
 @app.route('/about')
 def about():
     return render_template('about.html')
-
-@app.route('/find_closest', methods=['GET', 'POST'])
-def find_closest():
-    user_zip = None
-    user_lat = None
-    user_lon = None
-    parks_with_distance = []
-    error = None
-    if request.method == 'POST':
-        user_zip = request.form.get('zip_code', '').strip()
-        coords = ZIP_LATLON.get(user_zip)
-        if not coords:
-            error = "Sorry, we couldn't find that ZIP code. Try a major US city ZIP."
-        else:
-            user_lat, user_lon = coords
-            for park in PARKS_DATA:
-                if park.get('latitude') and park.get('longitude'):
-                    dist = haversine(user_lat, user_lon, park['latitude'], park['longitude'])
-                    park_copy = park.copy()
-                    park_copy['distance_km'] = round(dist, 1)
-                    parks_with_distance.append(park_copy)
-            parks_with_distance.sort(key=lambda p: p['distance_km'])
-    return render_template('find_closest.html', user_zip=user_zip, user_lat=user_lat, user_lon=user_lon, parks=parks_with_distance, error=error)
-
-@app.route('/api/nearby_parks')
-def api_nearby_parks():
-    # AJAX endpoint for map
-    lat = request.args.get('lat', type=float)
-    lon = request.args.get('lon', type=float)
-    if lat is None or lon is None:
-        return jsonify({"error": "Missing lat/lon"}), 400
-    parks = []
-    for park in PARKS_DATA:
-        if park.get('latitude') and park.get('longitude'):
-            dist = haversine(lat, lon, park['latitude'], park['longitude'])
-            parks.append({
-                "id": park['id'],
-                "name": park['name'],
-                "lat": park['latitude'],
-                "lon": park['longitude'],
-                "distance_km": round(dist, 1),
-                "address": park.get('address', ''),
-                "location": park.get('location', ''),
-                "type": park.get('type', ''),
-            })
-    parks.sort(key=lambda p: p['distance_km'])
-    return jsonify({"parks": parks[:20]})
 
 @app.route('/random_park')
 def random_park():
