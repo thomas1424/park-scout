@@ -74,11 +74,10 @@
                     class="w-full md:w-auto px-8 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-transform transform hover:scale-105">
                 <i class="fas fa-search mr-2"></i>Find Parks
             </button>
-            <button type="button" id="find-closest-park-button"
-                    class="w-full md:w-auto px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-transform transform hover:scale-105"
-                    title="Feature coming soon!">
-                <i class="fas fa-location-arrow mr-2"></i>Find Closest Park (Soon)
-            </button>
+            <a href="{{ url_for('find_closest') }}"
+               class="w-full md:w-auto px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-transform transform hover:scale-105 text-center">
+                <i class="fas fa-location-arrow mr-2"></i>Find Closest Park
+            </a>
             <button type="button" id="random-park-button"
                     class="w-full md:w-auto px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-transform transform hover:scale-105">
                 <i class="fas fa-random mr-2"></i>Random Park
@@ -146,55 +145,10 @@
 {{ super() }}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const closestParkButton = document.getElementById('find-closest-park-button');
-    if (closestParkButton) {
-        closestParkButton.addEventListener('click', function() {
-            alert('Finding the closest park based on your location is a feature coming soon! Ensure your browser location services are enabled.');
-            // Future implementation:
-            // if (navigator.geolocation) {
-            //     navigator.geolocation.getCurrentPosition(showPosition, showError);
-            // } else {
-            //     alert("Geolocation is not supported by this browser.");
-            // }
-            // function showPosition(position) {
-            //     const lat = position.coords.latitude;
-            //     const lon = position.coords.longitude;
-            //     // You would then send these coordinates to your Flask backend
-            //     // e.g., window.location.href = `/main?lat=${lat}&lon=${lon}`;
-            //     // Or use fetch to send it and update the page dynamically.
-            //     alert(`Your current position is Latitude: ${lat} Longitude: ${lon}. This data would be used to find nearby parks.`);
-            // }
-            // function showError(error) {
-            //     switch(error.code) {
-            //         case error.PERMISSION_DENIED:
-            //             alert("User denied the request for Geolocation.");
-            //             break;
-            //         case error.POSITION_UNAVAILABLE:
-            //             alert("Location information is unavailable.");
-            //             break;
-            //         case error.TIMEOUT:
-            //             alert("The request to get user location timed out.");
-            //             break;
-            //         case error.UNKNOWN_ERROR:
-            //             alert("An unknown error occurred.");
-            //             break;
-            //     }
-            // }
-        });
-    }
-
     const randomParkButton = document.getElementById('random-park-button');
     if (randomParkButton) {
         randomParkButton.onclick = function() {
-            {% if parks_to_display and parks_to_display|length > 0 %}
-                // Pick a random park from the displayed parks
-                const parks = {{ parks_to_display|tojson }};
-                const randomIndex = Math.floor(Math.random() * parks.length);
-                const randomParkId = parks[randomIndex].id;
-                window.location.href = "/park/" + randomParkId;
-            {% else %}
-                alert("No parks to choose from!");
-            {% endif %}
+            window.location.href = "/random_park";
         };
     }
 });

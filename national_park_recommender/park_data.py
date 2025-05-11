@@ -484,6 +484,96 @@ PARKS_DATA = [
         "rating": 4.7,
         "features": ["Squeaky Beach", "Wildlife", "Granite mountains"]
     },
+    {
+        "id": "guilin", "name": "Guilin and Lijiang River National Park", "type": "National Park", "location": "Guangxi, China",
+        "address": "Guilin, Guangxi, China", "latitude": 25.2736, "longitude": 110.2900, "region": "Asia",
+        "description": "Famous for its dramatic karst mountain landscape and scenic river cruises. Address: Guilin, Guangxi, China.",
+        "activities": ["boating", "photography", "hiking", "sightseeing"],
+        "scenery": ["karst mountains", "river", "villages"],
+        "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.7,
+        "features": ["Karst peaks", "River cruises", "Scenic villages"]
+    },
+    {
+        "id": "plaza_de_armas", "name": "Plaza de Armas", "type": "Historic Landmark", "location": "Cusco, Peru",
+        "address": "Plaza de Armas, Cusco, Peru", "latitude": -13.5167, "longitude": -71.9781, "region": "South America",
+        "description": "Historic city square surrounded by colonial architecture and Inca ruins. Address: Plaza de Armas, Cusco, Peru.",
+        "activities": ["walking", "history learning", "photography", "cultural tours"],
+        "scenery": ["plaza", "cathedrals", "mountains"],
+        "image_url": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.6,
+        "features": ["Colonial architecture", "Inca ruins", "Cultural events"]
+    },
+    {
+        "id": "tikal", "name": "Tikal National Park", "type": "UNESCO World Heritage Site", "location": "Petén, Guatemala",
+        "address": "Tikal, Petén, Guatemala", "latitude": 17.2220, "longitude": -89.6237, "region": "North America",
+        "description": "Ancient Mayan city with towering temples in the rainforest. Address: Tikal, Petén, Guatemala.",
+        "activities": ["archaeology", "hiking", "wildlife watching", "photography"],
+        "scenery": ["ruins", "rainforest", "temples"],
+        "image_url": "https://images.unsplash.com/photo-1511910293148-3706f2729753?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.8,
+        "features": ["Mayan temples", "Rainforest wildlife", "Ancient city"]
+    },
+    {
+        "id": "yala", "name": "Yala National Park", "type": "National Park", "location": "Sri Lanka",
+        "address": "Yala National Park, Sri Lanka", "latitude": 6.3667, "longitude": 81.5167, "region": "Asia",
+        "description": "Renowned for its leopards, elephants, and diverse birdlife. Address: Yala National Park, Sri Lanka.",
+        "activities": ["safari", "wildlife watching", "photography", "bird watching"],
+        "scenery": ["jungles", "lagoons", "grasslands"],
+        "image_url": "https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.7,
+        "features": ["Leopards", "Elephants", "Birdlife"]
+    },
+    {
+        "id": "torres_stirling", "name": "Stirling Range National Park", "type": "National Park", "location": "Western Australia, Australia",
+        "address": "Stirling Range National Park, WA 6338, Australia", "latitude": -34.4250, "longitude": 118.1167, "region": "Australia/Oceania",
+        "description": "Mountain range known for wildflowers and hiking. Address: Stirling Range National Park, WA 6338, Australia.",
+        "activities": ["hiking", "wildflower viewing", "photography", "bird watching"],
+        "scenery": ["mountains", "wildflowers", "forests"],
+        "image_url": "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.6,
+        "features": ["Wildflowers", "Mountain hikes", "Birdlife"]
+    },
+    {
+        "id": "fiery_furnace", "name": "Fiery Furnace", "type": "National Park Feature", "location": "Utah, USA",
+        "address": "Arches National Park, Moab, UT 84532", "latitude": 38.7486, "longitude": -109.5547, "region": "North America",
+        "description": "A labyrinth of narrow sandstone canyons and passages. Address: Arches National Park, Moab, UT 84532.",
+        "activities": ["hiking", "photography", "guided tours"],
+        "scenery": ["sandstone", "arches", "canyons"],
+        "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.7,
+        "features": ["Maze-like canyons", "Sandstone fins", "Guided hikes"]
+    },
+    {
+        "id": "lake_bled", "name": "Lake Bled", "type": "Lake", "location": "Slovenia",
+        "address": "Lake Bled, 4260 Bled, Slovenia", "latitude": 46.3625, "longitude": 14.0936, "region": "Europe",
+        "description": "Picturesque lake with an island church and medieval castle. Address: Lake Bled, 4260 Bled, Slovenia.",
+        "activities": ["boating", "swimming", "photography", "hiking"],
+        "scenery": ["lake", "island", "castle"],
+        "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.8,
+        "features": ["Island church", "Bled Castle", "Rowboat rides"]
+    },
+    {
+        "id": "table_rock", "name": "Table Rock State Park", "type": "State Park", "location": "South Carolina, USA",
+        "address": "158 Ellison Ln, Pickens, SC 29671", "latitude": 35.0240, "longitude": -82.7074, "region": "North America",
+        "description": "Mountain park with hiking trails and a scenic lake. Address: 158 Ellison Ln, Pickens, SC 29671.",
+        "activities": ["hiking", "fishing", "camping", "boating"],
+        "scenery": ["mountains", "lake", "forest"],
+        "image_url": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.6,
+        "features": ["Table Rock Mountain", "Lake Oolenoy", "Trails"]
+    },
+    {
+        "id": "giant_causeway", "name": "Giant's Causeway", "type": "UNESCO World Heritage Site", "location": "Northern Ireland, UK",
+        "address": "44 Causeway Rd, Bushmills BT57 8SU, UK", "latitude": 55.2408, "longitude": -6.5116, "region": "Europe",
+        "description": "Famous for its unique hexagonal basalt columns. Address: 44 Causeway Rd, Bushmills BT57 8SU, UK.",
+        "activities": ["walking", "photography", "nature study"],
+        "scenery": ["basalt columns", "coast", "cliffs"],
+        "image_url": "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.8,
+        "features": ["Basalt columns", "Coastal views", "Legendary site"]
+    },
 ]
 
 AVAILABLE_ACTIVITIES = sorted(list(set(activity for park in PARKS_DATA for activity in park.get("activities", []))))

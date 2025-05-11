@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, jsonify, session, url_for, re
 from park_data import PARKS_DATA, AVAILABLE_ACTIVITIES, AVAILABLE_SCENERY, AVAILABLE_REGIONS, AVAILABLE_PARK_TYPES
 
 import math
+import random
 
 # Simple static ZIP to lat/lon mapping for demo (expand as needed)
 ZIP_LATLON = {
@@ -253,6 +254,11 @@ def api_nearby_parks():
             })
     parks.sort(key=lambda p: p['distance_km'])
     return jsonify({"parks": parks[:20]})
+
+@app.route('/random_park')
+def random_park():
+    park = random.choice(PARKS_DATA)
+    return redirect(url_for('park_detail_page', park_id=park['id']))
 
 @app.errorhandler(404)
 def page_not_found(e):
