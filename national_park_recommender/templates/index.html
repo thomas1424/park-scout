@@ -115,16 +115,6 @@
                     <i class="fas fa-star text-amber-500"></i> Rating: {{ park.rating }}/5.0
                 </div>
                 {% endif %}
-                <div class="flex justify-center mt-4 mb-2">
-                    <button class="like-button {% if park.id in liked_park_ids %}liked{% else %}unliked{% endif %}" 
-                            data-park-id="{{ park.id }}" 
-                            aria-label="Toggle favorite" type="button">
-                        <i class="fa-heart {% if park.id in liked_park_ids %}fas text-red-500{% else %}far text-gray-600{% endif %}"></i>
-                        <span class="like-btn-label">
-                            {% if park.id in liked_park_ids %}Added to Favorites{% else %}Add to Favorites{% endif %}
-                        </span>
-                    </button>
-                </div>
                 <div class="mt-auto pt-3">
                     <a href="{{ url_for('park_detail_page', park_id=park.id) }}" 
                        class="inline-block w-full text-center bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">
