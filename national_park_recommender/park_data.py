@@ -384,6 +384,106 @@ PARKS_DATA = [
         "rating": 4.9,
         "features": ["Hundreds of waterfalls", "Rainforest", "Wildlife"]
     },
+    {
+        "id": "arches", "name": "Arches National Park", "type": "National Park", "location": "Utah, USA",
+        "address": "Arches National Park, Moab, UT 84532", "latitude": 38.7331, "longitude": -109.5925, "region": "North America",
+        "description": "Over 2,000 natural stone arch formations in the high desert of Utah. Address: Arches National Park, Moab, UT 84532.",
+        "activities": ["hiking", "photography", "stargazing", "rock climbing"],
+        "scenery": ["arches", "desert", "rock formations"],
+        "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.8,
+        "features": ["Delicate Arch", "Balanced Rock", "Fiery Furnace"]
+    },
+    {
+        "id": "kruger", "name": "Kruger National Park", "type": "National Park", "location": "South Africa",
+        "address": "Kruger National Park, South Africa", "latitude": -23.9884, "longitude": 31.5547, "region": "Africa",
+        "description": "One of Africa's largest game reserves. Address: Kruger National Park, South Africa.",
+        "activities": ["safari", "wildlife watching", "photography", "bird watching"],
+        "scenery": ["savannah", "rivers", "bushveld"],
+        "image_url": "https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.9,
+        "features": ["Big Five", "Game drives", "Birdlife"]
+    },
+    {
+        "id": "table_mountain", "name": "Table Mountain National Park", "type": "National Park", "location": "Cape Town, South Africa",
+        "address": "Table Mountain, Cape Town, South Africa", "latitude": -33.9628, "longitude": 18.4098, "region": "Africa",
+        "description": "Iconic flat-topped mountain overlooking Cape Town. Address: Table Mountain, Cape Town, South Africa.",
+        "activities": ["hiking", "cable car", "photography", "rock climbing"],
+        "scenery": ["mountains", "city views", "ocean"],
+        "image_url": "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.8,
+        "features": ["Tabletop summit", "Cableway", "Panoramic views"]
+    },
+    {
+        "id": "cinque_terre", "name": "Cinque Terre National Park", "type": "National Park", "location": "Liguria, Italy",
+        "address": "Cinque Terre, Liguria, Italy", "latitude": 44.1277, "longitude": 9.7096, "region": "Europe",
+        "description": "Five colorful seaside villages on the rugged Italian Riviera. Address: Cinque Terre, Liguria, Italy.",
+        "activities": ["hiking", "swimming", "photography", "boating"],
+        "scenery": ["cliffs", "villages", "sea"],
+        "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.7,
+        "features": ["Colorful villages", "Coastal trails", "Sea views"]
+    },
+    {
+        "id": "toronto_islands", "name": "Toronto Islands Park", "type": "Urban Park", "location": "Toronto, Canada",
+        "address": "Toronto Islands, Toronto, ON, Canada", "latitude": 43.6205, "longitude": -79.3781, "region": "North America",
+        "description": "A chain of small islands in Lake Ontario, just offshore from Toronto. Address: Toronto Islands, Toronto, ON, Canada.",
+        "activities": ["biking", "beach", "kayaking", "picnicking"],
+        "scenery": ["islands", "city views", "beaches"],
+        "image_url": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.6,
+        "features": ["Beaches", "Bike paths", "Toronto skyline"]
+    },
+    {
+        "id": "keukenhof", "name": "Keukenhof Gardens", "type": "Botanical Garden", "location": "Lisse, Netherlands",
+        "address": "Stationsweg 166A, 2161 AM Lisse, Netherlands", "latitude": 52.2711, "longitude": 4.5461, "region": "Europe",
+        "description": "World-famous tulip gardens open in spring. Address: Stationsweg 166A, 2161 AM Lisse, Netherlands.",
+        "activities": ["walking", "photography", "flower viewing"],
+        "scenery": ["gardens", "flowers", "lakes"],
+        "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.7,
+        "features": ["Tulip fields", "Spring blooms", "Windmills"]
+    },
+    {
+        "id": "bryce_canyon", "name": "Bryce Canyon National Park", "type": "National Park", "location": "Utah, USA",
+        "address": "Bryce Canyon National Park, UT 84764", "latitude": 37.5930, "longitude": -112.1871, "region": "North America",
+        "description": "Known for its crimson-colored hoodoos, spire-shaped rock formations. Address: Bryce Canyon National Park, UT 84764.",
+        "activities": ["hiking", "photography", "stargazing"],
+        "scenery": ["hoodoos", "canyons", "forests"],
+        "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.8,
+        "features": ["Hoodoos", "Bryce Amphitheater", "Night skies"]
+    },
+    {
+        "id": "sagarmatha", "name": "Sagarmatha National Park", "type": "National Park", "location": "Nepal",
+        "address": "Sagarmatha National Park, Khumjung 56000, Nepal", "latitude": 27.9333, "longitude": 86.7167, "region": "Asia",
+        "description": "Home to Mount Everest and Sherpa culture. Address: Sagarmatha National Park, Khumjung 56000, Nepal.",
+        "activities": ["trekking", "mountaineering", "wildlife watching"],
+        "scenery": ["mountains", "glaciers", "forests"],
+        "image_url": "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.9,
+        "features": ["Mount Everest", "Sherpa villages", "Himalayan wildlife"]
+    },
+    {
+        "id": "central_park", "name": "Central Park", "type": "Urban Park", "location": "New York, USA",
+        "address": "Central Park, New York, NY 10024", "latitude": 40.7851, "longitude": -73.9683, "region": "North America",
+        "description": "Iconic urban park in Manhattan. Address: Central Park, New York, NY 10024.",
+        "activities": ["walking", "biking", "boating", "picnicking"],
+        "scenery": ["lawns", "lakes", "city views"],
+        "image_url": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.8,
+        "features": ["Great Lawn", "Bow Bridge", "Bethesda Fountain"]
+    },
+    {
+        "id": "wilsons_prom", "name": "Wilsons Promontory National Park", "type": "National Park", "location": "Victoria, Australia",
+        "address": "Wilsons Promontory Rd, Yanakie VIC 3960, Australia", "latitude": -39.0300, "longitude": 146.3200, "region": "Australia/Oceania",
+        "description": "Southernmost tip of mainland Australia, known for beaches and wildlife. Address: Wilsons Promontory Rd, Yanakie VIC 3960, Australia.",
+        "activities": ["hiking", "beach", "wildlife watching", "camping"],
+        "scenery": ["beaches", "forests", "mountains"],
+        "image_url": "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80",
+        "rating": 4.7,
+        "features": ["Squeaky Beach", "Wildlife", "Granite mountains"]
+    },
 ]
 
 AVAILABLE_ACTIVITIES = sorted(list(set(activity for park in PARKS_DATA for activity in park.get("activities", []))))

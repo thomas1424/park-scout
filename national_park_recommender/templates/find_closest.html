@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Find Closest Park{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto py-10">
+    <h1 class="text-4xl font-bold mb-6 text-green-700 text-center">Find the Closest Park</h1>
+    <form method="POST" class="mb-8 flex flex-col md:flex-row gap-4 justify-center items-center">
+        <input type="text" name="zip_code" placeholder="Enter your ZIP code" value="{{ user_zip or '' }}" class="p-3 border border-gray-300 rounded-lg shadow-sm w-full md:w-1/2" maxlength="10" required>
+        <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">Find Parks</button>
+    </form>
+    {% if error %}
+        <div class="bg-red-100 text-red-700 p-4 rounded mb-6 text-center">{{ error }}</div>
+    {% endif %}
+    {% if user_lat and user_lon %}
+        <div id="closest-map" class="w-full h-96 rounded-lg shadow mb-8"></div>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var map = L.map('closest-map').setView([{{ user_lat }}, {{ user_lon }}], 6);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+            var userMarker = L.marker([{{ user_lat }}, {{ user_lon }}]).addTo(map)
+                .bindPopup("You are here (ZIP: {{ user_zip }})").openPopup();
+            fetch('/api/nearby_parks?lat={{ user_lat }}&lon={{ user_lon }}')
+                .then(resp => resp.json())
+                .then(data => {
+                    data.parks.forEach(function(park) {
+                        var marker = L.marker([park.lat, park.lon]).addTo(map);
+                        marker.bindPopup(
+                            `<b>${park.name}</b><br>${park.type}<br>${park.location}<br>${park.address}<br><b>Distance:</b> ${park.distance_km} km<br><a href="/park/${park.id}">View Details</a>`
+                        );
+                    });
+                });
+        });
+        </script>
+        <h2 class="text-2xl font-semibold mb-4 text-green-700">Nearby Parks</h2>
+        <ul class="divide-y">
+            {% for park in parks[:10] %}
+            <li class="py-3">
+                <b>{{ park.name }}</b> ({{ park.type }})<br>
+                <span class="text-gray-600">{{ park.location }}</span><br>
+                <span class="text-gray-500 text-sm">{{ park.address }}</span><br>
+                <span class="text-blue-700 font-semibold">Distance: {{ park.distance_km }} km</span>
+                <a href="{{ url_for('park_detail_page', park_id=park.id) }}" class="ml-4 text-green-600 hover:text-green-800 underline">View Details</a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock %}
