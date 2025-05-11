@@ -381,6 +381,16 @@ def chatbot():
         recommendations = [{'name': park['name'], 'location': park['location'], 'id': park['id']} for park in random.sample(PARKS_DATA, min(3, len(PARKS_DATA)))]
     return jsonify({'recommendations': recommendations[:3]})
 
+@app.route('/delete_account', methods=['POST'])
+@login_required
+def delete_account():
+    user = current_user
+    logout_user()
+    db.session.delete(user)
+    db.session.commit()
+    flash('Your account has been deleted.', 'success')
+    return redirect(url_for('welcome'))
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

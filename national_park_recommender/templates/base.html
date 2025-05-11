@@ -217,6 +217,35 @@
             color: #bbf7d0 !important;
             border-color: #bbf7d0 !important;
         }
+        /* Button fixes for visibility and green theme */
+        button, .btn, input[type="submit"], input[type="button"] {
+            background: linear-gradient(90deg, #059669 60%, #10b981 100%) !important;
+            color: #fff !important;
+            border: none !important;
+            border-radius: 0.5rem !important;
+            font-weight: 600 !important;
+            padding: 0.7rem 1.5rem !important;
+            box-shadow: 0 2px 8px #05966922;
+            transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+            cursor: pointer;
+        }
+        button:hover, .btn:hover, input[type="submit"]:hover, input[type="button"]:hover {
+            background: linear-gradient(90deg, #10b981 60%, #059669 100%) !important;
+            color: #fff !important;
+            box-shadow: 0 4px 16px #05966933;
+        }
+        .dark button, .dark .btn, .dark input[type="submit"], .dark input[type="button"] {
+            background: linear-gradient(90deg, #047857 60%, #059669 100%) !important;
+            color: #e5e7eb !important;
+        }
+        .dark button:hover, .dark .btn:hover, .dark input[type="submit"]:hover, .dark input[type="button"]:hover {
+            background: linear-gradient(90deg, #059669 60%, #10b981 100%) !important;
+            color: #fff !important;
+        }
+        /* Fix for buttons with only icon: always show icon and text */
+        button i, .btn i {
+            margin-right: 0.5em;
+        }
     </style>
     {% block head_extra %}{% endblock %}
 </head>
@@ -283,6 +312,7 @@
         </button>
         <button id="dark-mode-toggle" class="px-4 py-3 rounded-full bg-gray-900 text-white shadow-lg hover:bg-gray-700 transition flex items-center" title="Toggle dark mode" style="box-shadow:0 4px 24px #0006;">
             <i class="fas fa-moon"></i>
+            <span class="hidden md:inline">Dark Mode</span>
         </button>
     </div>
     <script>
