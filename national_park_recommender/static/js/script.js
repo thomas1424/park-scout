@@ -6,27 +6,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const likedCountNavMobile = document.getElementById('liked-count-nav-mobile');
 
     function displayToastMessage(message, type = 'info') {
-        if (!globalMessageArea) return;
+        try {
+            const globalMessageArea = document.getElementById('global-message-area');
+            if (!globalMessageArea) return;
 
-        const toast = document.createElement('div');
-        toast.className = `toast-message toast-${type}`;
-        toast.textContent = message;
-        
-        globalMessageArea.appendChild(toast);
+            const toast = document.createElement('div');
+            toast.className = `toast-message toast-${type}`;
+            toast.textContent = message;
+            
+            // Remove existing toasts
+            const existingToasts = globalMessageArea.getElementsByClassName('toast-message');
+            Array.from(existingToasts).forEach(toast => toast.remove());
+            
+            globalMessageArea.appendChild(toast);
+            requestAnimationFrame(() => toast.classList.add('show'));
 
-        // Trigger reflow for transition
-        requestAnimationFrame(() => {
-            toast.classList.add('show');
-        });
-
-        setTimeout(() => {
-            toast.classList.remove('show');
             setTimeout(() => {
-                if (globalMessageArea.contains(toast)) {
-                     globalMessageArea.removeChild(toast);
-                }
-            }, 300); // Wait for fade out transition
-        }, 3000); // Message visible for 3 seconds
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        } catch (error) {
+            console.error('Error displaying toast message:', error);
+        }
     }
     
     function updateLikedCount(newCount) {

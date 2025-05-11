@@ -1,18 +1,106 @@
 # app.py
-from flask import Flask, render_template, request, jsonify, session, url_for, redirect, flash
+from flask import Flask, render_template, request, jsonify, session, url_for, redirect, flash, current_app
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename
+from models import db, User
+from forms import LoginForm, RegistrationForm, ProfileForm
+import os
 from park_data import PARKS_DATA, AVAILABLE_ACTIVITIES, AVAILABLE_SCENERY, AVAILABLE_REGIONS, AVAILABLE_PARK_TYPES
+from PIL import Image
+import uuid
+from datetime import datetime
 
 import random
 
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def save_profile_image(file):
+    if not file:
+        return None
+        
+    try:
+        filename = secure_filename(str(uuid.uuid4()) + os.path.splitext(file.filename)[1])
+        filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        
+        # Create directory if it doesn't exist
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        
+        # Save and optimize image
+        image = Image.open(file)
+        image.thumbnail((500, 500))
+        image.save(filepath, optimize=True, quality=85)
+        
+        return filename
+    except Exception as e:
+        current_app.logger.error(f"Error saving profile image: {e}")
+        return None
+
 app = Flask(__name__)
-app.secret_key = 'your_very_secret_key_for_a_secure_session_b1x9d' # CHANGE THIS!
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev_key_change_in_production')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///parkscout.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static/uploads')
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+
+# Ensure upload directory exists
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+# Create necessary directories
+os.makedirs(os.path.join(app.root_path, 'static/uploads'), exist_ok=True)
+os.makedirs(os.path.join(app.root_path, 'static/img'), exist_ok=True)
+
+# Copy default images if they don't exist
+default_images = {
+    'default-profile.jpg': 'https://via.placeholder.com/500x500.jpg?text=Profile',
+    'default-park.jpg': 'https://via.placeholder.com/800x400.jpg?text=Park'
+}
+
+for img_name, placeholder_url in default_images.items():
+    img_path = os.path.join(app.root_path, 'static/img', img_name)
+    if not os.path.exists(img_path):
+        try:
+            import requests
+            response = requests.get(placeholder_url)
+            with open(img_path, 'wb') as f:
+                f.write(response.content)
+        except Exception as e:
+            current_app.logger.error(f"Error creating default image {img_name}: {e}")
+
+db.init_app(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+# Create all tables
+with app.app_context():
+    if not os.path.exists('parkscout.db'):
+        db.create_all()
 
 # Helper function to get park by ID
 def get_park_by_id(park_id):
-    for park in PARKS_DATA:
-        if park["id"] == park_id:
-            return park
-    return None
+    try:
+        return next((park for park in PARKS_DATA if park['id'] == park_id), None)
+    except Exception:
+        current_app.logger.error(f"Error fetching park with ID: {park_id}")
+        return None
+
+@app.context_processor
+def utility_processor():
+    return dict(get_park_by_id=get_park_by_id)
+
+@app.before_request
+def before_request():
+    if current_user.is_authenticated and not hasattr(current_user, 'liked_parks'):
+        current_user.liked_parks = []
+        db.session.commit()
 
 @app.route('/')
 def welcome():
@@ -101,22 +189,30 @@ def index():
                            liked_park_ids=session.get('liked_parks', []))
 
 @app.route('/like_park/<park_id>', methods=['POST'])
+@login_required
 def like_park(park_id):
-    if 'liked_parks' not in session:
-        session['liked_parks'] = []
-    
-    park = get_park_by_id(park_id) 
-    if not park:
-        return jsonify({'status': 'error', 'message': 'Park not found.'}), 404
+    try:
+        if not current_user.liked_parks:
+            current_user.liked_parks = []
+        
+        park = get_park_by_id(park_id)
+        if not park:
+            return jsonify({'status': 'error', 'message': 'Park not found'}), 404
 
-    if park_id not in session['liked_parks']:
-        session['liked_parks'].append(park_id)
-        session.modified = True 
-        return jsonify({'status': 'liked', 'park_id': park_id, 'message': f'{park["name"]} added to your liked parks!'})
-    else:
-        session['liked_parks'].remove(park_id)
-        session.modified = True
-        return jsonify({'status': 'unliked', 'park_id': park_id, 'message': f'{park["name"]} removed from your liked parks.'})
+        if park_id not in current_user.liked_parks:
+            current_user.liked_parks.append(park_id)
+        else:
+            current_user.liked_parks.remove(park_id)
+        
+        db.session.commit()
+        return jsonify({
+            'status': 'liked' if park_id in current_user.liked_parks else 'unliked',
+            'message': f"Park {'added to' if park_id in current_user.liked_parks else 'removed from'} favorites!"
+        })
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error(f"Error in like_park: {e}")
+        return jsonify({'status': 'error', 'message': 'An error occurred'}), 500
 
 @app.route('/liked')
 def liked_parks_page():
@@ -183,6 +279,88 @@ def about():
 def random_park():
     park = random.choice(PARKS_DATA)
     return redirect(url_for('park_detail_page', park_id=park['id']))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password', 'error')
+            return redirect(url_for('login'))
+        login_user(user)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        flash('Welcome back, {}!'.format(user.username), 'success')
+        return redirect(next_page)
+    return render_template('auth/login.html', title='Sign In', form=form)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Registration successful! Please log in.', 'success')
+        return redirect(url_for('login'))
+    return render_template('auth/register.html', title='Register', form=form)
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('index'))
+
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    if not hasattr(current_user, 'liked_parks') or current_user.liked_parks is None:
+        current_user.liked_parks = []
+        db.session.commit()
+
+    form = ProfileForm()
+    if form.validate_on_submit():
+        try:
+            if form.profile_image.data:
+                filename = save_profile_image(form.profile_image.data)
+                if filename:
+                    if current_user.profile_image:
+                        try:
+                            old_file = os.path.join(current_app.config['UPLOAD_FOLDER'], current_user.profile_image)
+                            if os.path.exists(old_file):
+                                os.remove(old_file)
+                        except Exception as e:
+                            current_app.logger.error(f"Error removing old profile image: {e}")
+                    current_user.profile_image = filename
+
+            current_user.bio = form.bio.data
+            current_user.location = form.location.data
+            current_user.updated_at = datetime.utcnow()
+            db.session.commit()
+            flash('Profile updated successfully!', 'success')
+        except Exception as e:
+            db.session.rollback()
+            current_app.logger.error(f"Error updating profile: {e}")
+            flash('An error occurred while updating your profile.', 'error')
+        return redirect(url_for('profile'))
+
+    elif request.method == 'GET':
+        form.bio.data = current_user.bio
+        form.location.data = current_user.location
+
+    return render_template(
+        'auth/profile.html', 
+        form=form,
+        created_at=current_user.created_at.strftime('%B %Y') if current_user.created_at else 'Unknown'
+    )
 
 @app.errorhandler(404)
 def page_not_found(e):

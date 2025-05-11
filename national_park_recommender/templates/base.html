@@ -21,6 +21,13 @@
             <a href="{{ url_for('map_page') }}" class="hover:text-green-200 transition">World Map</a>
             <a href="{{ url_for('gallery') }}" class="hover:text-green-200 transition">Gallery</a>
             <a href="{{ url_for('about') }}" class="hover:text-green-200 transition">About</a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('profile') }}" class="hover:text-green-200 transition">Profile</a>
+                <a href="{{ url_for('logout') }}" class="hover:text-green-200 transition">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="hover:text-green-200 transition">Login</a>
+                <a href="{{ url_for('register') }}" class="hover:text-green-200 transition">Register</a>
+            {% endif %}
             <a href="#" onclick="window.location.href='/random_park';return false;" class="hover:text-purple-300 transition font-bold">Surprise Me!</a>
         </div>
     </nav>
@@ -51,7 +58,6 @@
             <ul class="text-sm text-gray-200 list-disc ml-6">
                 <li>🌍 <b>All Parks</b> page: Browse every park in our database!</li>
                 <li>🖼️ Improved Gallery: See all parks with better images.</li>
-                <li>📝 <b>Blog</b> section: Read park guides and tips.</li>
                 <li>✨ Features: Like parks, random park button, find closest park (coming soon!), and more.</li>
                 <li>🐞 Bug fixes and image reliability improvements.</li>
             </ul>

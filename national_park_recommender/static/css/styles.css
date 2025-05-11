@@ -85,3 +85,38 @@ a {
 a:hover {
     color: #1d4ed8; /* Tailwind blue-700 */
 }
+
+/* Auth Components */
+.auth-form input {
+    margin-top: 0.25rem; /* mt-1 */
+    display: block; /* block */
+    width: 100%; /* w-full */
+    border-radius: 0.375rem; /* rounded-md */
+    border: 1px solid #d1d5db; /* border-gray-300 */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* shadow-sm */
+}
+
+.auth-form input:focus {
+    border-color: #10B981; /* Tailwind green-500 */
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.5); /* Tailwind ring-green-500 */
+}
+
+.profile-image {
+    @apply w-32 h-32 rounded-full object-cover;
+}
+
+.alert {
+    @apply p-4 mb-4 rounded-md;
+}
+
+.alert-success {
+    @apply bg-green-100 border-l-4 border-green-500 text-green-700;
+}
+
+.alert-error {
+    @apply bg-red-100 border-l-4 border-red-500 text-red-700;
+}
+
+.alert-info {
+    @apply bg-blue-100 border-l-4 border-blue-500 text-blue-700;
+}
