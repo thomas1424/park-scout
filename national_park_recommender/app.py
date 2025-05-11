@@ -1,27 +1,22 @@
 # app.py
 from flask import Flask, render_template, request, jsonify, session, url_for, redirect, flash, current_app
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-import werkzeug
 from werkzeug.security import check_password_hash
-from urllib.parse import urlparse  # Use Python's built-in URL parser instead
 from werkzeug.utils import secure_filename
-from werkzeug import __version__ as werkzeug_version
-print(f"Werkzeug version: {werkzeug_version}")
-print(f"Contents of werkzeug.urls: {dir(werkzeug.urls)}")
-print(f"Contents of werkzeug.utils: {dir(werkzeug.utils)}")
-print(f"Contents of werkzeug: {dir(werkzeug)}")
-print(f"Werkzeug version: {werkzeug_version}")
-print(f"Contents of werkzeug.urls: {dir(werkzeug.urls)}")
-print(f"Contents of werkzeug: {dir(werkzeug)}")
+from urllib.parse import urlparse
+import os
 from models import db, User
 from forms import LoginForm, RegistrationForm, ProfileForm
-import os
 from park_data import PARKS_DATA, AVAILABLE_ACTIVITIES, AVAILABLE_SCENERY, AVAILABLE_REGIONS, AVAILABLE_PARK_TYPES
 from PIL import Image
 import uuid
 from datetime import datetime
-
 import random
+import logging
+
+# Remove version checking and debug prints, add proper logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
@@ -292,7 +287,7 @@ def random_park():
 
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
-    test_url = urlparse(urlparse(target).netloc)
+    test_url = urlparse(target)
     return test_url.netloc == '' or test_url.netloc == ref_url.netloc
 
 @app.route('/login', methods=['GET', 'POST'])
