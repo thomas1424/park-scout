@@ -17,35 +17,55 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div>
                 <h3 class="text-lg font-semibold text-gray-700 mb-2">Park Types:</h3>
-                <select name="park_types" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500" multiple size="4">
+                <div class="max-h-60 overflow-y-auto p-3 border border-gray-200 rounded-lg bg-gray-50 space-y-2">
                     {% for park_type in available_park_types %}
-                    <option value="{{ park_type }}" {% if park_type in selected_park_types %}selected{% endif %}>{{ park_type }}</option>
+                    <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded-md cursor-pointer transition-colors">
+                        <input type="checkbox" name="park_types" value="{{ park_type }}" 
+                               {% if park_type in selected_park_types %}checked{% endif %}
+                               class="form-checkbox h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-green-500 transition-colors">
+                        <span class="text-gray-700 capitalize">{{ park_type }}</span>
+                    </label>
                     {% endfor %}
-                </select>
+                </div>
             </div>
             <div>
                 <h3 class="text-lg font-semibold text-gray-700 mb-2">Regions:</h3>
-                <select name="regions" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500" multiple size="4">
+                <div class="max-h-60 overflow-y-auto p-3 border border-gray-200 rounded-lg bg-gray-50 space-y-2">
                     {% for region in available_regions %}
-                    <option value="{{ region }}" {% if region in selected_regions %}selected{% endif %}>{{ region.replace('_', ' ') }}</option>
+                    <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded-md cursor-pointer transition-colors">
+                        <input type="checkbox" name="regions" value="{{ region }}" 
+                               {% if region in selected_regions %}checked{% endif %}
+                               class="form-checkbox h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-green-500 transition-colors">
+                        <span class="text-gray-700 capitalize">{{ region.replace('_', ' ') }}</span>
+                    </label>
                     {% endfor %}
-                </select>
+                </div>
             </div>
             <div>
                 <h3 class="text-lg font-semibold text-gray-700 mb-2">Preferred Activities:</h3>
-                <select name="activities" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500" multiple size="4">
+                <div class="max-h-60 overflow-y-auto p-3 border border-gray-200 rounded-lg bg-gray-50 space-y-2">
                     {% for activity in available_activities %}
-                    <option value="{{ activity }}" {% if activity in selected_activities %}selected{% endif %}>{{ activity.replace('_', ' ') }}</option>
+                    <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded-md cursor-pointer transition-colors">
+                        <input type="checkbox" name="activities" value="{{ activity }}" 
+                               {% if activity in selected_activities %}checked{% endif %}
+                               class="form-checkbox h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-green-500 transition-colors">
+                        <span class="text-gray-700 capitalize">{{ activity.replace('_', ' ') }}</span>
+                    </label>
                     {% endfor %}
-                </select>
+                </div>
             </div>
             <div>
                 <h3 class="text-lg font-semibold text-gray-700 mb-2">Desired Scenery:</h3>
-                <select name="scenery" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500" multiple size="4">
+                <div class="max-h-60 overflow-y-auto p-3 border border-gray-200 rounded-lg bg-gray-50 space-y-2">
                     {% for scenery_item in available_scenery %}
-                    <option value="{{ scenery_item }}" {% if scenery_item in selected_scenery %}selected{% endif %}>{{ scenery_item.replace('_', ' ') }}</option>
+                    <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded-md cursor-pointer transition-colors">
+                        <input type="checkbox" name="scenery" value="{{ scenery_item }}" 
+                               {% if scenery_item in selected_scenery %}checked{% endif %}
+                               class="form-checkbox h-5 w-5 text-green-600 border-gray-300 rounded focus:ring-green-500 transition-colors">
+                        <span class="text-gray-700 capitalize">{{ scenery_item.replace('_', ' ') }}</span>
+                    </label>
                     {% endfor %}
-                </select>
+                </div>
             </div>
         </div>
         
