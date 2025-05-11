@@ -14,9 +14,49 @@ from datetime import datetime
 import random
 import logging
 
-# Remove version checking and debug prints, add proper logging
+# Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev_key_change_in_production')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///parkscout.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static/uploads')
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+
+# Initialize extensions
+db.init_app(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+# Create necessary directories
+os.makedirs(os.path.join(app.root_path, 'static/uploads'), exist_ok=True)
+os.makedirs(os.path.join(app.root_path, 'static/img'), exist_ok=True)
+
+# Setup default images within application context
+with app.app_context():
+    # Create database if it doesn't exist
+    if not os.path.exists('parkscout.db'):
+        db.create_all()
+    
+    # Setup default images
+    default_images = {
+        'default-profile.jpg': 'https://via.placeholder.com/500x500.jpg?text=Profile',
+        'default-park.jpg': 'https://via.placeholder.com/800x400.jpg?text=Park'
+    }
+
+    for img_name, placeholder_url in default_images.items():
+        img_path = os.path.join(app.root_path, 'static/img', img_name)
+        if not os.path.exists(img_path):
+            try:
+                import requests
+                response = requests.get(placeholder_url)
+                with open(img_path, 'wb') as f:
+                    f.write(response.content)
+            except Exception as e:
+                logger.error(f"Error creating default image {img_name}: {e}")
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
@@ -29,65 +69,22 @@ def save_profile_image(file):
         
     try:
         filename = secure_filename(str(uuid.uuid4()) + os.path.splitext(file.filename)[1])
-        filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         
-        # Create directory if it doesn't exist
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
         
-        # Save and optimize image
         image = Image.open(file)
         image.thumbnail((500, 500))
         image.save(filepath, optimize=True, quality=85)
         
         return filename
     except Exception as e:
-        current_app.logger.error(f"Error saving profile image: {e}")
+        logger.error(f"Error saving profile image: {e}")
         return None
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev_key_change_in_production')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///parkscout.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static/uploads')
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
-
-# Ensure upload directory exists
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-
-# Create necessary directories
-os.makedirs(os.path.join(app.root_path, 'static/uploads'), exist_ok=True)
-os.makedirs(os.path.join(app.root_path, 'static/img'), exist_ok=True)
-
-# Copy default images if they don't exist
-default_images = {
-    'default-profile.jpg': 'https://via.placeholder.com/500x500.jpg?text=Profile',
-    'default-park.jpg': 'https://via.placeholder.com/800x400.jpg?text=Park'
-}
-
-for img_name, placeholder_url in default_images.items():
-    img_path = os.path.join(app.root_path, 'static/img', img_name)
-    if not os.path.exists(img_path):
-        try:
-            import requests
-            response = requests.get(placeholder_url)
-            with open(img_path, 'wb') as f:
-                f.write(response.content)
-        except Exception as e:
-            current_app.logger.error(f"Error creating default image {img_name}: {e}")
-
-db.init_app(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
-
-# Create all tables
-with app.app_context():
-    if not os.path.exists('parkscout.db'):
-        db.create_all()
 
 # Helper function to get park by ID
 def get_park_by_id(park_id):
@@ -296,9 +293,12 @@ def login():
         return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        # Allow login by username or email
+        user = User.query.filter(
+            (User.username == form.username.data) | (User.email == form.username.data)
+        ).first()
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password', 'error')
+            flash('Invalid username/email or password', 'error')
             return redirect(url_for('login'))
         login_user(user)
         next_page = request.args.get('next')
@@ -370,6 +370,19 @@ def profile():
         form=form,
         created_at=current_user.created_at.strftime('%B %Y') if current_user.created_at else 'Unknown'
     )
+
+@app.route('/chatbot', methods=['POST'])
+@login_required
+def chatbot():
+    user_input = request.json.get('message', '').lower()
+    # Simple demo: recommend parks based on keywords in user_input
+    recommendations = []
+    for park in PARKS_DATA:
+        if any(word in user_input for word in park.get('activities', [])) or any(word in user_input for word in park.get('scenery', [])):
+            recommendations.append({'name': park['name'], 'location': park['location'], 'id': park['id']})
+    if not recommendations:
+        recommendations = [{'name': park['name'], 'location': park['location'], 'id': park['id']} for park in random.sample(PARKS_DATA, min(3, len(PARKS_DATA)))]
+    return jsonify({'recommendations': recommendations[:3]})
 
 @app.errorhandler(404)
 def page_not_found(e):
