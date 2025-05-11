@@ -5,8 +5,13 @@ import werkzeug
 from werkzeug.security import check_password_hash
 import werkzeug
 # print(f"Werkzeug version: {werkzeug.__version__}")
-from werkzeug import secure_filename, __version__ as werkzeug_version
+from werkzeug.utils import secure_filename
 from werkzeug.urls import url_parse
+from werkzeug import __version__ as werkzeug_version
+print(f"Werkzeug version: {werkzeug_version}")
+print(f"Contents of werkzeug.urls: {dir(werkzeug.urls)}")
+print(f"Contents of werkzeug.utils: {dir(werkzeug.utils)}")
+print(f"Contents of werkzeug: {dir(werkzeug)}")
 print(f"Werkzeug version: {werkzeug_version}")
 print(f"Contents of werkzeug.urls: {dir(werkzeug.urls)}")
 print(f"Contents of werkzeug: {dir(werkzeug)}")
