@@ -217,8 +217,9 @@ body.dark .custom-checkbox-label:hover {
     box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.08),
         0 2px 4px rgba(0, 0, 0, 0.05);
-    border-radius: 1.2rem; /* For the rounded corners */
-    padding: 1rem 2rem;
+    border-radius: 0.9rem; /* For the rounded corners */
+    padding: 0.6rem 1.2rem;
+    font-size: 0.97rem;
     display: flex;
     align-items: center;
     justify-content: center; /* Center the links within the navbar */
