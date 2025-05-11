@@ -217,6 +217,9 @@ body.dark .custom-checkbox-label:hover {
     z-index: 1000;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .navbar .navbar-brand {
     font-size: 2rem;
@@ -280,9 +283,9 @@ body.dark .custom-checkbox-label:hover {
 
 @media (max-width: 640px) {
     .navbar {
-        width: 95%;
+        width: 98%;
         top: 1rem;
-        padding: 0.75rem 1.25rem;
+        padding: 0.75rem 0.5rem;
     }
 }
 
