@@ -3,62 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to ParkScout</title>
+    <title>ParkScout</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌲</text></svg>">
     <style>
         body {
-            background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1920&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
+            min-height: 100vh;
+            background: linear-gradient(120deg, #059669 0%, #10b981 100%);
+            color: #fff;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            overflow-x: hidden;
         }
-        .overlay {
-            background-color: rgba(0, 0, 0, 0.5);
+        .intro-hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
         }
-        .fade-in {
-            animation: fadeIn 1.5s ease;
+        .intro-hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+            opacity: 0.18;
+            filter: blur(2px);
         }
-        .slide-in {
-            animation: slideIn 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+        .intro-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
+        .intro-hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
+            background: linear-gradient(90deg, #fff 60%, #bbf7d0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        @keyframes slideIn {
-            from { transform: translateY(-40px); opacity: 0; }
-            to   { transform: translateY(0); opacity: 1; }
+        .intro-hero-desc {
+            font-size: 1.35rem;
+            font-weight: 400;
+            color: #e0f2f1;
+            margin-bottom: 2.5rem;
         }
-        .bounce {
-            animation: bounce 2s infinite;
+        .intro-hero-cta {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .intro-hero-cta a {
+            padding: 1.1rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, #059669 60%, #10b981 100%);
+            color: #fff;
+            box-shadow: 0 4px 24px #0004;
+            transition: background 0.18s, box-shadow 0.18s, transform 0.18s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        .intro-hero-cta a:hover {
+            background: linear-gradient(90deg, #10b981 60%, #059669 100%);
+            color: #bbf7d0;
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 8px 32px #05966933;
+        }
+        .intro-hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            justify-content: center;
+            margin-bottom: 2.5rem;
+        }
+        .intro-badge {
+            background: rgba(16,185,129,0.13);
+            color: #fff;
+            border-radius: 9999px;
+            padding: 0.5rem 1.2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .intro-hero-scroll {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #bbf7d0;
+            font-size: 1.1rem;
+            opacity: 0.85;
+            animation: bounce 2.5s infinite;
+            z-index: 2;
         }
         @keyframes bounce {
-            0%, 100% { transform: translateY(0);}
-            50% { transform: translateY(-12px);}
+            0%, 100% { transform: translate(-50%, 0);}
+            50% { transform: translate(-50%, -12px);}
+        }
+        @media (max-width: 600px) {
+            .intro-hero-title { font-size: 2.1rem; }
+            .intro-hero-desc { font-size: 1.05rem; }
+            .intro-hero-cta a { font-size: 1rem; padding: 0.8rem 1.5rem; }
         }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen text-white relative">
-    <div class="overlay absolute inset-0"></div>
-    <div class="relative z-10 text-center p-10 bg-black bg-opacity-60 rounded-xl shadow-2xl fade-in">
-        <span class="text-6xl mb-6 block bounce">🌲</span>
-        <h1 class="text-5xl md:text-7xl font-bold mb-4 slide-in">Welcome to <span class="text-green-400">ParkScout!</span></h1>
-        <p class="text-xl md:text-2xl mb-10 fade-in" style="animation-delay:0.5s;animation-fill-mode:both;">Your ultimate guide to discovering amazing parks around the world.</p>
-        <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
-            <a href="{{ url_for('index') }}" 
-               class="px-10 py-4 bg-green-600 text-white text-xl font-semibold rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black transition-transform transform hover:scale-105 fade-in"
-               style="animation-delay:0.8s;animation-fill-mode:both;">
-                <i class="fas fa-compass mr-2"></i>Explore Parks
-            </a>
-            <!-- Removed Find Closest Park button -->
+<body>
+    <div class="intro-hero">
+        <div class="intro-hero-bg"></div>
+        <div class="intro-hero-content fade-in">
+            <div class="intro-hero-badges">
+                <span class="intro-badge"><i class="fas fa-mountain"></i> 100+ Parks</span>
+                <span class="intro-badge"><i class="fas fa-heart"></i> Save Favorites</span>
+                <span class="intro-badge"><i class="fas fa-map-marked-alt"></i> Interactive Map</span>
+                <span class="intro-badge"><i class="fas fa-robot"></i> ParkScout AI</span>
+                <span class="intro-badge"><i class="fas fa-moon"></i> Dark Mode</span>
+            </div>
+            <h1 class="intro-hero-title">Discover Your Next Adventure<br>with <span style="color:#059669;">ParkScout</span></h1>
+            <div class="intro-hero-desc">
+                The modern way to explore, compare, and fall in love with the world's most beautiful parks.<br>
+                Smart recommendations, interactive maps, and a personalized experience—right at your fingertips.
+            </div>
+            <div class="intro-hero-cta">
+                <a href="{{ url_for('index') }}"><i class="fas fa-compass"></i> Explore Parks</a>
+                <a href="{{ url_for('about') }}"><i class="fas fa-info-circle"></i> Learn More</a>
+            </div>
+        </div>
+        <div class="intro-hero-scroll">
+            <i class="fas fa-chevron-down"></i> Scroll to explore
         </div>
     </div>
-    <footer class="absolute bottom-5 text-center text-sm text-gray-300 z-10">
-        <p>&copy; <span id="current-year"></span> ParkScout. Find your adventure!</p>
-    </footer>
-    <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
 </body>
 </html>
