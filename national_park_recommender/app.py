@@ -5,14 +5,8 @@ import werkzeug
 from werkzeug.security import check_password_hash
 import werkzeug
 # print(f"Werkzeug version: {werkzeug.__version__}")
-try:
-    from werkzeug.urls import url_parse
-    print(f"Contents of werkzeug.urls: {dir(werkzeug.urls)}")
-except AttributeError as e:
-    print("werkzeug.urls module not found.")
-    # Fallback to basic URL validation
-    def url_parse(url):
-        return type('ParseResult', (), {'netloc': lambda: None})()
+from werkzeug.utils import url_parse
+print(f"Contents of werkzeug.utils: {dir(werkzeug.utils)}")
 
 from werkzeug.utils import secure_filename
 from models import db, User
