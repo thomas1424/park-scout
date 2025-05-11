@@ -49,45 +49,64 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    likeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const parkId = this.dataset.parkId;
-            const icon = this.querySelector('i.fa-heart');
+    // Improved like button functionality
+    document.querySelectorAll('.like-button').forEach(button => {
+        let isProcessing = false;
 
-            fetch(`/like_park/${parkId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
+        async function toggleLike(btn) {
+            if (isProcessing) return;
+            
+            const parkId = btn.dataset.parkId;
+            const icon = btn.querySelector('i');
+            const label = btn.querySelector('.like-btn-label');
+            
+            try {
+                isProcessing = true;
+                btn.classList.add('loading');
+                
+                const response = await fetch(`/like_park/${parkId}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                });
+
+                if (!response.ok) throw new Error('Network response failed');
+                
+                const data = await response.json();
+                
+                // Clear existing states
+                btn.classList.remove('liked', 'unliked', 'loading');
+                icon.classList.remove('fas', 'far');
+                
+                // Apply new state
                 if (data.status === 'liked') {
-                    icon.classList.remove('far', 'text-gray-600');
-                    icon.classList.add('fas', 'text-red-500');
-                    button.classList.add('liked');
-                    button.classList.remove('unliked');
-                    button.setAttribute('aria-label', `Unlike ${data.park_id}`);
-                } else if (data.status === 'unliked') {
-                    icon.classList.remove('fas', 'text-red-500');
-                    icon.classList.add('far', 'text-gray-600');
-                    button.classList.remove('liked');
-                    button.classList.add('unliked');
-                    button.setAttribute('aria-label', `Like ${data.park_id}`);
+                    btn.classList.add('liked');
+                    icon.classList.add('fas');
+                    label.textContent = 'Added to Favorites';
+                    displayToastMessage('Added to favorites!', 'success');
+                } else {
+                    btn.classList.add('unliked');
+                    icon.classList.add('far');
+                    label.textContent = 'Add to Favorites';
+                    displayToastMessage('Removed from favorites', 'info');
                 }
-                displayToastMessage(data.message, data.status === 'liked' ? 'success' : 'info');
-                let currentCount = parseInt(likedCountNav && likedCountNav.textContent ? likedCountNav.textContent : '0');
-                if(data.status === 'liked') {
-                    currentCount++;
-                } else if (data.status === 'unliked' && currentCount > 0) {
-                    currentCount--;
-                }
-                updateLikedCount(Math.max(0, currentCount));
-            })
-            .catch(error => {
-                console.error('Error liking park:', error);
-                displayToastMessage('An error occurred. Please try again.', 'error');
-            });
+                
+                // Trigger heart animation
+                icon.style.animation = 'none';
+                icon.offsetHeight; // Trigger reflow
+                icon.style.animation = null;
+                
+            } catch (error) {
+                console.error('Error toggling like:', error);
+                displayToastMessage('Failed to update favorites. Please try again.', 'error');
+            } finally {
+                isProcessing = false;
+                btn.classList.remove('loading');
+            }
+        }
+
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleLike(button);
         });
     });
 

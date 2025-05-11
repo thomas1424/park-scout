@@ -530,3 +530,88 @@ body.dark .navbar .navbar-link.surprise:hover {
     .like-button { min-width: 2.2em; min-height: 2.2em; }
     .park-card { border-radius: 0.8rem; }
 }
+
+/* New Like Button Styles */
+.like-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: white;
+    border: 2px solid #10b981;
+    border-radius: 9999px;
+    font-weight: 600;
+    color: #10b981;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    min-width: 120px;
+    justify-content: center;
+}
+
+.like-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #10b981;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 0;
+}
+
+.like-button.liked::before {
+    transform: translateX(0);
+}
+
+.like-button i,
+.like-button span {
+    position: relative;
+    z-index: 1;
+    transition: all 0.2s ease;
+}
+
+.like-button.liked {
+    color: white;
+}
+
+.like-button:not(.loading):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+.like-button.loading {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+.like-button .like-btn-label {
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/* Dark mode support */
+.dark .like-button {
+    background: #1f2937;
+    border-color: #059669;
+    color: #6ee7b7;
+}
+
+.dark .like-button::before {
+    background: #059669;
+}
+
+.dark .like-button.liked {
+    color: white;
+}
+
+@keyframes heartPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+.like-button i {
+    animation: heartPop 0.3s ease;
+}

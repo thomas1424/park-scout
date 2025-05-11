@@ -117,9 +117,11 @@
                 {% endif %}
                 <div class="flex justify-center mt-4 mb-2">
                     <button class="like-button {% if park.id in liked_park_ids %}liked{% else %}unliked{% endif %}" 
-                            data-park-id="{{ park.id }}" aria-label="Like park" type="button">
-                        <i class="fa-heart fa{% if park.id in liked_park_ids %}s{% else %}r{% endif %}"></i>
-                        <span class="like-btn-label ml-2">
+                            data-park-id="{{ park.id }}" 
+                            aria-label="Toggle favorite"
+                            type="button">
+                        <i class="fa-heart {% if park.id in liked_park_ids %}fas{% else %}far{% endif %}"></i>
+                        <span class="like-btn-label">
                             {% if park.id in liked_park_ids %}Added to Favorites{% else %}Add to Favorites{% endif %}
                         </span>
                     </button>
