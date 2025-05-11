@@ -5,10 +5,8 @@ import werkzeug
 from werkzeug.security import check_password_hash
 import werkzeug
 # print(f"Werkzeug version: {werkzeug.__version__}")
-from werkzeug.utils import url_parse
-print(f"Contents of werkzeug.utils: {dir(werkzeug.utils)}")
-
-from werkzeug.utils import secure_filename
+from werkzeug import url_parse, secure_filename
+print(f"Contents of werkzeug: {dir(werkzeug)}")
 from models import db, User
 from forms import LoginForm, RegistrationForm, ProfileForm
 import os
