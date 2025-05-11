@@ -338,35 +338,49 @@
         </div>
     </footer>
 
-    <!-- Floating action buttons: Only Dark Mode (ParkScout AI removed) -->
+    <!-- Floating action button: Only Dark Mode (ParkScout AI removed) -->
     <div style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:50;">
         <button id="dark-mode-toggle" class="px-4 py-3 rounded-full bg-gray-900 text-white shadow-lg hover:bg-gray-700 transition flex items-center" title="Toggle dark mode" style="box-shadow:0 4px 24px #0006;">
-            <i class="fas fa-moon"></i>
-            <span class="hidden md:inline">Dark Mode</span>
+            <i id="dark-mode-icon" class="fas fa-moon"></i>
+            <span id="dark-mode-label" class="hidden md:inline">Dark Mode</span>
         </button>
     </div>
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
     <script>
-        // Dark mode toggle
+        // Dark mode toggle with icon and label swap
         const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const darkModeIcon = document.getElementById('dark-mode-icon');
+        const darkModeLabel = document.getElementById('dark-mode-label');
         function setDarkMode(on) {
             if (on) {
                 document.body.classList.add('dark');
                 document.documentElement.classList.add('dark');
                 localStorage.setItem('darkMode', '1');
+                darkModeIcon.classList.remove('fa-moon');
+                darkModeIcon.classList.add('fa-sun');
+                darkModeLabel.textContent = 'Light Mode';
+                darkModeToggle.title = "Toggle light mode";
             } else {
                 document.body.classList.remove('dark');
                 document.documentElement.classList.remove('dark');
                 localStorage.setItem('darkMode', '0');
+                darkModeIcon.classList.remove('fa-sun');
+                darkModeIcon.classList.add('fa-moon');
+                darkModeLabel.textContent = 'Dark Mode';
+                darkModeToggle.title = "Toggle dark mode";
             }
         }
         darkModeToggle.addEventListener('click', () => {
             setDarkMode(!document.body.classList.contains('dark'));
         });
         // On load, set dark mode if user previously enabled it
-        if (localStorage.getItem('darkMode') === '1') setDarkMode(true);
+        if (localStorage.getItem('darkMode') === '1') {
+            setDarkMode(true);
+        } else {
+            setDarkMode(false);
+        }
     </script>
     <script>
         // New intro animation: fade/zoom only, no logo move

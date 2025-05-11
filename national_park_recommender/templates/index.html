@@ -92,15 +92,11 @@
     </h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {% for park in parks_to_display %}
-        <div class="park-card bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl">
+        <div class="park-card grow-on-hover fade-in flex flex-col">
             <div class="relative">
                 <a href="{{ url_for('park_detail_page', park_id=park.id) }}">
                     <img src="{{ park.image_url }}" alt="Image of {{ park.name }}" class="w-full h-56 object-cover">
                 </a>
-                <button class="like-button {% if park.id in liked_park_ids %}liked{% else %}unliked{% endif %}" 
-                        data-park-id="{{ park.id }}" aria-label="Like park" type="button" style="margin-left:auto;">
-                    <i class="fa-heart fa{% if park.id in liked_park_ids %}s{% else %}r{% endif %}"></i>
-                </button>
             </div>
             <div class="p-5 flex flex-col flex-grow">
                 <h3 class="text-xl font-semibold text-green-700 mb-1">
@@ -119,6 +115,15 @@
                     <i class="fas fa-star text-amber-500"></i> Rating: {{ park.rating }}/5.0
                 </div>
                 {% endif %}
+                <div class="flex justify-center mt-4 mb-2">
+                    <button class="like-button {% if park.id in liked_park_ids %}liked{% else %}unliked{% endif %}" 
+                            data-park-id="{{ park.id }}" aria-label="Like park" type="button">
+                        <i class="fa-heart fa{% if park.id in liked_park_ids %}s{% else %}r{% endif %}"></i>
+                        <span class="like-btn-label ml-2">
+                            {% if park.id in liked_park_ids %}Added to Favorites{% else %}Add to Favorites{% endif %}
+                        </span>
+                    </button>
+                </div>
                 <div class="mt-auto pt-3">
                     <a href="{{ url_for('park_detail_page', park_id=park.id) }}" 
                        class="inline-block w-full text-center bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">
@@ -152,13 +157,25 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', async function() {
             const parkId = this.getAttribute('data-park-id');
             const icon = this.querySelector('i');
-            const liked = this.classList.contains('liked');
-            const resp = await fetch(`/like_park/${parkId}`, {method: 'POST'});
-            if (resp.ok) {
-                this.classList.toggle('liked');
-                this.classList.toggle('unliked');
-                icon.classList.toggle('fas');
-                icon.classList.toggle('far');
+            const label = this.querySelector('.like-btn-label');
+            // Disable button briefly to prevent double clicks
+            this.disabled = true;
+            try {
+                const resp = await fetch(`/like_park/${parkId}`, {method: 'POST'});
+                if (resp.ok) {
+                    const data = await resp.json();
+                    this.classList.toggle('liked');
+                    this.classList.toggle('unliked');
+                    icon.classList.toggle('fas');
+                    icon.classList.toggle('far');
+                    if (data.status === 'liked') {
+                        label.textContent = 'Added to Favorites';
+                    } else if (data.status === 'unliked') {
+                        label.textContent = 'Removed from Favorites';
+                    }
+                }
+            } finally {
+                setTimeout(() => { this.disabled = false; }, 350); // Prevent rapid double clicks
             }
         });
     });
