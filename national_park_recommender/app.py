@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, jsonify, session, url_for, re
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import werkzeug
 from werkzeug.security import check_password_hash
+import werkzeug
 print(f"Werkzeug version: {werkzeug.__version__}")
 try:
     from werkzeug.urls import url_parse
