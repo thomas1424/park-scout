@@ -73,67 +73,8 @@
         </form>
     </div>
 </div>
-<!-- Chatbot floating widget markup -->
-<button id="chatbot-widget-btn" data-tooltip="Need help finding a park?">
-    <i class="fas fa-robot"></i>
-    <span class="hidden md:inline">ParkScout AI</span>
-</button>
-<div id="chatbot-widget-window">
-    <div id="chatbot-widget-header">
-        <span><i class="fas fa-robot mr-2"></i>ParkScout AI</span>
-        <button id="chatbot-widget-close" title="Minimize"><i class="fas fa-minus"></i></button>
-    </div>
-    <div id="chatbot-widget-messages"></div>
-    <form id="chatbot-widget-form">
-        <input type="text" id="chatbot-widget-input" placeholder="Ask for a park recommendation..." autocomplete="off">
-        <button type="submit"><i class="fas fa-paper-plane"></i></button>
-    </form>
-</div>
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
-<script>
-(function() {
-    // Floating chatbot widget logic
-    const btn = document.getElementById('chatbot-widget-btn');
-    const windowEl = document.getElementById('chatbot-widget-window');
-    const closeBtn = document.getElementById('chatbot-widget-close');
-    const form = document.getElementById('chatbot-widget-form');
-    const input = document.getElementById('chatbot-widget-input');
-    const messages = document.getElementById('chatbot-widget-messages');
-
-    btn.addEventListener('click', () => {
-        windowEl.classList.toggle('active');
-        if (windowEl.classList.contains('active')) {
-            setTimeout(() => input.focus(), 200);
-        }
-    });
-    closeBtn.addEventListener('click', () => {
-        windowEl.classList.remove('active');
-    });
-
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const userMsg = input.value.trim();
-        if (!userMsg) return;
-        messages.innerHTML += `<div class="mb-2"><b>You:</b> ${userMsg}</div>`;
-        input.value = '';
-        messages.scrollTop = messages.scrollHeight;
-        const resp = await fetch('/chatbot', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({message: userMsg})
-        });
-        const data = await resp.json();
-        if (data.recommendations && data.recommendations.length > 0) {
-            let recs = data.recommendations.map(p => `<a href="/park/${p.id}" class="text-green-700 dark:text-green-400 underline">${p.name}</a> (${p.location})`).join('<br>');
-            messages.innerHTML += `<div class="mb-2"><b>ParkScout AI:</b><br>${recs}</div>`;
-        } else {
-            messages.innerHTML += `<div class="mb-2"><b>ParkScout AI:</b> Sorry, I couldn't find any parks for you.</div>`;
-        }
-        messages.scrollTop = messages.scrollHeight;
-    });
-})();
-</script>
 {% endblock %}
