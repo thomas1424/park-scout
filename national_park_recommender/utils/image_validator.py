@@ -23,6 +23,17 @@ def validate_image_url(url: str) -> bool:
         logger.error(f"Error validating image URL {url}: {e}")
         return False
 
+def validate_google_image(url: str) -> bool:
+    """Special validation for Google image URLs."""
+    try:
+        if "googleusercontent.com" in url:
+            response = requests.head(url, timeout=5)
+            return response.status_code == 200
+        return False
+    except Exception as e:
+        logger.error(f"Error validating Google image URL {url}: {e}")
+        return False
+
 def download_and_verify_image(url: str) -> Tuple[bool, str]:
     """Download and verify image content."""
     try:
@@ -35,22 +46,14 @@ def download_and_verify_image(url: str) -> Tuple[bool, str]:
     except Exception as e:
         return False, str(e)
 
-def get_fallback_image_url(park_name: str, retries=3) -> str:
-    """Get a fallback image URL with multiple sources and retries."""
-    sources = [
-        f"https://source.unsplash.com/1200x800/?{park_name},national-park",
-        f"https://api.pexels.com/v1/search?query={park_name}+landscape&per_page=1",
-        f"https://api.flickr.com/services/rest/?method=flickr.photos.search&text={park_name}+landscape"
-    ]
+def get_fallback_image_url(park_name: str, region: str = None) -> str:
+    """Enhanced fallback system with region-specific searches."""
+    search_query = f"{park_name} {region if region else ''} landscape mountain"
     
-    for _ in range(retries):
-        for source in sources:
-            try:
-                if validate_image_url(source):
-                    return source
-                time.sleep(0.1)  # Rate limiting
-            except Exception as e:
-                logger.error(f"Error getting fallback image from {source}: {e}")
-                continue
-    
+    # Try Unsplash first
+    unsplash_url = f"https://source.unsplash.com/1600x900/?{search_query.replace(' ', ',')}"
+    if validate_image_url(unsplash_url):
+        return unsplash_url
+        
+    # Then try alternative sources
     return "/static/img/default-park.jpg"

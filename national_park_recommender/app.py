@@ -15,7 +15,7 @@ import random
 import logging
 from utils.image_validator import validate_image_url, get_fallback_image_url
 from functools import lru_cache
-from werkzeug.contrib.cache import SimpleCache
+from flask_caching import Cache
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -90,7 +90,7 @@ def load_user(id):
     return User.query.get(int(id))
 
 # Initialize cache
-cache = SimpleCache()
+cache = Cache(app, config={'CACHE_TYPE': 'SimpleCache'})
 
 @lru_cache(maxsize=100)
 def get_park_by_id(park_id):

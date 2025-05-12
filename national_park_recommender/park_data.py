@@ -830,5 +830,8 @@ AVAILABLE_PARK_TYPES = [
     "Geological Formation",
     "Forest Reserve",
     "Urban Park",
-    "Cave System"
+    "Cave System",
+    "Mountain Peak",
+    "Volcano",
+    "Sacred Mountain"
 ]
