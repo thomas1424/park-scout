@@ -42,6 +42,15 @@ document.addEventListener('DOMContentLoaded', function() {
             handleImageError(img, parkName);
         };
     });
+
+    // Add dynamic navbar shadow on scroll
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 10) {
+            document.body.classList.add('scrolled');
+        } else {
+            document.body.classList.remove('scrolled');
+        }
+    });
 }); // <-- Ensure this closing brace and parenthesis is present
 
 // Add image handling functions

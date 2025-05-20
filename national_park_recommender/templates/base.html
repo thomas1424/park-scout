@@ -112,17 +112,17 @@
             pointer-events: none;
             transition: opacity 0.7s cubic-bezier(.4,0,.2,1), visibility 0.7s cubic-bezier(.4,0,.2,1);
         }
-        /* Navbar styles */
-        .navbar {
-            background: #f8fafc;
-            box-shadow: 0 2px 12px #0001;
-            border-radius: 0 0 1.2rem 1.2rem;
-            padding: 0.7rem 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            z-index: 10;
+        /* Remove old navbar styles if present, new styles are in styles.css */
+    </style>
+    {% block head_extra %}{% endblock %}
+</head>
+<body class="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 text-gray-800 antialiased transition-colors duration-300">
+    <div id="intro-overlay">
+        <span id="intro-logo"><span class="logo-emoji">🌲</span> ParkScout</span>
+    </div>
+    <nav class="navbar">
+        <a href="{{ url_for('welcome') }}" class="navbar-brand" id="navbar-logo"><span class="logo-emoji">🌲</span> ParkScout</a>
+        <div class="navbar-links">
         }
         .navbar .navbar-brand {
             font-size: 2rem;
