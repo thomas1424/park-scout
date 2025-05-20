@@ -90,8 +90,7 @@
 <script>
 async function handleImageError(img, parkName) {
     const overlay = img.parentElement.querySelector('.image-loading-overlay');
-    overlay.classList.remove('hidden');
-    
+    if (overlay) overlay.classList.remove('hidden');
     try {
         const response = await fetch(`/api/fallback-image?park=${encodeURIComponent(parkName)}`);
         const data = await response.json();
@@ -103,7 +102,7 @@ async function handleImageError(img, parkName) {
     } catch (error) {
         img.src = "{{ url_for('static', filename='img/default-park.jpg') }}";
     } finally {
-        overlay.classList.add('hidden');
+        if (overlay) overlay.classList.add('hidden');
     }
 }
 </script>

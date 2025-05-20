@@ -1,8 +1,6 @@
 // static/js/script.js
 document.addEventListener('DOMContentLoaded', function() {
     const globalMessageArea = document.getElementById('global-message-area');
-    const likedCountNav = document.getElementById('liked-count-nav');
-    const likedCountNavMobile = document.getElementById('liked-count-nav-mobile');
 
     function displayToastMessage(message, type = 'info') {
         const globalMessageArea = document.getElementById('global-message-area');
@@ -19,25 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
             toast.classList.remove('show');
             setTimeout(() => toast.remove(), 300);
         }, 3000);
-    }
-    
-    function updateLikedCount(newCount) {
-        if (likedCountNav) {
-            likedCountNav.textContent = newCount > 0 ? newCount : '';
-            if (newCount > 0) {
-                likedCountNav.classList.remove('hidden');
-            } else {
-                likedCountNav.classList.add('hidden');
-            }
-        }
-         if (likedCountNavMobile) {
-            likedCountNavMobile.textContent = newCount > 0 ? newCount : '';
-            if (newCount > 0) {
-                likedCountNavMobile.classList.remove('hidden');
-            } else {
-                likedCountNavMobile.classList.add('hidden');
-            }
-        }
     }
 
     // Mobile menu toggle (if not already in base.html or if more complex logic needed)
@@ -67,9 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Add image handling functions
 async function handleImageError(img, parkName) {
-    const overlay = img.closest('.image-container').querySelector('.image-loading-overlay');
-    if (overlay) overlay.classList.remove('hidden');
-    
     try {
         const response = await fetch(`/api/fallback-image?park=${encodeURIComponent(parkName)}`);
         if (!response.ok) throw new Error('Failed to get fallback image');
@@ -83,7 +59,5 @@ async function handleImageError(img, parkName) {
     } catch (error) {
         console.error('Image fallback error:', error);
         img.src = '/static/img/default-park.jpg';
-    } finally {
-        if (overlay) overlay.classList.add('hidden');
     }
 }
