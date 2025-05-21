@@ -125,6 +125,7 @@ input, select, textarea, button, .btn {
 .card-title, .card-description {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -132,6 +133,7 @@ input, select, textarea, button, .btn {
 
 .card-description {
   -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
 
 /* --- Flex/Grid Responsiveness --- */
