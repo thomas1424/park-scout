@@ -1,18 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Suggest a Park{% endblock %}
 {% block content %}
-<div class="max-w-lg mx-auto py-10 text-center">
+<div class="max-w-lg mx-auto py-10 text-center fade-in">
     <h1 class="text-4xl font-bold mb-6 text-green-700">Suggest a New Park</h1>
     <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Prank" class="mx-auto mb-6 rounded-lg shadow-lg" style="max-width:300px;">
     <p class="text-xl text-gray-700 mb-4">Gotcha! Suggestions are closed for now. 😆</p>
     <p class="text-gray-500">But keep enjoying the parks already listed!</p>
 </div>
 {% endblock %}
-
-@app.route('/suggest', methods=['GET', 'POST'])
-def suggest():
-    if request.method == 'POST':
-        # Save suggestion to DB or send email
-        flash('Thank you for your suggestion!', 'success')
-        return redirect(url_for('suggest'))
-    return render_template('suggest.html')

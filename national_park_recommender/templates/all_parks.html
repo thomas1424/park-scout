@@ -23,7 +23,7 @@
     {% if parks %}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {% for park in parks %}
-        <div class="park-card bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl h-full">
+        <div class="park-card bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl h-full fade-in">
             <div class="relative image-container">
                 <a href="{{ url_for('park_detail_page', park_id=park.id) }}">
                     <img src="{{ park.image_url or url_for('static', filename='img/default-park.jpg') }}"

@@ -3,7 +3,7 @@
 {% block title %}Find Your Park{% endblock %}
 
 {% block content %}
-<div class="bg-white p-6 md:p-8 rounded-xl shadow-2xl mb-10 transform transition-all duration-500 hover:shadow-3xl">
+<div class="bg-white p-6 md:p-8 rounded-xl shadow-2xl mb-10">
     <h1 class="text-3xl md:text-4xl font-bold text-green-700 mb-2 text-center">Discover Your Next Adventure!</h1>
     <p class="text-center text-gray-600 mb-8">Use the filters below or search by keyword to find parks that match your interests.</p>
     
@@ -94,14 +94,17 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {% for park in parks_to_display %}
         <div class="park-card grow-on-hover fade-in flex flex-col">
-            <div class="relative">
+            <div class="relative image-container">
                 <a href="{{ url_for('park_detail_page', park_id=park.id) }}">
                     <img 
                         src="{{ park.image_url if park.image_url else url_for('static', filename='img/parks/' ~ park.id ~ '.jpg') }}" 
                         alt="Image of {{ park.name }}" 
                         class="w-full h-56 object-cover"
                         loading="lazy"
-                        onerror="this.onerror=null;this.src='https://source.unsplash.com/600x400/?{{ park.name | urlencode }},national-park';">
+                        onerror="this.onerror=null;handleImageError(this, '{{ park.name }}');">
+                    <div class="image-loading-overlay hidden">
+                        <div class="spinner"></div>
+                    </div>
                 </a>
             </div>
             <div class="p-5 flex flex-col flex-grow">

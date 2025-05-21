@@ -3,8 +3,8 @@
 {% block title %}{{ park.name }}{% endblock %}
 
 {% block content %}
-<article class="bg-white p-6 md:p-10 rounded-xl shadow-2xl max-w-4xl mx-auto">
-    <div class="relative mb-6">
+<article class="bg-white p-6 md:p-10 rounded-xl shadow-2xl max-w-4xl mx-auto fade-in">
+    <div class="relative mb-6 image-container">
         <img src="{{ park.image_url or url_for('static', filename='img/default-park.jpg') }}" 
              alt="Banner image of {{ park.name }}" 
              class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"

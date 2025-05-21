@@ -38,11 +38,27 @@ crossorigin=""></script>
         border-radius: 3px;
         margin-top: 5px;
     }
+
+    /* Fade-in animation for the map container */
+    .fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="bg-white p-6 md:p-8 rounded-xl shadow-2xl">
+<div class="bg-white p-6 md:p-8 rounded-xl shadow-2xl fade-in">
     <h1 class="text-3xl md:text-4xl font-bold text-green-700 mb-6 text-center">Interactive World Landmark Map</h1>
     
     <p class="text-center text-gray-600 mb-6">

@@ -3,157 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover national parks with ParkScout - your personal guide to outdoor adventures">
     <title>{% block title %}ParkScout{% endblock %} - National Park Recommender</title>
+    
+    <!-- Preload critical assets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Styles -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    
+    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌲</text></svg>">
-    <style>
-        body.dark {
-            background: #18181b;
-            color: #e5e7eb;
-        }
-        .dark .bg-white { background-color: #23272f !important; }
-        .dark .text-gray-700, .dark .text-gray-600 { color: #d1d5db !important; }
-        .dark .text-green-700 { color: #6ee7b7 !important; }
-        .dark .shadow-md, .dark .shadow-lg, .dark .shadow-2xl { box-shadow: 0 2px 16px #0006 !important; }
-        .dark .bg-green-600 { background-color: #059669 !important; }
-        .dark .bg-green-700 { background-color: #047857 !important; }
-        .dark .bg-gray-800 { background-color: #18181b !important; }
-        .dark .bg-gray-50, .dark .bg-emerald-50, .dark .bg-teal-50 { background: #23272f !important; }
-        .dark .border-gray-300 { border-color: #374151 !important; }
-        .dark .bg-blue-100, .dark .bg-green-100, .dark .bg-amber-100, .dark .bg-red-100 { background-color: #23272f !important; }
-        .dark .text-blue-700, .dark .text-amber-600, .dark .text-red-500 { color: #38bdf8 !important; }
-        .dark .rounded-xl { border-radius: 1rem !important; }
-        .dark input, .dark textarea, .dark select { background: #23272f !important; color: #e5e7eb !important; border-color: #374151 !important; }
-        .dark .hover\:bg-green-700:hover { background-color: #065f46 !important; }
-        .dark .hover\:bg-purple-700:hover { background-color: #6d28d9 !important; }
-        .dark .hover\:text-green-200:hover { color: #bbf7d0 !important; }
-        .dark .hover\:text-blue-800:hover { color: #60a5fa !important; }
-        .dark .hover\:text-green-700:hover { color: #6ee7b7 !important; }
-        .dark .hover\:text-purple-300:hover { color: #a78bfa !important; }
-        .dark .bg-black { background: #18181b !important; }
-        .dark .text-white { color: #e5e7eb !important; }
-        .dark .text-gray-300 { color: #a1a1aa !important; }
-        .dark .text-gray-400 { color: #d1d5db !important; }
-        .dark .text-gray-200 { color: #f3f4f6 !important; }
-        .dark .bg-white-80 { background-color: #23272fcc !important; }
-        .dark .hover\:text-white:hover { color: #38bdf8 !important; }
-        .dark .hover\:text-green-200:hover { color: #6ee7b7 !important; }
-        .dark .hover\:text-green-600:hover { color: #6ee7b7 !important; }
-        .dark .hover\:text-green-800:hover { color: #34d399 !important; }
-        .dark .hover\:text-blue-800:hover { color: #60a5fa !important; }
-        .dark .hover\:text-blue-600:hover { color: #38bdf8 !important; }
-        .dark .hover\:text-purple-300:hover { color: #a78bfa !important; }
-        .dark .hover\:text-gray-700:hover { color: #d1d5db !important; }
-        /* Intro animation styles */
-        #intro-overlay {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(120deg, #059669 0%, #10b981 100%);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s cubic-bezier(.4,0,.2,1), visibility 0.8s cubic-bezier(.4,0,.2,1);
-            will-change: opacity, visibility;
-        }
-        #intro-logo {
-            font-size: clamp(2.2rem, 6vw, 3.5rem);
-            font-weight: 900;
-            color: #fff;
-            background: linear-gradient(90deg, #fff 60%, #bbf7d0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            opacity: 1;
-            animation: introFadeZoom 0.6s cubic-bezier(.3,0,.2,1);
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5em;
-        }
-        @keyframes introFadeZoom {
-            0% {
-                opacity: 0;
-                transform: scale(0.8);
-                filter: blur(8px);
+
+    <!-- Custom Tailwind config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: 'var(--primary)',
+              accent: 'var(--accent)'
             }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-                filter: blur(0);
-            }
+          }
         }
-        #intro-logo.move-corner {
-            font-size: 2rem;
-            left: var(--logo-final-x, 2.2rem);
-            top: var(--logo-final-y, 1.6rem);
-            transform: translate(0, 0);
-            background: linear-gradient(90deg, #059669 60%, #10b981 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        #intro-logo span.logo-emoji {
-            font-size: 1.2em;
-            line-height: 1;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        @media (max-width: 600px) {
-            #intro-logo {
-                font-size: clamp(1.2rem, 8vw, 2.1rem);
-            }
-        }
-        #intro-overlay.hide {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity 0.7s cubic-bezier(.4,0,.2,1), visibility 0.7s cubic-bezier(.4,0,.2,1);
-        }
-        /* Remove old navbar styles if present, new styles are in styles.css */
-    </style>
+      }
+    </script>
+
     {% block head_extra %}{% endblock %}
 </head>
-<body class="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 text-gray-800 antialiased transition-colors duration-300">
-    <div id="intro-overlay">
-        <span id="intro-logo"><span class="logo-emoji">🌲</span> ParkScout</span>
-    </div>
-    <nav class="navbar">
-        <a href="{{ url_for('welcome') }}" class="navbar-brand" id="navbar-logo"><span class="logo-emoji">🌲</span> ParkScout</a>
+<body class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+    <a href="#main-content" class="sr-only focus:not-sr-only absolute top-2 left-2 bg-white text-green-700 px-4 py-2 rounded shadow z-50">Skip to main content</a>
+    <!-- Simplified navbar -->
+    <nav class="navbar sticky top-4 mx-auto max-w-7xl px-4 py-3 rounded-2xl" aria-label="Main navigation">
+        <a href="{{ url_for('welcome') }}" class="navbar-brand" id="navbar-logo" aria-label="ParkScout Home">
+            <span class="logo-emoji" aria-hidden="true">🌲</span> ParkScout
+        </a>
         <div class="navbar-links">
-            <a href="{{ url_for('index') }}" class="navbar-link">Discover</a>
-            <a href="{{ url_for('parks') }}" class="navbar-link">All Parks</a>
-            <a href="{{ url_for('map_page') }}" class="navbar-link">Map</a>
-            <a href="{{ url_for('gallery') }}" class="navbar-link">Gallery</a>
-            <a href="{{ url_for('about') }}" class="navbar-link">About</a>
+            <a href="{{ url_for('index') }}" class="navbar-link {{ 'active' if request.endpoint == 'index' }}" aria-current="{{ 'page' if request.endpoint == 'index' }}">Discover</a>
+            <a href="{{ url_for('parks') }}" class="navbar-link {{ 'active' if request.endpoint == 'parks' }}" aria-current="{{ 'page' if request.endpoint == 'parks' }}">All Parks</a>
+            <a href="{{ url_for('map_page') }}" class="navbar-link {{ 'active' if request.endpoint == 'map_page' }}" aria-current="{{ 'page' if request.endpoint == 'map_page' }}">Map</a>
+            <a href="{{ url_for('gallery') }}" class="navbar-link {{ 'active' if request.endpoint == 'gallery' }}" aria-current="{{ 'page' if request.endpoint == 'gallery' }}">Gallery</a>
+            <a href="{{ url_for('about') }}" class="navbar-link {{ 'active' if request.endpoint == 'about' }}" aria-current="{{ 'page' if request.endpoint == 'about' }}">About</a>
             {% if current_user.is_authenticated %}
-                <a href="{{ url_for('profile') }}" class="navbar-link">Profile</a>
+                <a href="{{ url_for('profile') }}" class="navbar-link {{ 'active' if request.endpoint == 'profile' }}" aria-current="{{ 'page' if request.endpoint == 'profile' }}">Profile</a>
                 <a href="{{ url_for('logout') }}" class="navbar-link">Logout</a>
             {% else %}
-                <a href="{{ url_for('login') }}" class="navbar-link">Login</a>
-                <a href="{{ url_for('register') }}" class="navbar-link">Register</a>
+                <a href="{{ url_for('login') }}" class="navbar-link {{ 'active' if request.endpoint == 'login' }}" aria-current="{{ 'page' if request.endpoint == 'login' }}">Login</a>
+                <a href="{{ url_for('register') }}" class="navbar-link {{ 'active' if request.endpoint == 'register' }}" aria-current="{{ 'page' if request.endpoint == 'register' }}">Register</a>
             {% endif %}
-            <a href="#" onclick="window.location.href='/random_park';return false;" class="navbar-link surprise">Surprise Me!</a>
+            <a href="#" onclick="window.location.href='/random_park';return false;" class="navbar-link surprise" aria-label="Go to a random park">
+                <i class="fas fa-random" aria-hidden="true"></i> Surprise Me!
+            </a>
         </div>
     </nav>
-
-    <main class="container mx-auto p-4 md:p-6 lg:p-8 min-h-[calc(100vh-160px)] transition-colors duration-300">
+    <div id="global-message-area" class="fixed top-20 right-5 z-[100] w-auto max-w-xs"></div>
+    <!-- Main content with consistent padding -->
+    <main id="main-content" class="container mx-auto px-4 py-8 mt-20">
+        <!-- Flash messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                {% for category, message in messages %}
-                <div class="alert-{{ category }} bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4 rounded-md" role="alert">
-                    <p>{{ message }}</p>
+                <div class="space-y-2 mb-6">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} animate-fade-in">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             {% endif %}
         {% endwith %}
-        <div id="global-message-area" class="fixed top-20 right-5 z-[100] w-auto max-w-xs"></div>
+        
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="bg-gray-800 text-gray-300 text-center p-6 mt-auto">
+    <!-- Modernized footer -->
+    <footer class="bg-gray-800 text-gray-300 py-12 mt-auto">
         <p>&copy; <span id="current-year"></span> ParkScout by <a href="https://github.com/thomas1424" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Thomas Pan</a>. Happy Exploring!</p>
         <p class="text-sm">Icons by <a href="https://fontawesome.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Font Awesome</a>.</p>
         <p class="text-sm">Powered by <a href="https://flask.palletsprojects.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Flask</a> and <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-200">Tailwind CSS</a>.</p>
@@ -171,58 +97,20 @@
         </div>
     </footer>
 
-    <!-- Floating action button: Only Dark Mode (ParkScout AI removed) -->
-    <div style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:50;">
-        <button id="dark-mode-toggle" class="px-4 py-3 rounded-full bg-gray-900 text-white shadow-lg hover:bg-gray-700 transition flex items-center" title="Toggle dark mode" style="box-shadow:0 4px 24px #0006;">
+    <!-- Floating action buttons -->
+    <div class="fixed bottom-6 right-6 flex flex-col gap-4 z-50">
+        <button id="dark-mode-toggle" aria-label="Toggle dark mode"
+                class="p-3 rounded-full bg-gray-900 text-white shadow-lg hover:bg-gray-700 transition-all focus:outline-none focus:ring-2 focus:ring-green-500">
             <i id="dark-mode-icon" class="fas fa-moon"></i>
-            <span id="dark-mode-label" class="hidden md:inline">Dark Mode</span>
+        </button>
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                class="p-3 rounded-full bg-green-600 text-white shadow-lg hover:bg-green-700 transition-all focus:outline-none focus:ring-2 focus:ring-green-500"
+                aria-label="Scroll to top">
+            <i class="fas fa-arrow-up"></i>
         </button>
     </div>
-    <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
-    <script>
-        // Dark mode toggle with icon and label swap
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
-        const darkModeIcon = document.getElementById('dark-mode-icon');
-        const darkModeLabel = document.getElementById('dark-mode-label');
-        function setDarkMode(on) {
-            if (on) {
-                document.body.classList.add('dark');
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('darkMode', '1');
-                darkModeIcon.classList.remove('fa-moon');
-                darkModeIcon.classList.add('fa-sun');
-                darkModeLabel.textContent = 'Light Mode';
-                darkModeToggle.title = "Toggle light mode";
-            } else {
-                document.body.classList.remove('dark');
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('darkMode', '0');
-                darkModeIcon.classList.remove('fa-sun');
-                darkModeIcon.classList.add('fa-moon');
-                darkModeLabel.textContent = 'Dark Mode';
-                darkModeToggle.title = "Toggle dark mode";
-            }
-        }
-        darkModeToggle.addEventListener('click', () => {
-            setDarkMode(!document.body.classList.contains('dark'));
-        });
-        // On load, set dark mode if user previously enabled it
-        if (localStorage.getItem('darkMode') === '1') {
-            setDarkMode(true);
-        } else {
-            setDarkMode(false);
-        }
-    </script>
-    <script>
-        // New intro animation: fade/zoom only, no logo move
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                document.getElementById('intro-overlay').classList.add('hide');
-            }, 700); // Reduced from 1400ms to 700ms
-        });
-    </script>
+
+    <!-- Core scripts -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
