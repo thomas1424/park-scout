@@ -1,158 +1,141 @@
 {% extends "base.html" %}
 
-{% block title %}Find Your Park{% endblock %}
+{% block title %}ParkScout - Find Your Perfect Park{% endblock %}
 
 {% block content %}
-<div class="bg-white p-6 md:p-8 rounded-xl shadow-2xl mb-10">
-    <h1 class="text-3xl md:text-4xl font-bold text-green-700 mb-2 text-center">Discover Your Next Adventure!</h1>
-    <p class="text-center text-gray-600 mb-8">Use the filters below or search by keyword to find parks that match your interests.</p>
+<div class="bg-white p-6 md:p-8 rounded-xl shadow-2xl mb-10 fade-in">
+    <h1 class="text-3xl md:text-4xl font-bold text-green-700 mb-6 text-center">Find Your Perfect Park</h1>
     
-    <!-- Filters Feature Restored -->
-    <form method="POST" action="{{ url_for('index') }}" class="space-y-8">
-        <div>
-            <label for="search_term" class="block text-lg font-semibold text-gray-700 mb-2" style="font-family: 'Inter', 'Segoe UI', Arial, sans-serif;">Search Parks (Name, Location, Description)</label>
-            <input type="text" name="search_term" id="search_term" value="{{ search_term_value }}" placeholder="e.g., Yosemite, canyon, hiking trails"
-                   class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors bg-white dark:bg-gray-900 dark:text-white dark:border-gray-700" style="font-family: 'Inter', 'Segoe UI', Arial, sans-serif;">
-        </div>
+    <!-- Search and Filter Section -->
+    <div class="mb-8">
+        <form method="POST" action="{{ url_for('index') }}" class="space-y-6">
+            <div class="max-w-2xl mx-auto">
+                <label for="search" class="block text-lg font-medium text-gray-700 mb-2">Search Parks</label>
+                <input type="text" 
+                       name="search" 
+                       id="search" 
+                       placeholder="Enter park name, location, or activity..."
+                       class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500">
+            </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div>
-                <h3 class="text-lg font-semibold text-gray-700 mb-2" style="font-family: 'Inter', 'Segoe UI', Arial, sans-serif;">Park Types:</h3>
-                <div class="max-h-60 overflow-y-auto p-3 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-2">
-                    {% for park_type in available_park_types %}
-                    <label class="flex items-center space-x-3 p-2 rounded-md cursor-pointer transition-colors custom-checkbox-label">
-                        <input type="checkbox" name="park_types" value="{{ park_type }}" 
-                               {% if park_type in selected_park_types %}checked{% endif %}
-                               class="custom-checkbox">
-                        <span class="text-gray-700 dark:text-gray-200 capitalize" style="font-family: 'Inter', 'Segoe UI', Arial, sans-serif;">{{ park_type }}</span>
-                    </label>
-                    {% endfor %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Activities Filter -->
+                <div>
+                    <h3 class="text-lg font-medium text-gray-700 mb-2">Activities</h3>
+                    <div class="space-y-2 max-h-48 overflow-y-auto p-3 border border-gray-200 rounded-lg">
+                        {% for activity in available_activities %}
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" 
+                                   name="activities" 
+                                   value="{{ activity }}"
+                                   class="rounded text-green-600 focus:ring-green-500">
+                            <span class="text-gray-700">{{ activity | replace('_', ' ') | title }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-            <div>
-                <h3 class="text-lg font-semibold text-gray-700 mb-2" style="font-family: 'Inter', 'Segoe UI', Arial, sans-serif;">Regions:</h3>
-                <div class="max-h-60 overflow-y-auto p-3 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-2">
-                    {% for region in available_regions %}
-                    <label class="flex items-center space-x-3 p-2 rounded-md cursor-pointer transition-colors custom-checkbox-label">
-                        <input type="checkbox" name="regions" value="{{ region }}" 
-                               {% if region in selected_regions %}checked{% endif %}
-                               class="custom-checkbox">
-                        <span class="text-gray-700 dark:text-gray-200 capitalize" style="font-family: 'Inter', 'Segoe UI', Arial, sans-serif;">{{ region.replace('_', ' ') }}</span>
-                    </label>
-                    {% endfor %}
-                </div>
-            </div>
-            <div>
-                <h3 class="text-lg font-semibold text-gray-700 mb-2" style="font-family: 'Inter', 'Segoe UI', Arial, sans-serif;">Preferred Activities:</h3>
-                <div class="max-h-60 overflow-y-auto p-3 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-2">
-                    {% for activity in available_activities %}
-                    <label class="flex items-center space-x-3 p-2 rounded-md cursor-pointer transition-colors custom-checkbox-label">
-                        <input type="checkbox" name="activities" value="{{ activity }}" 
-                               {% if activity in selected_activities %}checked{% endif %}
-                               class="custom-checkbox">
-                        <span class="text-gray-700 dark:text-gray-200 capitalize" style="font-family: 'Inter', 'Segoe UI', Arial, sans-serif;">{{ activity.replace('_', ' ') }}</span>
-                    </label>
-                    {% endfor %}
-                </div>
-            </div>
-            <div>
-                <h3 class="text-lg font-semibold text-gray-700 mb-2" style="font-family: 'Inter', 'Segoe UI', Arial, sans-serif;">Desired Scenery:</h3>
-                <div class="max-h-60 overflow-y-auto p-3 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 space-y-2">
-                    {% for scenery_item in available_scenery %}
-                    <label class="flex items-center space-x-3 p-2 rounded-md cursor-pointer transition-colors custom-checkbox-label">
-                        <input type="checkbox" name="scenery" value="{{ scenery_item }}" 
-                               {% if scenery_item in selected_scenery %}checked{% endif %}
-                               class="custom-checkbox">
-                        <span class="text-gray-700 dark:text-gray-200 capitalize" style="font-family: 'Inter', 'Segoe UI', Arial, sans-serif;">{{ scenery_item.replace('_', ' ') }}</span>
-                    </label>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        
-        <div class="flex flex-col items-center space-y-4 pt-4">
-            <button type="submit"
-                    class="w-full md:w-auto px-8 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-transform transform hover:scale-105">
-                <i class="fas fa-search mr-2"></i>Find Parks
-            </button>
-            <button type="button" id="random-park-button"
-                    class="w-full md:w-auto px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-transform transform hover:scale-105">
-                <i class="fas fa-random mr-2"></i>Random Park
-            </button>
-        </div>
-    </form>
-</div>
 
-{% if parks_to_display %}
-    <h2 class="text-3xl font-bold text-gray-700 mb-6 mt-12">
-        {% if not (selected_activities or selected_scenery or selected_regions or selected_park_types or search_term_value) %}
-            Popular Parks
-        {% else %}
-            Recommended Parks
-        {% endif %}
-    </h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-        {% for park in parks_to_display %}
-        <div class="park-card grow-on-hover fade-in flex flex-col">
-            <div class="relative image-container">
-                <a href="{{ url_for('park_detail_page', park_id=park.id) }}">
-                    <img 
-                        src="{{ park.image_url if park.image_url else url_for('static', filename='img/parks/' ~ park.id ~ '.jpg') }}" 
-                        alt="Image of {{ park.name }}" 
-                        class="w-full h-56 object-cover"
-                        loading="lazy"
-                        onerror="this.onerror=null;handleImageError(this, '{{ park.name }}');">
+                <!-- Region Filter -->
+                <div>
+                    <h3 class="text-lg font-medium text-gray-700 mb-2">Regions</h3>
+                    <div class="space-y-2 max-h-48 overflow-y-auto p-3 border border-gray-200 rounded-lg">
+                        {% for region in available_regions %}
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" 
+                                   name="regions" 
+                                   value="{{ region }}"
+                                   class="rounded text-green-600 focus:ring-green-500">
+                            <span class="text-gray-700">{{ region | replace('_', ' ') | title }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Park Types Filter -->
+                <div>
+                    <h3 class="text-lg font-medium text-gray-700 mb-2">Park Types</h3>
+                    <div class="space-y-2 max-h-48 overflow-y-auto p-3 border border-gray-200 rounded-lg">
+                        {% for type in available_park_types %}
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" 
+                                   name="park_types" 
+                                   value="{{ type }}"
+                                   class="rounded text-green-600 focus:ring-green-500">
+                            <span class="text-gray-700">{{ type | replace('_', ' ') | title }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-4 mt-6">
+                <button type="submit" 
+                        class="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors">
+                    <i class="fas fa-search mr-2"></i>Find Parks
+                </button>
+                <a href="{{ url_for('map_page') }}" 
+                   class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
+                    <i class="fas fa-map-marked-alt mr-2"></i>View Map
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Results Section -->
+    {% if recommended_parks %}
+    <div class="mt-12">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Recommended Parks</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for park in recommended_parks %}
+            <div class="park-card bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl">
+                <div class="relative image-container">
+                    <img src="{{ park.image_url or url_for('static', filename='img/default-park.jpg') }}"
+                         alt="Image of {{ park.name }}"
+                         class="w-full h-48 object-cover"
+                         loading="lazy"
+                         onerror="this.onerror=null;handleImageError(this, '{{ park.name }}');">
                     <div class="image-loading-overlay hidden">
                         <div class="spinner"></div>
                     </div>
-                </a>
-            </div>
-            <div class="p-5 flex flex-col flex-grow">
-                <h3 class="text-xl font-semibold text-green-700 mb-1">
-                    <a href="{{ url_for('park_detail_page', park_id=park.id) }}" class="hover:underline">{{ park.name }}</a>
-                </h3>
-                <p class="text-xs text-gray-500 mb-1">{{ park.type }} - {{ park.region }}</p>
-                <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt mr-1 text-green-600"></i>{{ park.location }}</p>
-                <p class="text-gray-600 text-sm mb-3 line-clamp-3 flex-grow">{{ park.description }}</p>
-                {% if park.match_score %}
-                <div class="text-xs text-blue-600 bg-blue-100 rounded-full px-2 py-0.5 mb-2 inline-block">
-                    Match Score: {{ park.match_score }} ({{ park.activity_matches }} activit{{'y' if park.activity_matches == 1 else 'ies'}}, 
-                    {{ park.scenery_matches }} scener{{'y' if park.scenery_matches == 1 else 'ies'}})
                 </div>
-                {% elif park.rating %}
-                <div class="text-xs text-amber-600 bg-amber-100 rounded-full px-2 py-0.5 mb-2 inline-block">
-                    <i class="fas fa-star text-amber-500"></i> Rating: {{ park.rating }}/5.0
-                </div>
-                {% endif %}
-                <div class="mt-auto pt-3">
-                    <a href="{{ url_for('park_detail_page', park_id=park.id) }}" 
-                       class="inline-block w-full text-center bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">
-                       View Details <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
+                <div class="p-5 flex flex-col flex-grow">
+                    <h3 class="text-xl font-semibold text-green-700 mb-1">
+                        <a href="{{ url_for('park_detail_page', park_id=park.id) }}" class="hover:underline">{{ park.name }}</a>
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-2">{{ park.type }} - {{ park.region }}</p>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{ park.description }}</p>
+                    <div class="mt-auto">
+                        <a href="{{ url_for('park_detail_page', park_id=park.id) }}" 
+                           class="inline-block w-full text-center bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">
+                           View Details
+                        </a>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-{% elif request.method == 'POST' %}
-    <div class="text-center py-12">
-        <img src="https://illustrations.popsy.co/amber/remote-work.svg" alt="No results found" class="mx-auto h-64 mb-6">
-        <h2 class="text-2xl font-semibold text-gray-700 mb-2">No Parks Found Matching Your Criteria</h2>
-        <p class="text-gray-500">Try adjusting your search or filters.</p>
-    </div>
-{% endif %}
+    {% endif %}
+</div>
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const randomParkButton = document.getElementById('random-park-button');
-    if (randomParkButton) {
-        randomParkButton.onclick = function() {
-            window.location.href = "/random_park";
-        };
-    }
-});
+function handleImageError(img, parkName) {
+    const overlay = img.parentElement.querySelector('.image-loading-overlay');
+    if (overlay) overlay.classList.remove('hidden');
+    fetch(`/api/fallback-image?park=${encodeURIComponent(parkName)}`)
+        .then(resp => resp.json())
+        .then(data => {
+            img.src = data.url || "{{ url_for('static', filename='img/default-park.jpg') }}";
+        })
+        .catch(() => {
+            img.src = "{{ url_for('static', filename='img/default-park.jpg') }}";
+        })
+        .finally(() => {
+            if (overlay) overlay.classList.add('hidden');
+        });
+}
 </script>
 {% endblock %}
